@@ -20,7 +20,9 @@
     "next": "^14.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.48.2",
     "superjson": "^1.13.1",
+    "tailwind-variants": "^0.1.18",
     "zod": "^3.22.4"
   },
   "devDependencies": {
