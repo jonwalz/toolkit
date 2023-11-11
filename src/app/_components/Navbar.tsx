@@ -10,23 +10,10 @@ import {
 
 export const Nav = () => {
   return (
-    <Navbar position="static">
+    <Navbar position="static" maxWidth="full">
       <NavbarBrand>
         <p className="font-bold text-inherit">Writer's Toolkit</p>
       </NavbarBrand>
-      <NavbarContent className="hidden gap-4 sm:flex" justify="center">
-        <NavbarItem>
-          <Link href="#">Features</Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="#" aria-current="page">
-            Customers
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link href="#">Integrations</Link>
-        </NavbarItem>
-      </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">
           <Link href="#">Login</Link>

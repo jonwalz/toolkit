@@ -28,6 +28,7 @@ specifiers:
   prettier-plugin-tailwindcss: ^0.5.1
   react: 18.2.0
   react-dom: 18.2.0
+  react-feather: ^2.0.10
   react-hook-form: ^7.48.2
   superjson: ^1.13.1
   tailwind-merge: ^2.0.0
@@ -53,6 +54,7 @@ dependencies:
   next: 14.0.2_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-feather: 2.0.10_react@18.2.0
   react-hook-form: 7.48.2_react@18.2.0
   superjson: 1.13.3
   tailwind-merge: 2.0.0
@@ -4970,7 +4972,6 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       react-is: 16.13.1
-    dev: true
 
   /punycode/2.3.1:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
@@ -4990,6 +4991,15 @@ packages:
       scheduler: 0.23.0
     dev: false
 
+  /react-feather/2.0.10_react@18.2.0:
+    resolution: {integrity: sha512-BLhukwJ+Z92Nmdcs+EMw6dy1Z/VLiJTzEQACDUEnWMClhYnFykJCGWQx+NmwP/qQHGX/5CzQ+TGi8ofg2+HzVQ==}
+    peerDependencies:
+      react: '>=16.8.6'
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.2.0
+    dev: false
+
   /react-hook-form/7.48.2_react@18.2.0:
     resolution: {integrity: sha512-H0T2InFQb1hX7qKtDIZmvpU1Xfn/bdahWBN1fH19gSe4bBEqTfmlr7H3XWTaVtiK4/tpPaI1F3355GPMZYge+A==}
     engines: {node: '>=12.22.0'}
@@ -5001,7 +5011,6 @@ packages:
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
-    dev: true
 
   /react-remove-scroll-bar/2.3.4_u5zja476buyywzbvglb2fbhaii:
     resolution: {integrity: sha512-63C4YQBUt0m6ALadE9XV56hV8BgJWDmmTPY758iIJjfQKt2nYwoUrPk0LXRXcB/yIj82T1/Ixfdpdk68LwIB0A==}
