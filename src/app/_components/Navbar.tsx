@@ -12,7 +12,9 @@ export const Nav = () => {
   return (
     <Navbar position="static" maxWidth="full">
       <NavbarBrand>
-        <p className="font-bold text-inherit">Writer's Toolkit</p>
+        <Link href="/" className="font-bold text-inherit">
+          Writer's Toolkit
+        </Link>
       </NavbarBrand>
       <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">

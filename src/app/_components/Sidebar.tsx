@@ -32,7 +32,7 @@ export default function Sidebar({
               Progress log
             </Button>
             <Button
-              href="accomplishments"
+              href="/accomplishments"
               as={Link}
               variant="ghost"
               className="w-full justify-start"
