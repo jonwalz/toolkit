@@ -2,31 +2,33 @@ import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
-let post = {
-  id: 1,
-  name: "Hello World",
-};
+import { supabaseClient } from "~/server/vendor/supabase";
 
 export const postRouter = createTRPCRouter({
   hello: publicProcedure
     .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
+    .query(async () => {
+      const { data: notes } = await supabaseClient.from("notes").select("*");
+
       return {
-        greeting: `Hello ${input.text}`,
+        greeting: notes,
       };
     }),
+  // Create private procedure that requires authentication TODO
+  createUser: publicProcedure
+    .input(z.object({ email: z.string(), password: z.string() }))
+    .mutation(async ({ input: { email, password } }) => {
+      const { data, error } = await supabaseClient.auth.signUp({
+        email: email,
+        password: password,
+      });
 
-  create: publicProcedure
-    .input(z.object({ name: z.string().min(1) }))
-    .mutation(async ({ input }) => {
-      // simulate a slow db call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      if (error) {
+        console.log("Server error: ", error);
+        throw new Error(error.message);
+      }
 
-      post = { id: post.id + 1, name: input.name };
-      return post;
+      console.log("data: ", data);
+      return { message: "User created successfully", user: data };
     }),
-
-  getLatest: publicProcedure.query(() => {
-    return post;
-  }),
 });
