@@ -34,7 +34,9 @@ export default function RootLayout({
               <div className="bg-background">
                 <div className="grid lg:grid-cols-5">
                   <Sidebar className="hidden lg:block" />
-                  <div className="px-2 py-5">{children}</div>
+                  <div className="col-span-4 flex flex-col items-center justify-center px-2 py-4">
+                    {children}
+                  </div>
                 </div>
               </div>
             </div>
