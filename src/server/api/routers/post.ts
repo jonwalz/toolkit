@@ -3,7 +3,8 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { redirect } from 'next/navigation'
 
-import { supabaseClient } from "~/server/vendor/supabase";
+import { supabaseClient, supabaseServerClient } from "~/server/vendor/supabase";
+import { NextResponse } from "next/server";
 
 export const postRouter = createTRPCRouter({
   hello: publicProcedure
@@ -18,13 +19,10 @@ export const postRouter = createTRPCRouter({
   // Create private procedure that requires authentication TODO
   createUser: publicProcedure
     .input(z.object({ email: z.string(), password: z.string() }))
-    .mutation(async ({ input: { email, password } }) => {
-      const { data, error } = await supabaseClient.auth.signUp({
+    .mutation(async ({ input: { email, password }, ctx }) => {
+      const { data, error } = await supabaseServerClient().auth.signUp({
         email: email,
         password: password,
-        options: {
-          emailRedirectTo: `${location.origin}/auth/callback`,
-        },
       });
 
       if (error) {
@@ -32,13 +30,14 @@ export const postRouter = createTRPCRouter({
         throw new Error(error.message);
       }
 
+      // TODO: handle existing user
+      // TODO: Handle success
+
       console.log("data: ", data);
-      return { message: "User created successfully", user: data };
     }),
     login: publicProcedure
       .input(z.object({ email: z.string(), password: z.string() }))
       .mutation(async ({ input: { email, password }, ctx }) => {
-        console.log("URL: ", ctx.req.url);
         const { data, error } = await supabaseClient.auth.signInWithPassword({
           email: email,
           password: password
@@ -50,7 +49,6 @@ export const postRouter = createTRPCRouter({
         }
 
         // console.log("data: ", data);
-        return { message: "User logged in successfully", user: data };
       }),
     logout: publicProcedure
       .query(async () => {

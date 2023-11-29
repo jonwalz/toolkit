@@ -4,9 +4,9 @@ import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
 
 import { TRPCReactProvider } from "~/trpc/react";
-import { NextUIProviderComp } from "../_providers/nextUIProvider";
-import { Nav } from "../_components/Navbar";
-import Sidebar from "../_components/Sidebar";
+import { NextUIProviderComp } from "../../_providers/nextUIProvider";
+import { Nav } from "../../_components/Navbar";
+import Sidebar from "../../_components/Sidebar";
 
 const inter = Inter({
   subsets: ["latin"],

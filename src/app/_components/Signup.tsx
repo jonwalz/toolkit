@@ -26,18 +26,20 @@ import {
 const formSchema = z.object({
   email: z.string().min(3),
   password: z.string().min(3).max(20),
+  passwordConfirmation: z.string().min(3).max(20),
 });
 
-export function LoginForm() {
+export function SignupForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
       password: "",
+      passwordConfirmation: "",
     },
   });
 
-  const { mutate } = api.post.login.useMutation();
+  const { mutate } = api.post.createUser.useMutation();
 
   async function onSubmit({ email, password }: z.infer<typeof formSchema>) {
     mutate({ email, password });
@@ -72,6 +74,19 @@ export function LoginForm() {
                   <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input type="password" placeholder="Password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="passwordConfirmation"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm Password</FormLabel>
+                  <FormControl>
+                    <Input type="password" placeholder="Confirm password" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

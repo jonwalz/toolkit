@@ -7,9 +7,9 @@
  * need to use are documented accordingly near the end.
  */
 import { initTRPC } from "@trpc/server";
-import { type NextRequest } from "next/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
+import { NextRequest, NextResponse } from "next/server";
 
 /**
  * 1. CONTEXT
@@ -20,8 +20,8 @@ import { ZodError } from "zod";
  */
 
 interface CreateContextOptions {
-  headers: Headers;
   req: NextRequest;
+  res: NextResponse;
 }
 
 /**
@@ -34,10 +34,11 @@ interface CreateContextOptions {
  *
  * @see https://create.t3.gg/en/usage/trpc#-serverapitrpcts
  */
-export const createInnerTRPCContext = (opts: CreateContextOptions) => {
+export const createInnerTRPCContext = (opts?: CreateContextOptions) => {
   return {
-    headers: opts.headers,
-    req: opts.req,
+    headers: opts?.req.headers,
+    req: opts?.req,
+    res: opts?.res
   };
 };
 
@@ -47,13 +48,10 @@ export const createInnerTRPCContext = (opts: CreateContextOptions) => {
  *
  * @see https://trpc.io/docs/context
  */
-export const createTRPCContext = (opts: { req: NextRequest }) => {
+export const createTRPCContext = async (opts?: { req: NextRequest, res: NextResponse }) => {
   // Fetch stuff that depends on the request
 
-  return createInnerTRPCContext({
-    headers: opts.req.headers,
-    req: opts.req,
-  });
+  return createInnerTRPCContext((opts && {...opts}));
 };
 
 /**
@@ -100,3 +98,17 @@ export const createTRPCRouter = t.router;
  * are logged in.
  */
 export const publicProcedure = t.procedure;
+
+// TODO: Add session to context in middleware file
+// const isAuthed = t.middleware(({ ctx, next }) => {
+//   if (!ctx.req || !ctx.session.user) {
+//     throw new TRPCError({ code: "UNAUTHORIZED" });
+//   }
+//   return next({
+//     ctx: {
+//       // infers the `session` as non-nullable
+//       session: { ...ctx.session, user: ctx.session.user },
+//     },
+//   });
+// });
+// export const protectedProcedure = t.procedure.use(isAuthed);
