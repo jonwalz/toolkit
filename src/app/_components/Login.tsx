@@ -37,7 +37,7 @@ export function LoginForm() {
     },
   });
 
-  const { mutate } = api.post.createUser.useMutation();
+  const { mutate } = api.post.login.useMutation();
 
   async function onSubmit({ email, password }: z.infer<typeof formSchema>) {
     mutate({ email, password });

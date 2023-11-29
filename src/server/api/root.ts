@@ -1,14 +1,10 @@
 import { postRouter } from "~/server/api/routers/post";
+import { authCallbackRouter } from "~/server/api/routers/authCallback";
 import { createTRPCRouter } from "~/server/api/trpc";
 
-/**
- * This is the primary router for your server.
- *
- * All routers added in /api/routers should be manually added here.
- */
 export const appRouter = createTRPCRouter({
   post: postRouter,
+  authCallback: authCallbackRouter,
 });
 
-// export type definition of API
 export type AppRouter = typeof appRouter;

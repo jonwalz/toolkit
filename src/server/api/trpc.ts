@@ -21,6 +21,7 @@ import { ZodError } from "zod";
 
 interface CreateContextOptions {
   headers: Headers;
+  req: NextRequest;
 }
 
 /**
@@ -36,6 +37,7 @@ interface CreateContextOptions {
 export const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     headers: opts.headers,
+    req: opts.req,
   };
 };
 
@@ -50,6 +52,7 @@ export const createTRPCContext = (opts: { req: NextRequest }) => {
 
   return createInnerTRPCContext({
     headers: opts.req.headers,
+    req: opts.req,
   });
 };
 
