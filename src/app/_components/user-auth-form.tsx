@@ -38,16 +38,22 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const router = useRouter()
 
   async function onSubmit({ email, password }: FormData) {
-    await supabase.auth.signInWithPassword({
+    setIsLoading(true)
+    const resp = await supabase.auth.signInWithPassword({
       email,
       password,
     })
-    router.refresh()
 
-    return toast({
-      title: "Check your email",
-      description: "We sent you a login link. Be sure to check your spam too.",
-    })
+    if (resp.error) {
+      setIsLoading(false)
+      return toast({
+        title: "Something went wrong.",
+        description: "Please refresh the page and try again.",
+        variant: "destructive",
+      })
+    }
+
+    router.refresh()
   }
 
   return (

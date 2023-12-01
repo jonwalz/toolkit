@@ -23,22 +23,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`font-sans ${inter.variable}`}>
-        <TRPCReactProvider cookies={cookies().toString()}>
-          <NextUIProviderComp>
-            <div className="border-t">
-              <div className="bg-background">
-                <div className="grid">
-                  <div className="col-span-4 flex flex-col items-center justify-center px-2 py-4">
-                    {children}
-                  </div>
-                </div>
+    <TRPCReactProvider cookies={cookies().toString()}>
+      <NextUIProviderComp>
+        <div className="border-t">
+          <div className="bg-background">
+            <div className="grid">
+              <div className="col-span-4 flex flex-col items-center justify-center px-2 py-4">
+                {children}
               </div>
             </div>
-          </NextUIProviderComp>
-        </TRPCReactProvider>
-      </body>
-    </html>
+          </div>
+        </div>
+      </NextUIProviderComp>
+    </TRPCReactProvider>
   );
 }
