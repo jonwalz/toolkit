@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -13,13 +13,23 @@ import { Label } from "~/@/components/ui/label"
 import { toast } from "~/@/components/ui/use-toast"
 import { Icons } from "~/@/components/icons"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { asOptionalField } from "../_lib/zod"
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 const formSchema = z.object({
   email: z.string().min(3),
   password: z.string().min(3).max(20),
-});
+  confirmPassword: asOptionalField(z.string()
+    .min(3)
+    .max(20))
+}).refine((data) => {
+  if (data?.confirmPassword) {
+    return data?.password === data?.confirmPassword
+  } else {
+    return true;
+  };
+})
 
 type FormData = z.infer<typeof formSchema>
 
@@ -32,29 +42,56 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     resolver: zodResolver(formSchema),
   })
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
-  const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false)
-  const searchParams = useSearchParams()
-  const supabase = createClientComponentClient()
-  const router = useRouter()
+  const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false);
+  const supabase = createClientComponentClient();
+  const router = useRouter();
+  const pathname = usePathname();
+  const isRegister = pathname === "/register";
+  const isLogin = pathname === "/login";
 
   async function onSubmit({ email, password }: FormData) {
     setIsLoading(true)
-    const resp = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
 
-    if (resp.error) {
-      setIsLoading(false)
-      return toast({
-        title: "Something went wrong.",
-        description: "Please refresh the page and try again.",
-        variant: "destructive",
+    if (isRegister) {
+      const resp = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${location.origin}/auth/callback`,
+        },
       })
+
+      if (resp.error) {
+        toast({
+          title: "Something went wrong.",
+          description: "Please refresh the page and try again.",
+          variant: "destructive",
+        })
+      }
+
+      router.push("/login")
     }
 
-    router.refresh()
+    if (isLogin) {
+      const resp = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
+
+      if (resp.error) {
+        toast({
+          title: "Something went wrong.",
+          description: "Please refresh the page and try again.",
+          variant: "destructive",
+        })
+      }
+      router.refresh()
+    }
+
+    setIsLoading(false)
   }
+
+  console.log("errors: ", errors) 
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>
@@ -77,13 +114,23 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             <Input
               id="password"
               type="password"
-              placeholder="password"
+              placeholder="Password"
               autoCapitalize="none"
               autoComplete="password"
               autoCorrect="off"
               disabled={isLoading || isGitHubLoading}
               {...register("password")}
             />
+            {isRegister && <Input
+              id="confirmPassword"
+              type="password"
+              placeholder="Confirm password"
+              autoCapitalize="none"
+              autoComplete="password"
+              autoCorrect="off"
+              disabled={isLoading || isGitHubLoading}
+              {...register("confirmPassword")}
+            />}
             {errors?.email && (
               <p className="px-1 text-xs text-red-600">
                 {errors.email.message}
@@ -94,7 +141,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
-            Sign In with Email
+            { isLogin ? "Sign In with Email" : "Sign Up with Email"}
           </button>
         </div>
       </form>

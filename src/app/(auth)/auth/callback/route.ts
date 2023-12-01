@@ -15,5 +15,6 @@ export async function GET(request: NextRequest) {
   }
 
   // URL to redirect to after sign in process completes
+  console.log("HITS callback route: ", requestUrl.origin)
   return NextResponse.redirect(requestUrl.origin)
 }

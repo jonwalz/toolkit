@@ -12,7 +12,6 @@ export async function middleware(req: NextRequest) {
 
   const supabase = createMiddlewareClient({ req, res });
 
-  // const sessionData = await supabase.auth.getSession()
   const { data, error: sessionError } = await supabase.auth.getSession()
 
   if (sessionError) {
@@ -20,18 +19,15 @@ export async function middleware(req: NextRequest) {
     throw new Error(sessionError.message);
   }
 
-  // if user is signed in and the current path is / redirect the user to /dashboard
-  if (data.session?.user && (req.nextUrl.pathname === '/login' || req.nextUrl.pathname === '/signup')) {
+  if (data.session?.user && (req.nextUrl.pathname === '/login' || req.nextUrl.pathname === '/register')) {
     console.log("Redirecting to /dashboard")
     return NextResponse.redirect(new URL('/dashboard', req.url))
   }
 
-  // // if user is not signed in and the current path is not / redirect the user to /
-  if (!data.session?.user && (req.nextUrl.pathname !== '/login' && req.nextUrl.pathname !== '/signup')) {
+  if (!data.session?.user && (req.nextUrl.pathname !== '/login' && req.nextUrl.pathname !== '/register')) {
     return NextResponse.redirect(new URL('/login', req.url))
   }
 
-  console.log("SESSION DATA: ", data);
   return res
 }
 
