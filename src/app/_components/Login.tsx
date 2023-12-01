@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { api } from "~/trpc/react";
 
 import { Button } from "~/@/components/ui/button";
 import {
@@ -21,14 +20,18 @@ import {
   CardTitle,
   CardContent,
 } from "~/@/components/ui/card";
+import { useRouter } from "next/navigation";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
-// email and password form schema
 const formSchema = z.object({
   email: z.string().min(3),
   password: z.string().min(3).max(20),
 });
 
 export function LoginForm() {
+  const router = useRouter()
+  const supabase = createClientComponentClient()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -37,10 +40,12 @@ export function LoginForm() {
     },
   });
 
-  const { mutate } = api.post.login.useMutation();
-
   async function onSubmit({ email, password }: z.infer<typeof formSchema>) {
-    mutate({ email, password });
+    await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+    router.refresh()
   }
 
   return (

@@ -3,8 +3,9 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { redirect } from 'next/navigation'
 
-import { supabaseClient, supabaseServerClient } from "~/server/vendor/supabase";
+import { supabaseClient, supabaseServerRouteClient } from "~/server/vendor/supabase";
 import { NextResponse } from "next/server";
+import { cookies } from 'next/headers'
 
 export const postRouter = createTRPCRouter({
   hello: publicProcedure
@@ -16,11 +17,12 @@ export const postRouter = createTRPCRouter({
         greeting: notes,
       };
     }),
-  // Create private procedure that requires authentication TODO
+  // TODO: Create private procedure that requires authentication
   createUser: publicProcedure
     .input(z.object({ email: z.string(), password: z.string() }))
     .mutation(async ({ input: { email, password }, ctx }) => {
-      const { data, error } = await supabaseServerClient().auth.signUp({
+      // @ts-ignore
+      const { data, error } = await supabaseServerRouteClient({ req: ctx.req, res: ctx.res}).auth.signUp({
         email: email,
         password: password,
       });
@@ -33,26 +35,40 @@ export const postRouter = createTRPCRouter({
       // TODO: handle existing user
       // TODO: Handle success
 
+      cookies().set('userId', data?.user?.id || "") 
+
+      const userId = cookies().get('userId')
+
+      console.log("Cookie user id: ", userId)
+
       console.log("data: ", data);
     }),
     login: publicProcedure
       .input(z.object({ email: z.string(), password: z.string() }))
       .mutation(async ({ input: { email, password }, ctx }) => {
-        const { data, error } = await supabaseClient.auth.signInWithPassword({
-          email: email,
-          password: password
-        });
+        const res = NextResponse.next()
+        const { data, error } = await supabaseServerRouteClient({ req: ctx.req, res: res})
+          .auth
+          .signInWithPassword({
+            email: email,
+            password: password
+          });
 
         if (error) {
           console.log("Server error: ", error);
           throw new Error(error.message);
         }
-
-        // console.log("data: ", data);
-      }),
+    
+        return {
+          user: data?.user
+        }
+    }),
     logout: publicProcedure
-      .query(async () => {
-        const { error } = await supabaseClient.auth.signOut()
+      .query(async ({ ctx }) => {
+        const res = NextResponse.next()
+        const { error } = await supabaseServerRouteClient({ req: ctx.req, res: res})
+          .auth
+          .signOut()
 
         if (error) {
           console.log("Server error: ", error);

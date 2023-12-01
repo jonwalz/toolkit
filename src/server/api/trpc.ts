@@ -21,7 +21,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 interface CreateContextOptions {
   req: NextRequest;
-  res: NextResponse;
+  res?: NextResponse;
 }
 
 /**
@@ -48,8 +48,10 @@ export const createInnerTRPCContext = (opts?: CreateContextOptions) => {
  *
  * @see https://trpc.io/docs/context
  */
-export const createTRPCContext = async (opts?: { req: NextRequest, res: NextResponse }) => {
+export const createTRPCContext = async (opts: { req: NextRequest, res?: NextResponse }) => {
   // Fetch stuff that depends on the request
+
+  console.log("OPTS: ", JSON.stringify(opts))
 
   return createInnerTRPCContext((opts && {...opts}));
 };

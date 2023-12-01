@@ -48,7 +48,7 @@ export function SignupForm() {
   return (
     <Card className="border-black-600 w-[350px]">
       <CardHeader>
-        <CardTitle>Sign in</CardTitle>
+        <CardTitle>Sign Up</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>

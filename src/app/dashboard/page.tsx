@@ -1,7 +1,9 @@
+"use client"
 // import { CreatePost } from "~/app/_components/create-post";
 // import { api } from "~/trpc/server";
 
 export default function Home() {
+  console.log("DASHBOARD")
   // const hello = await api.post.hello.query({ text: "from tRPC" });
 
   return (
