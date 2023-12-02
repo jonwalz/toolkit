@@ -1,9 +1,9 @@
-import "~/styles/globals.css";
+import "@/styles/globals.css";
 
 import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
 
-import { TRPCReactProvider } from "~/trpc/react";
+import { TRPCReactProvider } from "@/trpc/react";
 import { NextUIProviderComp } from "../_providers/nextUIProvider";
 
 const inter = Inter({
@@ -28,7 +28,7 @@ export default function RootLayout({
         <div className="border-t">
           <div className="bg-background">
             <div className="grid">
-              <div className="col-span-4 flex flex-col items-center justify-center px-2 py-4">
+              <div className="col-span-4 flex flex-col items-center justify-center px-2">
                 {children}
               </div>
             </div>

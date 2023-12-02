@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
-import { postRouter } from "~/server/api/routers/post";
-import { createTRPCContext, createTRPCRouter } from "~/server/api/trpc";
+import { postRouter } from "@/server/api/routers/post";
+import { createTRPCContext, createTRPCRouter } from "@/server/api/trpc";
 
 // Use this to call TRPC methods from client components
 export const appRouter = createTRPCRouter({

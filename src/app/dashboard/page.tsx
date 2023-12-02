@@ -1,6 +1,6 @@
 "use client"
-// import { CreatePost } from "~/app/_components/create-post";
-// import { api } from "~/trpc/server";
+// import { CreatePost } from "@/app/_components/create-post";
+// import { api } from "@/trpc/server";
 
 export default function Home() {
   console.log("DASHBOARD")

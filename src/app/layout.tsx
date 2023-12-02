@@ -1,7 +1,10 @@
-import "~/styles/globals.css";
+import "@/styles/globals.css";
 
 import { Inter } from "next/font/google";
-import { Toaster } from "~/@/components/ui/toaster";
+import { TailwindIndicator } from "./_components/tailwind-indicator";
+import { ThemeProvider } from "./_components/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
+
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,9 +24,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable}`}>
-        {children}
-        <Toaster />
+      <body className={`overscroll-y-none font-sans ${inter.variable}`}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+          <Toaster />
+          <TailwindIndicator />
+        </ThemeProvider>
       </body>
     </html>
   );

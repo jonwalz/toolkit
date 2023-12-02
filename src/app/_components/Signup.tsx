@@ -3,9 +3,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { api } from "~/trpc/react";
+import { api } from "@/trpc/react";
 
-import { Button } from "~/@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -13,14 +13,14 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/@/components/ui/form";
-import { Input } from "~/@/components/ui/input";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardContent,
-} from "~/@/components/ui/card";
+} from "@/components/ui/card";
 
 // email and password form schema
 const formSchema = z.object({

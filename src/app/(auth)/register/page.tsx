@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { Icons } from "~/@/components/icons";
-import { buttonVariants } from "~/@/components/ui/button";
-import { cn } from "~/@/lib/utils";
-import { SignupForm } from "~/app/_components/Signup";
-import { UserAuthForm } from "~/app/_components/user-auth-form";
+import { Icons } from "@/components/icons";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { SignupForm } from "@/app/_components/Signup";
+import { UserAuthForm } from "@/app/_components/user-auth-form";
 
 export default function Signup() {
   return (
