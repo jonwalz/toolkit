@@ -19,7 +19,7 @@ export async function middleware(req: NextRequest) {
     throw new Error(sessionError.message);
   }
 
-  if (data.session?.user && (req.nextUrl.pathname === '/login' || req.nextUrl.pathname === '/register')) {
+  if (data.session?.user && (req.nextUrl.pathname === '/login' || req.nextUrl.pathname === '/register' || req.nextUrl.pathname === '/')) {
     console.log("Redirecting to /dashboard")
     return NextResponse.redirect(new URL('/dashboard', req.url))
   }

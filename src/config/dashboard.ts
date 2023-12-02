@@ -3,44 +3,33 @@ import { DashboardConfig } from "@/types";
 export const dashboardConfig: DashboardConfig = {
   mainNav: [
     {
-      title: "Documentation",
-      href: "/docs",
-    },
-    {
-      title: "Support",
-      href: "/support",
-      disabled: true,
-    },
-  ],
-  sidebarNav: [
-    {
       title: "Progress log",
-      href: "/progress",
+      href: "/dashboard/progress",
       icon: "post",
     },
     {
       title: "Story accomplishments",
-      href: "/accomplishments",
+      href: "/dashboard/accomplishments",
       icon: "post",
     },
     {
       title: "Project Targets",
-      href: "/targets",
+      href: "/dashboard/targets",
       icon: "post",
     },
     {
       title: "Word count",
-      href: "/count",
+      href: "/dashboard/count",
       icon: "post",
     },
     {
       title: "Mindset",
-      href: "/mindset",
+      href: "/dashboard/mindset",
       icon: "post",
     },
     {
       title: "Journal prompts",
-      href: "/journal",
+      href: "/dashboard/journal",
       icon: "post",
     },
   ],
