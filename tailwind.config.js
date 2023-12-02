@@ -1,5 +1,4 @@
 import { fontFamily } from "tailwindcss/defaultTheme";
-import { nextui } from "@nextui-org/react";
 
 const config = {
   content: [
@@ -78,7 +77,6 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
-  // plugins: [nextui()],
 };
 
 export default config;
