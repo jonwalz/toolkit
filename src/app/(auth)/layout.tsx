@@ -24,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <TRPCReactProvider cookies={cookies().toString()}>
-      <NextUIProviderComp>
+      {/* <NextUIProviderComp> */}
         <div className="border-t">
           <div className="bg-background">
             <div className="grid">
@@ -34,7 +34,7 @@ export default function RootLayout({
             </div>
           </div>
         </div>
-      </NextUIProviderComp>
+      {/* </NextUIProviderComp> */}
     </TRPCReactProvider>
   );
 }

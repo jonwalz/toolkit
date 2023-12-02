@@ -1,9 +1,11 @@
 import "@/styles/globals.css";
 
 import { Inter } from "next/font/google";
-import { TailwindIndicator } from "./_components/tailwind-indicator";
-import { ThemeProvider } from "./_components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
+import { siteConfig } from "@/config/site";
+import { ThemeProvider } from "@/components/theme-provider";
+import { TailwindIndicator } from "@/components/tailwind-indicator";
+import { cn } from "@/lib/utils";
 
 
 const inter = Inter({
@@ -12,8 +14,8 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Writer's Toolkit",
-  description: "A toolkit for writers",
+  title: siteConfig.title,
+  description: siteConfig.description,
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
@@ -23,12 +25,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`overscroll-y-none font-sans ${inter.variable}`}>
+    <html lang="en"suppressHydrationWarning>
+      <head />
+      <body className={cn(
+          "min-h-screen bg-background antialiased overscroll-y-none font-sans",
+          inter.variable,
+        )}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
           <Toaster />
-          <TailwindIndicator />
+          {/* <TailwindIndicator /> */}
         </ThemeProvider>
       </body>
     </html>
