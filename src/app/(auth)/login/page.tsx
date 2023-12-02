@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 import * as z from "zod";
-import { UserAuthForm } from "@/app/_components/user-auth-form"
+import { UserAuthForm } from "@/components/user-auth-form"
 
 export const metadata: Metadata = {
   title: "Login",

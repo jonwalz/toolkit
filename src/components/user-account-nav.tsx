@@ -12,6 +12,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { UserAvatar } from "@/components/user-avatar"
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import { useRouter } from "next/navigation"
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
   // user: Pick<User, "name" | "image" | "email">
@@ -19,6 +21,9 @@ interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function UserAccountNav({ user }: UserAccountNavProps) {
+  const supabase = createClientComponentClient()
+  const router = useRouter()
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -51,8 +56,10 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="cursor-pointer"
-          onSelect={(event) => {
+          onSelect={async (event) => {
             event.preventDefault()
+            await supabase.auth.signOut()
+            router.refresh()
             // signOut({
             //   callbackUrl: `${window.location.origin}/login`,
             // })
