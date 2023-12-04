@@ -1,7 +1,5 @@
 # Writer's Toolkit
 
-DB management https://supabase.com/dashboard/project/ivyetfewzyvpkmjdtyiy
-
 ## Installation
 
 To install the project, you need to have Node.js and npm (or yarn) installed on your machine. Then, you can clone the repository and install the dependencies:
@@ -63,6 +61,14 @@ The project uses React hooks for managing state and side effects. You can find t
 ## UI Components
 
 The UI components are built with React. You can find the components in `src/components`.
+
+## Database
+
+Database is managed by Supabase:
+DB management https://supabase.com/dashboard/project/ivyetfewzyvpkmjdtyiy
+
+Database ORM is Drizzle:
+https://github.com/drizzle-team/drizzle-orm
 
 ## License
 
