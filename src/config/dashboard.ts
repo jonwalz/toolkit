@@ -33,4 +33,4 @@ export const dashboardConfig: DashboardConfig = {
       icon: "post",
     },
   ],
-}
+};

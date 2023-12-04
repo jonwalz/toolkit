@@ -1,22 +1,22 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
+import { useState } from "react";
+import Link from "next/link";
 
-import { MainNavItem } from "@/types"
-import { siteConfig } from "@/config/site"
-import { Icons } from "@/components/icons"
-import { MobileNav } from "@/components/mobile-nav"
+import { MainNavItem } from "@/types";
+import { siteConfig } from "@/config/site";
+import { Icons } from "@/components/icons";
+import { MobileNav } from "@/components/mobile-nav";
 
 interface MainNavProps {
-  items?: MainNavItem[]
-  children?: React.ReactNode
+  items?: MainNavItem[];
+  children?: React.ReactNode;
 }
 
 export function MainNav({ items, children }: MainNavProps) {
-  const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false)
+  const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
 
-  const handleShowMobileMenu = () => setShowMobileMenu(!showMobileMenu)
+  const handleShowMobileMenu = () => setShowMobileMenu(!showMobileMenu);
 
   return (
     <div className="flex gap-6 md:gap-10">
@@ -37,5 +37,5 @@ export function MainNav({ items, children }: MainNavProps) {
         <MobileNav items={items}>{children}</MobileNav>
       )}
     </div>
-  )
+  );
 }

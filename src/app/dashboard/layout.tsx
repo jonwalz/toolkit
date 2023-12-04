@@ -1,21 +1,19 @@
-import { dashboardConfig } from "@/config/dashboard"
+import { dashboardConfig } from "@/config/dashboard";
 
 // TODO: Figure this out with Supabase / trpc
 // import { getCurrentUser } from "@/lib/session"
-import { MainNav } from "@/components/main-nav"
-import { DashboardNav } from "@/components/nav"
-import { SiteFooter } from "@/components/site-footer"
-import { UserAccountNav } from "@/components/user-account-nav"
-import { TRPCReactProvider } from "@/trpc/react"
+import { MainNav } from "@/components/main-nav";
+import { DashboardNav } from "@/components/nav";
+import { SiteFooter } from "@/components/site-footer";
+import { UserAccountNav } from "@/components/user-account-nav";
+import { TRPCReactProvider } from "@/trpc/react";
 import { cookies } from "next/headers";
 
 interface DashboardLayoutProps {
-  children?: React.ReactNode
+  children?: React.ReactNode;
 }
 
-export default function DashboardLayout({
-  children,
-}: DashboardLayoutProps) {
+export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <TRPCReactProvider cookies={cookies().toString()}>
       <div className="flex min-h-screen flex-col space-y-6">
@@ -36,5 +34,5 @@ export default function DashboardLayout({
         <SiteFooter className="border-t" />
       </div>
     </TRPCReactProvider>
-  )
+  );
 }
