@@ -1,5 +1,3 @@
-import { notFound } from "next/navigation"
-
 import { dashboardConfig } from "@/config/dashboard"
 
 // TODO: Figure this out with Supabase / trpc
@@ -15,7 +13,7 @@ interface DashboardLayoutProps {
   children?: React.ReactNode
 }
 
-export default async function DashboardLayout({
+export default function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
   return (

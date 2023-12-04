@@ -4,7 +4,6 @@ import { Inter } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
 import { siteConfig } from "@/config/site";
 import { ThemeProvider } from "@/components/theme-provider";
-import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { cn } from "@/lib/utils";
 
 

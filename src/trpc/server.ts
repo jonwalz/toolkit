@@ -1,17 +1,14 @@
-import {
-  httpBatchLink,
-  loggerLink,
-} from "@trpc/client";
+import { httpBatchLink, loggerLink } from "@trpc/client";
 // import { cookies } from "next/headers";
-import { createTRPCNext } from '@trpc/next';
+import { createTRPCNext } from "@trpc/next";
 
 import { type AppRouter } from "@/server/api/root";
 import { transformer } from "./shared";
 import { NextPageContext } from "next";
 
 export function getBaseUrl() {
-  if (typeof window !== 'undefined') {
-    return '';
+  if (typeof window !== "undefined") {
+    return "";
   }
   // reference for vercel.com
   if (process.env.VERCEL_URL) {
@@ -69,8 +66,8 @@ export const trpcClientSide = createTRPCNext<AppRouter, SSRContext>({
         // adds pretty logs to your console in development and logs errors in production
         loggerLink({
           enabled: (opts) =>
-            process.env.NODE_ENV === 'development' ||
-            (opts.direction === 'down' && opts.result instanceof Error),
+            process.env.NODE_ENV === "development" ||
+            (opts.direction === "down" && opts.result instanceof Error),
         }),
         httpBatchLink({
           url: `${getBaseUrl()}/api/trpc`,
@@ -87,7 +84,7 @@ export const trpcClientSide = createTRPCNext<AppRouter, SSRContext>({
 
             const {
               // If you're using Node 18 before 18.15.0, omit the "connection" header
-              connection: _connection,
+              // connection: _connection,
               ...headers
             } = ctx.req.headers;
             return headers;
@@ -130,4 +127,3 @@ export const trpcClientSide = createTRPCNext<AppRouter, SSRContext>({
     return {};
   },
 });
-

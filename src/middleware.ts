@@ -1,46 +1,50 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
-import { CookieOptions, createServerClient } from "@supabase/ssr";
-
+import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 
 export async function middleware(request: NextRequest) {
-  let response = NextResponse.next({
+  const response = NextResponse.next({
     request: {
       headers: request.headers,
     },
-  })
+  });
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  const reqCookies = request.cookies.getAll()
-  console.log("Cookies: ", reqCookies)
+  const reqCookies = request.cookies.getAll();
+  console.log("Cookies: ", reqCookies);
 
   const supabase = createMiddlewareClient({ req: request, res: response });
 
-  const { data, error: sessionError } = await supabase.auth.getSession()
+  const { data, error: sessionError } = await supabase.auth.getSession();
 
   supabase.auth.onAuthStateChange((event, session) => {
-    console.log("Event: ", event)
-    console.log("Session: ", session)
-  })
+    console.log("Event: ", event);
+    console.log("Session: ", session);
+  });
 
   if (sessionError) {
     console.log("Session error: ", sessionError);
     throw new Error(sessionError.message);
   }
 
-  if (data.session?.user && (request.nextUrl.pathname === '/login' || request.nextUrl.pathname === '/register' || request.nextUrl.pathname === '/')) {
-    console.log("Redirecting to /dashboard")
-    return NextResponse.redirect(new URL('/dashboard', request.url))
+  if (
+    data.session?.user &&
+    (request.nextUrl.pathname === "/login" ||
+      request.nextUrl.pathname === "/register" ||
+      request.nextUrl.pathname === "/")
+  ) {
+    console.log("Redirecting to /dashboard");
+    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
-  if (!data.session?.user && (request.nextUrl.pathname !== '/login' && request.nextUrl.pathname !== '/register')) {
-    return NextResponse.redirect(new URL('/login', request.url))
+  if (
+    !data.session?.user &&
+    request.nextUrl.pathname !== "/login" &&
+    request.nextUrl.pathname !== "/register"
+  ) {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  return response
+  return response;
 }
 
 export const config = {
@@ -52,6 +56,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    '/((?!_next/static|_next/image|favicon.ico).*)',
+    "/((?!_next/static|_next/image|favicon.ico).*)",
   ],
 };

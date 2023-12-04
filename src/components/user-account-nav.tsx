@@ -16,13 +16,11 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { useRouter } from "next/navigation"
 import { clientSideApi } from "@/trpc/react"
 
-interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
-}
 
-export function UserAccountNav(props: UserAccountNavProps) {
+export function UserAccountNav() {
   const supabase = createClientComponentClient()
   const router = useRouter()
-  const { data: user, error } = clientSideApi.user.getUser.useQuery()
+  const { data: user } = clientSideApi.user.getUser.useQuery()
 
   console.log("DATA: ", user)
 
@@ -31,7 +29,7 @@ export function UserAccountNav(props: UserAccountNavProps) {
       <DropdownMenuTrigger>
         <UserAvatar
           // user={{ name: user.name || null, image: user.image || null }}
-          user={{ name: null, image: null }}
+          user={{ email: user?.email ?? "Welcome"}}
           className="h-8 w-8"
         />
       </DropdownMenuTrigger>

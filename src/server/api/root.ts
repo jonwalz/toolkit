@@ -1,7 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
 import { userRouter } from "@/server/api/routers/post";
-import { createTRPCContext, createTRPCRouter } from "@/server/api/trpc";
-import { getBaseUrl } from "@/trpc/server";
+import { createTRPCRouter } from "@/server/api/trpc";
 
 // Use this to call TRPC methods from client components
 export const appRouter = createTRPCRouter({
@@ -14,6 +12,6 @@ export const appRouter = createTRPCRouter({
 //   headers: new Headers(),
 //   req: new NextRequest(getBaseUrl()),
 //   res: new NextResponse()
-// }); 
+// });
 
 export type AppRouter = typeof appRouter;

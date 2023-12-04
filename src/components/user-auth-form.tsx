@@ -15,8 +15,6 @@ import { Icons } from "@/components/icons"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { asOptionalField } from "@/lib/zod"
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
-
 const formSchema = z.object({
   email: z.string().min(3),
   password: z.string().min(3).max(20),
@@ -33,7 +31,7 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>
 
-export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+export function UserAuthForm({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   const {
     register,
     handleSubmit,
@@ -42,7 +40,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     resolver: zodResolver(formSchema),
   })
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
-  const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false);
   const supabase = createClientComponentClient();
   const router = useRouter();
   const pathname = usePathname();
@@ -106,7 +103,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               autoCapitalize="none"
               autoComplete="email"
               autoCorrect="off"
-              disabled={isLoading || isGitHubLoading}
+              disabled={isLoading}
               {...register("email")}
             />
             <Input
@@ -116,7 +113,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               autoCapitalize="none"
               autoComplete="password"
               autoCorrect="off"
-              disabled={isLoading || isGitHubLoading}
+              disabled={isLoading}
               {...register("password")}
             />
             {isRegister && <Input
@@ -126,7 +123,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               autoCapitalize="none"
               autoComplete="password"
               autoCorrect="off"
-              disabled={isLoading || isGitHubLoading}
+              disabled={isLoading}
               {...register("confirmPassword")}
             />}
             {errors?.email && (
@@ -153,9 +150,9 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           </span>
         </div>
       </div>
-        {isGitHubLoading ? (
+        {/* {isGitHubLoading ? (
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
+        ) : ( */}
           <button className="gsi-material-button">
             <div className="gsi-material-button-state"></div>
             <div className="gsi-material-button-content-wrapper">
@@ -172,7 +169,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               <span style={{display: "none"}}>Sign in with Google</span>
             </div>
           </button>
-        )}
+        {/* )} */}
     </div>
   )
 }

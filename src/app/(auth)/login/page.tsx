@@ -1,10 +1,7 @@
 import { Metadata } from "next"
 import Link from "next/link"
 
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
-import * as z from "zod";
 import { UserAuthForm } from "@/components/user-auth-form"
 
 export const metadata: Metadata = {
@@ -12,15 +9,10 @@ export const metadata: Metadata = {
   description: "Login to your account",
 }
 
-const formSchema = z.object({
-  email: z.string().min(3),
-  password: z.string().min(3).max(20),
-});
-
 export default function LoginPage() {
   return (
     <div className="container flex h-screen w-screen flex-col items-center justify-center">
-      {/* Use this to go back to "landing page" */}
+      {/* TODO: Use this to go back to "landing page" once build*/}
       {/* <Link
         href="/"
         className={cn(
