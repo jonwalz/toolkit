@@ -52,10 +52,6 @@ export const createTRPCContext = (opts: {
   req: NextRequest;
   res?: NextResponse;
 }) => {
-  // Fetch stuff that depends on the request
-
-  console.log("OPTS: ", JSON.stringify(opts));
-
   return createInnerTRPCContext(opts && { ...opts });
 };
 

@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import Link from "next/link"
+import Link from "next/link";
 // import { User } from "next-auth"
 // import { signOut } from "next-auth/react"
 
@@ -10,26 +10,23 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { UserAvatar } from "@/components/user-avatar"
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
-import { useRouter } from "next/navigation"
-import { clientSideApi } from "@/trpc/react"
-
+} from "@/components/ui/dropdown-menu";
+import { UserAvatar } from "@/components/user-avatar";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useRouter } from "next/navigation";
+import { clientSideApi } from "@/trpc/react";
 
 export function UserAccountNav() {
-  const supabase = createClientComponentClient()
-  const router = useRouter()
-  const { data: user } = clientSideApi.user.getUser.useQuery()
-
-  console.log("DATA: ", user)
+  const supabase = createClientComponentClient();
+  const router = useRouter();
+  const { data: user } = clientSideApi.user.getUser.useQuery();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <UserAvatar
           // user={{ name: user.name || null, image: user.image || null }}
-          user={{ email: user?.email ?? "Welcome"}}
+          user={{ email: user?.email ?? "Welcome" }}
           className="h-8 w-8"
         />
       </DropdownMenuTrigger>
@@ -58,9 +55,9 @@ export function UserAccountNav() {
         <DropdownMenuItem
           className="cursor-pointer"
           onSelect={async (event) => {
-            event.preventDefault()
-            await supabase.auth.signOut()
-            router.refresh()
+            event.preventDefault();
+            await supabase.auth.signOut();
+            router.refresh();
             // signOut({
             //   callbackUrl: `${window.location.origin}/login`,
             // })
@@ -70,5 +67,5 @@ export function UserAccountNav() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

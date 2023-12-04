@@ -9,17 +9,9 @@ export async function middleware(request: NextRequest) {
     },
   });
 
-  const reqCookies = request.cookies.getAll();
-  console.log("Cookies: ", reqCookies);
-
   const supabase = createMiddlewareClient({ req: request, res: response });
 
   const { data, error: sessionError } = await supabase.auth.getSession();
-
-  supabase.auth.onAuthStateChange((event, session) => {
-    console.log("Event: ", event);
-    console.log("Session: ", session);
-  });
 
   if (sessionError) {
     console.log("Session error: ", sessionError);
