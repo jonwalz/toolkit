@@ -1,34 +1,46 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
+import { CookieOptions, createServerClient } from "@supabase/ssr";
 
 
-export async function middleware(req: NextRequest) {
-  let res = NextResponse.next({
+export async function middleware(request: NextRequest) {
+  let response = NextResponse.next({
     request: {
-      headers: req.headers,
+      headers: request.headers,
     },
   })
 
-  const supabase = createMiddlewareClient({ req, res });
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  const reqCookies = request.cookies.getAll()
+  console.log("Cookies: ", reqCookies)
+
+  const supabase = createMiddlewareClient({ req: request, res: response });
 
   const { data, error: sessionError } = await supabase.auth.getSession()
+
+  supabase.auth.onAuthStateChange((event, session) => {
+    console.log("Event: ", event)
+    console.log("Session: ", session)
+  })
 
   if (sessionError) {
     console.log("Session error: ", sessionError);
     throw new Error(sessionError.message);
   }
 
-  if (data.session?.user && (req.nextUrl.pathname === '/login' || req.nextUrl.pathname === '/register' || req.nextUrl.pathname === '/')) {
+  if (data.session?.user && (request.nextUrl.pathname === '/login' || request.nextUrl.pathname === '/register' || request.nextUrl.pathname === '/')) {
     console.log("Redirecting to /dashboard")
-    return NextResponse.redirect(new URL('/dashboard', req.url))
+    return NextResponse.redirect(new URL('/dashboard', request.url))
   }
 
-  if (!data.session?.user && (req.nextUrl.pathname !== '/login' && req.nextUrl.pathname !== '/register')) {
-    return NextResponse.redirect(new URL('/login', req.url))
+  if (!data.session?.user && (request.nextUrl.pathname !== '/login' && request.nextUrl.pathname !== '/register')) {
+    return NextResponse.redirect(new URL('/login', request.url))
   }
 
-  return res
+  return response
 }
 
 export const config = {

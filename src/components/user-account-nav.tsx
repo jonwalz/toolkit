@@ -14,31 +14,34 @@ import {
 import { UserAvatar } from "@/components/user-avatar"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { useRouter } from "next/navigation"
+import { clientSideApi } from "@/trpc/react"
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
-  // user: Pick<User, "name" | "image" | "email">
-  user: any
 }
 
-export function UserAccountNav({ user }: UserAccountNavProps) {
+export function UserAccountNav(props: UserAccountNavProps) {
   const supabase = createClientComponentClient()
   const router = useRouter()
+  const { data: user, error } = clientSideApi.user.getUser.useQuery()
+
+  console.log("DATA: ", user)
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <UserAvatar
-          user={{ name: user.name || null, image: user.image || null }}
+          // user={{ name: user.name || null, image: user.image || null }}
+          user={{ name: null, image: null }}
           className="h-8 w-8"
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
-            {user.name && <p className="font-medium">{user.name}</p>}
-            {user.email && (
+            {/* {user. && <p className="font-medium">{user.name}</p>} */}
+            {user?.email && (
               <p className="w-[200px] truncate text-sm text-muted-foreground">
-                {user.email}
+                {user?.email}
               </p>
             )}
           </div>

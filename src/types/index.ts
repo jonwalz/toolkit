@@ -8,7 +8,6 @@ export type NavItem = {
 }
 
 export type MainNavItem = NavItem
-type NavLink = any
 
 
 export type DashboardConfig = {
