@@ -23,13 +23,11 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             <UserAccountNav />
           </div>
         </header>
-        <div className="container grid flex-1 gap-12 md:grid-cols-[240px_1fr]">
+        <div className="grid flex-1 gap-12 px-3 md:container md:grid-cols-[240px_1fr]">
           <aside className="hidden w-[240px] flex-col md:flex">
             <DashboardNav items={dashboardConfig.mainNav} />
           </aside>
-          <main className="flex w-full flex-1 flex-col overflow-hidden">
-            {children}
-          </main>
+          <main className="flex w-full flex-1 flex-col">{children}</main>
         </div>
         <SiteFooter className="border-t" />
       </div>

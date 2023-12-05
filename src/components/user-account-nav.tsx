@@ -1,8 +1,6 @@
 "use client";
 
 import Link from "next/link";
-// import { User } from "next-auth"
-// import { signOut } from "next-auth/react"
 
 import {
   DropdownMenu,
@@ -58,9 +56,7 @@ export function UserAccountNav() {
             event.preventDefault();
             await supabase.auth.signOut();
             router.refresh();
-            // signOut({
-            //   callbackUrl: `${window.location.origin}/login`,
-            // })
+            router.push("/login");
           }}
         >
           Sign out

@@ -82,7 +82,8 @@ export function UserAuthForm({
       if (resp.error) {
         toast({
           title: "Something went wrong.",
-          description: "Please refresh the page and try again.",
+          description:
+            "Email and password combination was not found. Please try again.",
           variant: "destructive",
         });
       }
