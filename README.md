@@ -70,6 +70,25 @@ DB management https://supabase.com/dashboard/project/ivyetfewzyvpkmjdtyiy
 Database ORM is Drizzle:
 https://github.com/drizzle-team/drizzle-orm
 
+To run a supabase DB instance locally, you'll need to install the [supabase CLI](https://supabase.com/docs/guides/cli) and run
+
+```bash
+supabase init
+supabase start
+```
+
+To generate typescript types, you'll need to first login with supabase cli:
+
+```bash
+supabase login
+```
+
+Then link the supabase project:
+
+```bash
+supabase link
+```
+
 ## License
 
 This project is licensed under the MIT License.
