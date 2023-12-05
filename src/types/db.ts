@@ -39,16 +39,27 @@ export interface Database {
         Row: {
           id: number
           title: string | null
+          user_id: string | null
         }
         Insert: {
           id?: number
           title?: string | null
+          user_id?: string | null
         }
         Update: {
           id?: number
           title?: string | null
+          user_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "notes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: {

@@ -13,8 +13,8 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <div className="container flex h-screen w-screen flex-col items-center justify-center">
-      {/* TODO: Use this to go back to "landing page" once build*/}
+    <div className="container grid h-screen w-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
+      {/* TODO: Use this to go back to "landing page" once built*/}
       {/* <Link
         href="/"
         className={cn(
@@ -47,6 +47,7 @@ export default function LoginPage() {
           </Link>
         </p>
       </div>
+      <div className="hidden h-full bg-muted lg:block" />
     </div>
   );
 }

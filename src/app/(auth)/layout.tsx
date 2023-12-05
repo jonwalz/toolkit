@@ -22,7 +22,7 @@ export default function RootLayout({
         <div className="border-t">
           <div className="bg-background">
             <div className="grid">
-              <div className="col-span-4 flex flex-col items-center justify-center px-2">
+              <div className="col-span-4 flex flex-col items-center justify-center">
                 {children}
               </div>
             </div>
