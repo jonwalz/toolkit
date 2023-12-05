@@ -47,6 +47,7 @@ export function UserAuthForm({
   const router = useRouter();
   const pathname = usePathname();
   const isRegister = pathname === "/register";
+  console.log("Is register: ", isRegister);
   const isLogin = pathname === "/login";
 
   async function onSubmit({ email, password }: FormData) {
@@ -192,9 +193,11 @@ export function UserAuthForm({
               </svg>
             </div>
             <span className="gsi-material-button-contents">
-              Sign in with Google
+              {isRegister ? "Sign up" : "Sign in"} with Google
             </span>
-            <span style={{ display: "none" }}>Sign in with Google</span>
+            <span style={{ display: "none" }}>
+              {isRegister ? "Sign up" : "Sign in"} with Google
+            </span>
           </div>
         </button>
       </div>
