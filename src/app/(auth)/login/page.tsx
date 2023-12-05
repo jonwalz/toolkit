@@ -1,13 +1,15 @@
-import { Metadata } from "next"
-import Link from "next/link"
+import { Metadata } from "next";
+import Link from "next/link";
 
-import { Icons } from "@/components/icons"
-import { UserAuthForm } from "@/components/user-auth-form"
+import { Icons } from "@/components/icons";
+import { UserAuthForm } from "@/components/user-auth-form";
+
+export const runtime = "edge";
 
 export const metadata: Metadata = {
   title: "Login",
   description: "Login to your account",
-}
+};
 
 export default function LoginPage() {
   return (
@@ -46,5 +48,5 @@ export default function LoginPage() {
         </p>
       </div>
     </div>
-  )
+  );
 }

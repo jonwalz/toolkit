@@ -1,7 +1,8 @@
 "use client";
-
 import { DashboardHeader } from "@/components/header";
 import { Shell } from "@/components/shell";
+
+export const runtime = "edge";
 
 export default function Home() {
   return (
