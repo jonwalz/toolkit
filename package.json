@@ -9,6 +9,10 @@
     "start": "next start",
     "db-types": "supabase gen types typescript --linked > ./src/types/db.ts"
   },
+  "engines": {
+    "node": ">=21.2.0"
+  },
+  "engineStrict": true,
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
     "@nextui-org/react": "^2.2.9",
