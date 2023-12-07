@@ -47,7 +47,6 @@ export function UserAuthForm({
   const router = useRouter();
   const pathname = usePathname();
   const isRegister = pathname === "/register";
-  console.log("Is register: ", isRegister);
   const isLogin = pathname === "/login";
 
   async function onSubmit({ email, password }: FormData) {
@@ -83,7 +82,7 @@ export function UserAuthForm({
         toast({
           title: "Something went wrong.",
           description:
-            "Email and password combination was not found. Please try again.",
+            "Email and password combination not found. Please try again.",
           variant: "destructive",
         });
       }

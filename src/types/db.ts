@@ -61,6 +61,50 @@ export interface Database {
           }
         ]
       }
+      progress: {
+        Row: {
+          created_at: string
+          date: string | null
+          id: number
+          play: string | null
+          progress_paragraph: string | null
+          self_care: string | null
+          user_id: string | null
+          wip_time: string | null
+          word_count: number | null
+        }
+        Insert: {
+          created_at?: string
+          date?: string | null
+          id?: number
+          play?: string | null
+          progress_paragraph?: string | null
+          self_care?: string | null
+          user_id?: string | null
+          wip_time?: string | null
+          word_count?: number | null
+        }
+        Update: {
+          created_at?: string
+          date?: string | null
+          id?: number
+          play?: string | null
+          progress_paragraph?: string | null
+          self_care?: string | null
+          user_id?: string | null
+          wip_time?: string | null
+          word_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "progress_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
     }
     Views: {
       [_ in never]: never

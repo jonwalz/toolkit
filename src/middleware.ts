@@ -2,6 +2,11 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 
+// A function that checks if the pathname is in the list of urls
+function isUrl(request: NextRequest, urls: string[]) {
+  return urls.some((url) => request.nextUrl.pathname.startsWith(url));
+}
+
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next({
     request: {
@@ -13,9 +18,9 @@ export async function middleware(request: NextRequest) {
 
   const { data, error: sessionError } = await supabase.auth.getSession();
 
-  if (sessionError) {
+  if (sessionError && isUrl(request, ["/login", "/register"])) {
     console.log("Session error: ", sessionError);
-    throw new Error(sessionError.message);
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   if (

@@ -16,6 +16,7 @@ const config = {
     "@typescript-eslint/consistent-type-definitions": "off",
     "react/no-unescaped-entities": "off",
 
+    "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/no-unsafe-call": "off",
     "@typescript-eslint/no-unsafe-assignment": "off",
     "@typescript-eslint/consistent-type-imports": [
