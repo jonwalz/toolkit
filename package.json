@@ -10,7 +10,7 @@
     "db-types": "supabase gen types typescript --linked > ./src/types/db.ts"
   },
   "engines": {
-    "node": "21"
+    "node": "20.x"
   },
   "engineStrict": true,
   "dependencies": {
