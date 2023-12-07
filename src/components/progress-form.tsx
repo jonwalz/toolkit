@@ -35,8 +35,6 @@ export function ProgressForm() {
     createNewProgressEntry.mutate(data);
   };
 
-  console.log("FORM ERRORS", errors);
-
   return (
     <div className="grid gap-6">
       <form onSubmit={handleSubmit(onSubmit)}>

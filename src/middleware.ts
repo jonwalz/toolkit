@@ -20,6 +20,13 @@ export async function middleware(request: NextRequest) {
 
   if (sessionError && isUrl(request, ["/login", "/register"])) {
     console.log("Session error: ", sessionError);
+    const { error } = await supabase.auth.signOut();
+
+    // To handle expired sessions
+    if (error) {
+      if (error) console.error("Error signing out:", error);
+    }
+
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
