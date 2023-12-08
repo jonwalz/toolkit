@@ -18,7 +18,8 @@ import { columns } from "./columns";
 import { clientSideApi } from "@/trpc/react";
 
 export function ProgressTable() {
-  const { data = [] } = clientSideApi.progress.getProgress.useQuery();
+  const { data = [], isLoading } =
+    clientSideApi.progress.getProgress.useQuery();
 
   console.log("DATA: ", data);
 
@@ -66,7 +67,7 @@ export function ProgressTable() {
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
+                {isLoading ? "Loading..." : "No results."}
               </TableCell>
             </TableRow>
           )}

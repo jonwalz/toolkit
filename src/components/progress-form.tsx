@@ -8,6 +8,7 @@ import { Textarea } from "./ui/textarea";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
 import { clientSideApi } from "@/trpc/react";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   date: z.string(),
@@ -31,7 +32,7 @@ export function ProgressForm() {
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      date: "",
+      date: new Date().toDateString(),
       play: "",
       wipTime: "",
       selfCare: "",
@@ -39,8 +40,15 @@ export function ProgressForm() {
       progressParagraph: "",
     },
   });
+
+  const router = useRouter();
+
   const createNewProgressEntry =
-    clientSideApi.progress.createProgress.useMutation();
+    clientSideApi.progress.createProgress.useMutation({
+      onSuccess: () => {
+        router.push("/dashboard/progress");
+      },
+    });
 
   const onSubmit = (data: FormData) => {
     const checkedWordCount = data.wordCount ? data.wordCount : undefined;

@@ -18,13 +18,7 @@ export default function Progress() {
           New
         </Link>
       </div>
-      <div
-        className={
-          "flex min-h-[400px] flex-col justify-center rounded-md border p-8 animate-in fade-in-50"
-        }
-      >
-        <ProgressTable />
-      </div>
+      <ProgressTable />
     </Shell>
   );
 }

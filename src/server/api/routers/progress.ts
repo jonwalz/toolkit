@@ -7,7 +7,8 @@ export const progressRouter = createTRPCRouter({
   getProgress: publicProcedure.query(async () => {
     const { data: progress, error } = await supabaseServerComponentClient()
       .from("progress")
-      .select("*");
+      .select("*")
+      .order("date", { ascending: false });
 
     console.log("progress: ", progress);
 
