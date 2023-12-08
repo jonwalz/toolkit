@@ -14,7 +14,10 @@ const formSchema = z.object({
   play: z.string(),
   wipTime: z.string(),
   selfCare: z.string(),
-  wordCount: z.number(),
+  wordCount: z.preprocess(
+    (value) => (value === "" ? undefined : value),
+    z.number().nullable().optional().default(null),
+  ),
   progressParagraph: z.string(),
 });
 
@@ -27,13 +30,24 @@ export function ProgressForm() {
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      date: "",
+      play: "",
+      wipTime: "",
+      selfCare: "",
+      wordCount: null,
+      progressParagraph: "",
+    },
   });
   const createNewProgressEntry =
     clientSideApi.progress.createProgress.useMutation();
 
   const onSubmit = (data: FormData) => {
-    createNewProgressEntry.mutate(data);
+    const checkedWordCount = data.wordCount ? data.wordCount : undefined;
+    createNewProgressEntry.mutate({ ...data, wordCount: checkedWordCount });
   };
+
+  console.log("ERRORS: ", errors);
 
   return (
     <div className="grid gap-6">
@@ -57,11 +71,11 @@ export function ProgressForm() {
               <Input className="mb-2" {...register("selfCare")} />
             </Label>
             <Label>
-              Word Count:
+              Word Count (Optional):
               <Input
                 className="mb-2"
                 type="number"
-                {...register("wordCount", { valueAsNumber: true })}
+                {...register("wordCount")}
               />
             </Label>
           </div>

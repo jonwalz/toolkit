@@ -25,7 +25,7 @@ export const progressRouter = createTRPCRouter({
         play: z.string(),
         wipTime: z.string(),
         selfCare: z.string(),
-        wordCount: z.number(),
+        wordCount: z.number().or(z.undefined()),
         progressParagraph: z.string(),
       }),
     )
@@ -38,7 +38,7 @@ export const progressRouter = createTRPCRouter({
             play: input.play,
             wip_time: input.wipTime,
             self_care: input.selfCare,
-            word_count: input.wordCount,
+            word_count: input.wordCount ?? null,
             progress_paragraph: input.progressParagraph,
           },
         ]);
