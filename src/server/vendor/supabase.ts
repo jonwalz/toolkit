@@ -8,9 +8,15 @@ import { cache } from "react";
 import { CookieOptions, createServerClient } from "@supabase/ssr";
 import { Database } from "@/types/db";
 
+const isLocal = process.env.NODE_ENV === "development";
+
 export const supabaseClient = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "",
+  isLocal
+    ? process.env.NEXT_PUBLIC_SUPABASE_LOCAL_URL!
+    : process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  isLocal
+    ? process.env.NEXT_PUBLIC_SUPABASE_LOCAL_ANON_KEY!
+    : process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
 );
 
 export const supabaseServerComponentClient = cache(() => {
@@ -26,8 +32,12 @@ export const supabaseServerRouteClient = () => {
 export const supabaseServerClient = () => {
   const cookieStore = cookies();
   return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    isLocal
+      ? process.env.NEXT_PUBLIC_SUPABASE_LOCAL_URL!
+      : process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    isLocal
+      ? process.env.NEXT_PUBLIC_SUPABASE_LOCAL_ANON_KEY!
+      : process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
         get(name: string) {
