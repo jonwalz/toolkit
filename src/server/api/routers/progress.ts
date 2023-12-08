@@ -4,6 +4,20 @@ import { supabaseServerComponentClient } from "@/server/vendor/supabase";
 import { z } from "zod";
 
 export const progressRouter = createTRPCRouter({
+  getProgress: publicProcedure.query(async () => {
+    const { data: progress, error } = await supabaseServerComponentClient()
+      .from("progress")
+      .select("*");
+
+    console.log("progress: ", progress);
+
+    if (error) {
+      console.log("Progress entry error: ", error.message);
+      throw error;
+    }
+
+    return progress;
+  }),
   createProgress: publicProcedure
     .input(
       z.object({

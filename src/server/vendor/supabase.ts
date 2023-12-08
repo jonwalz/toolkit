@@ -6,6 +6,7 @@ import {
 import { createClient } from "@supabase/supabase-js";
 import { cache } from "react";
 import { CookieOptions, createServerClient } from "@supabase/ssr";
+import { Database } from "@/types/db";
 
 export const supabaseClient = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
@@ -14,7 +15,7 @@ export const supabaseClient = createClient(
 
 export const supabaseServerComponentClient = cache(() => {
   const cookieStore = cookies();
-  return createServerComponentClient({ cookies: () => cookieStore });
+  return createServerComponentClient<Database>({ cookies: () => cookieStore });
 });
 
 export const supabaseServerRouteClient = () => {

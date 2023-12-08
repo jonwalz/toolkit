@@ -1,5 +1,6 @@
 import { DashboardHeader } from "@/components/header";
 import { ProgressForm } from "@/components/progress-form";
+import { ProgressTable } from "@/components/progress-table";
 import { Shell } from "@/components/shell";
 
 export const runtime = "edge";
@@ -14,6 +15,7 @@ export default function Progress() {
         }
       >
         <ProgressForm />
+        <ProgressTable />
       </div>
     </Shell>
   );
