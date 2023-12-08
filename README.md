@@ -67,10 +67,9 @@ The UI components are built with React. You can find the components in `src/comp
 Database is managed by Supabase:
 DB management https://supabase.com/dashboard/project/ivyetfewzyvpkmjdtyiy
 
-Database ORM is Drizzle:
-https://github.com/drizzle-team/drizzle-orm
+To run a supabase DB instance locally, first install docker.
 
-To run a supabase DB instance locally, you'll need to install the [supabase CLI](https://supabase.com/docs/guides/cli) and run
+Then you'll need to install the [supabase CLI](https://supabase.com/docs/guides/cli) and run
 
 ```bash
 supabase init
