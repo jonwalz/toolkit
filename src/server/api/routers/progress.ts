@@ -10,8 +10,6 @@ export const progressRouter = createTRPCRouter({
       .select("*")
       .order("date", { ascending: false });
 
-    console.log("progress: ", progress);
-
     if (error) {
       console.log("Progress entry error: ", error.message);
       throw error;

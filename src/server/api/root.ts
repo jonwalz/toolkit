@@ -1,4 +1,4 @@
-import { userRouter } from "@/server/api/routers/post";
+import { userRouter } from "@/server/api/routers/user";
 import { createTRPCRouter } from "@/server/api/trpc";
 import { progressRouter } from "./routers/progress";
 
