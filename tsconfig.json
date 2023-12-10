@@ -26,8 +26,11 @@
     /* Path Aliases */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
+      "@/*": ["./src/*"]
     }
+  },
+  "parserOptions": {
+    "project": "./tsconfig.eslint.json"
   },
   "include": [
     ".eslintrc.cjs",
@@ -37,7 +40,8 @@
     "**/*.cjs",
     "**/*.mjs",
     ".next/types/**/*.ts",
-    "tailwind.config.js"
+    "tailwind.config.js",
+    "test/vitest.config.js"
   ],
   "exclude": ["node_modules"]
 }
