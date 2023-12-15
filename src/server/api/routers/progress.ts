@@ -15,7 +15,7 @@ export const progressRouter = createTRPCRouter({
       throw error;
     }
 
-    return progress;
+    return progress.map((entry) => ({ ...entry, editId: entry.id }));
   }),
   createProgress: publicProcedure
     .input(

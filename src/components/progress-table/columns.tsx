@@ -3,8 +3,12 @@
 import { Database } from "@/types/db";
 import { formatDateString } from "@/utils/dates";
 import { createColumnHelper } from "@tanstack/react-table";
+import { Icons } from "../icons";
+import Link from "next/link";
 
-type Progress = Database["public"]["Tables"]["progress"]["Row"];
+type Progress = Database["public"]["Tables"]["progress"]["Row"] & {
+  editId: number;
+};
 
 const columnHelper = createColumnHelper<Progress>();
 
@@ -38,5 +42,16 @@ export const columns = [
     id: "word_count",
     header: "Word Count",
     cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor("editId", {
+    id: "editId",
+    header: "Edit",
+    cell: (info) => {
+      return (
+        <Link href={`/dashboard/progress/edit/${info.row.original.editId}`}>
+          <Icons.logo />
+        </Link>
+      );
+    },
   }),
 ];
