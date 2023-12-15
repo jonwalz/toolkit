@@ -76,6 +76,12 @@ supabase init
 supabase start
 ```
 
+To get the local studio url, run:
+
+```
+supabase status
+```
+
 To generate typescript types, you'll need to first login with supabase cli:
 
 ```bash

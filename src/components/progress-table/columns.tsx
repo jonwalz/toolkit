@@ -1,6 +1,7 @@
 "use client";
 
 import { Database } from "@/types/db";
+import { formatDateString } from "@/utils/dates";
 import { createColumnHelper } from "@tanstack/react-table";
 
 type Progress = Database["public"]["Tables"]["progress"]["Row"];
@@ -11,7 +12,7 @@ export const columns = [
   columnHelper.accessor("date", {
     id: "date",
     header: "Date",
-    cell: (info) => info.getValue(),
+    cell: (info): string => formatDateString(info.getValue()),
   }),
   columnHelper.accessor("play", {
     id: "play",

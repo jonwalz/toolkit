@@ -21,8 +21,6 @@ export function ProgressTable() {
   const { data = [], isLoading } =
     clientSideApi.progress.getProgress.useQuery();
 
-  console.log("DATA: ", data);
-
   const table = useReactTable({
     data,
     columns,
@@ -37,7 +35,7 @@ export function ProgressTable() {
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className="whitespace-nowrap">
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -58,7 +56,7 @@ export function ProgressTable() {
                 data-state={row.getIsSelected() && "selected"}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
+                  <TableCell key={cell.id} className="max-w-[100px] truncate">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
