@@ -4,8 +4,13 @@ import { supabaseServerComponentClient } from "@/server/vendor/supabase";
 
 export const userRouter = createTRPCRouter({
   getUser: publicProcedure.query(async () => {
-    const { data: user } = await supabaseServerComponentClient().auth.getUser();
+    try {
+      const { data: user } =
+        await supabaseServerComponentClient().auth.getUser();
 
-    return user.user;
+      return user.user;
+    } catch (e) {
+      console.log("Get user error: ---------------:\n", e);
+    }
   }),
 });

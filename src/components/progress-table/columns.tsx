@@ -6,9 +6,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { Icons } from "../icons";
 import Link from "next/link";
 
-type Progress = Database["public"]["Tables"]["progress"]["Row"] & {
-  editId: number;
-};
+type Progress = Database["public"]["Tables"]["progress"]["Row"];
 
 const columnHelper = createColumnHelper<Progress>();
 
@@ -43,13 +41,13 @@ export const columns = [
     header: "Word Count",
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor("editId", {
-    id: "editId",
+  columnHelper.accessor("id", {
+    id: "id",
     header: "Edit",
     cell: (info) => {
       return (
-        <Link href={`/dashboard/progress/edit/${info.row.original.editId}`}>
-          <Icons.logo />
+        <Link href={`/dashboard/progress/edit/${info.row.original.id}`}>
+          <Icons.logo className="w-4" />
         </Link>
       );
     },

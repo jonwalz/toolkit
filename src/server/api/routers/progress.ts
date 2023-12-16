@@ -8,14 +8,14 @@ export const progressRouter = createTRPCRouter({
     const { data: progress, error } = await supabaseServerComponentClient()
       .from("progress")
       .select("*")
-      .order("date", { ascending: false });
+      .order("date", { ascending: true });
 
     if (error) {
       console.log("Progress entry error: ", error.message);
       throw error;
     }
 
-    return progress.map((entry) => ({ ...entry, editId: entry.id }));
+    return progress;
   }),
   createProgress: publicProcedure
     .input(

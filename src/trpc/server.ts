@@ -24,26 +24,6 @@ export function getBaseUrl() {
   return `http://127.0.0.1:${process.env.PORT ?? 3000}`;
 }
 
-// export const api = createTRPCProxyClient<AppRouter>({
-//   transformer,
-//   links: [
-//     loggerLink({
-//       enabled: (op) =>
-//         process.env.NODE_ENV === "development" ||
-//         (op.direction === "down" && op.result instanceof Error),
-//     }),
-//     unstable_httpBatchStreamLink({
-//       url: getUrl(),
-//       headers() {
-//         return {
-//           cookie: cookies().toString(),
-//           "x-trpc-source": "rsc",
-//         };
-//       },
-//     }),
-//   ],
-// });
-
 export interface SSRContext extends NextPageContext {
   status?: number;
 }
