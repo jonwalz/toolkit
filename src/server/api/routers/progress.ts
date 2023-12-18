@@ -1,11 +1,11 @@
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 
-import { supabaseServerComponentClient } from "@/server/vendor/supabase";
+import { supabaseServerClient } from "@/server/vendor/supabase";
 import { z } from "zod";
 
 export const progressRouter = createTRPCRouter({
   getProgress: publicProcedure.query(async () => {
-    const { data: progress, error } = await supabaseServerComponentClient()
+    const { data: progress, error } = await supabaseServerClient()
       .from("progress")
       .select("*")
       .order("date", { ascending: true });
@@ -29,7 +29,7 @@ export const progressRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input }) => {
-      const { data: progress, error } = await supabaseServerComponentClient()
+      const { data: progress, error } = await supabaseServerClient()
         .from("progress")
         .insert([
           {

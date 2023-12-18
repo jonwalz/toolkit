@@ -15,6 +15,8 @@ const config = {
     "@typescript-eslint/array-type": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
     "react/no-unescaped-entities": "off",
+    "@typescript-eslint/no-unsafe-argument": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
 
     "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/no-unsafe-call": "off",

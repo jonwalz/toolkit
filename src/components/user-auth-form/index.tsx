@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/icons";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createBrowserClient } from "@supabase/ssr";
 import { asOptionalField } from "@/lib/zod";
 
 const formSchema = z
@@ -35,6 +35,7 @@ export function UserAuthForm({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
+  const [isLoading, setIsLoading] = React.useState(false);
   const {
     register,
     handleSubmit,
@@ -42,8 +43,10 @@ export function UserAuthForm({
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
   });
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const supabase = createClientComponentClient();
+  const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "",
+  );
   const router = useRouter();
   const pathname = usePathname();
   const isRegister = pathname === "/register";
@@ -62,14 +65,15 @@ export function UserAuthForm({
       });
 
       if (resp.error) {
+        console.log("Register error:", resp.error);
         toast({
           title: "Something went wrong.",
           description: "Please refresh the page and try again.",
           variant: "destructive",
         });
+      } else {
+        router.push("/login");
       }
-
-      router.push("/login");
     }
 
     if (isLogin) {

@@ -1,10 +1,5 @@
 import { cookies } from "next/headers";
-import {
-  createRouteHandlerClient,
-  createServerComponentClient,
-} from "@supabase/auth-helpers-nextjs";
 import { createClient } from "@supabase/supabase-js";
-import { cache } from "react";
 import { CookieOptions, createServerClient } from "@supabase/ssr";
 import { Database } from "@/types/db";
 
@@ -17,19 +12,9 @@ export const supabaseClient = createClient(
   supabaseAnonKey ?? "",
 );
 
-export const supabaseServerComponentClient = cache(() => {
-  const cookieStore = cookies();
-  return createServerComponentClient<Database>({ cookies: () => cookieStore });
-});
-
-export const supabaseServerRouteClient = () => {
-  const cookieStore = cookies();
-  return createRouteHandlerClient({ cookies: () => cookieStore });
-};
-
 export const supabaseServerClient = () => {
   const cookieStore = cookies();
-  return createServerClient(supabaseUrl, supabaseAnonKey, {
+  return createServerClient<Database>(supabaseUrl, supabaseAnonKey, {
     cookies: {
       get(name: string) {
         return cookieStore.get(name)?.value;

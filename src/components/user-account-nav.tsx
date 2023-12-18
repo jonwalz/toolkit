@@ -10,12 +10,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { UserAvatar } from "@/components/user-avatar";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import { clientSideApi } from "@/trpc/react";
+import { supabaseComponentClient as supabase } from "@/client/supabase";
 
 export function UserAccountNav() {
-  const supabase = createClientComponentClient();
   const router = useRouter();
   const { data: user } = clientSideApi.user.getUser.useQuery();
 
