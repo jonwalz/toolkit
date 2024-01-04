@@ -145,6 +145,11 @@ export function UserAuthForm({
                 {errors.email.message}
               </p>
             )}
+            {errors?.password && (
+              <p className="px-1 text-xs text-red-600">
+                {errors.password.message}
+              </p>
+            )}
           </div>
           <button className={cn(buttonVariants())} disabled={isLoading}>
             {isLoading && (
