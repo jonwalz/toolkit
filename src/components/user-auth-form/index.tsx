@@ -15,6 +15,11 @@ import { Icons } from "@/components/icons";
 import { createBrowserClient } from "@supabase/ssr";
 import { asOptionalField } from "@/lib/zod";
 
+export const supabase = createBrowserClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "",
+);
+
 const formSchema = z
   .object({
     email: z.string().min(3),
@@ -43,10 +48,6 @@ export function UserAuthForm({
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
   });
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "",
-  );
   const router = useRouter();
   const pathname = usePathname();
   const isRegister = pathname === "/register";
@@ -90,6 +91,7 @@ export function UserAuthForm({
           variant: "destructive",
         });
       }
+      console.log("MADE IT********");
       router.refresh();
     }
 
