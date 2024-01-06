@@ -142,12 +142,12 @@ export function UserAuthForm({
             )}
             {errors?.email && (
               <p className="px-1 text-xs text-red-600">
-                {errors.email.message}
+                Email must contain at least 3 character(s)
               </p>
             )}
             {errors?.password && (
               <p className="px-1 text-xs text-red-600">
-                {errors.password.message}
+                Password must contain at least 3 character(s)
               </p>
             )}
           </div>
