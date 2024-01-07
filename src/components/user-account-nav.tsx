@@ -58,8 +58,6 @@ export function UserAccountNav() {
             } catch (e) {
               console.error("Sign out error: ", e);
             }
-            // router.refresh();
-            console.log("HIT");
             router.push("/login");
           }}
         >
