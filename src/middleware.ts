@@ -51,6 +51,8 @@ export async function middleware(request: NextRequest) {
 
   const { data, error: sessionError } = await supabase.auth.getSession();
 
+  console.log("Initial get session error: ", sessionError);
+
   if (sessionError && isUrl(request, ["/login", "/register"])) {
     console.log("Session error: ", sessionError);
     const { error } = await supabase.auth.signOut();
@@ -62,6 +64,8 @@ export async function middleware(request: NextRequest) {
 
     return NextResponse.redirect(new URL("/login", request.url));
   }
+
+  console.log("Session data: ", JSON.stringify(data, null, 2));
 
   if (
     data.session?.user &&
