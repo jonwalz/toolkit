@@ -94,7 +94,7 @@ export function UserAuthForm({
   }
 
   async function onSignInWithGoogle() {
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
         queryParams: {
@@ -111,6 +111,8 @@ export function UserAuthForm({
         variant: "destructive",
       });
     }
+
+    router.push("/dashboard");
   }
 
   return (
@@ -185,9 +187,6 @@ export function UserAuthForm({
           <span className="bg-background px-2 text-muted-foreground">Or</span>
         </div>
       </div>
-      {/* {isGitHubLoading ? (
-          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-        ) : ( */}
       <div className="flex w-full justify-center">
         <button className="gsi-material-button" onClick={onSignInWithGoogle}>
           <div className="gsi-material-button-state"></div>
@@ -228,7 +227,6 @@ export function UserAuthForm({
           </div>
         </button>
       </div>
-      {/* )} */}
     </div>
   );
 }
