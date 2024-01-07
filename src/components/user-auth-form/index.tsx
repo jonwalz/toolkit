@@ -12,8 +12,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/icons";
-import { createBrowserClient } from "@supabase/ssr";
 import { asOptionalField } from "@/lib/zod";
+import { supabase } from "@/client/supabase";
 
 const formSchema = z
   .object({
@@ -43,10 +43,6 @@ export function UserAuthForm({
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
   });
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "",
-  );
   const router = useRouter();
   const pathname = usePathname();
   const isRegister = pathname === "/register";
@@ -65,6 +61,7 @@ export function UserAuthForm({
       });
 
       if (resp.error) {
+        // TODO: convert log to be captured by sentry or other visibility product
         console.log("Register error:", resp.error);
         toast({
           title: "Something went wrong.",
@@ -110,7 +107,7 @@ export function UserAuthForm({
               autoComplete="email"
               autoCorrect="off"
               disabled={isLoading}
-              className="mb-2"
+              className="mb-4 border-white/50"
               {...register("email")}
             />
             <Label htmlFor="password">Password</Label>
@@ -122,18 +119,18 @@ export function UserAuthForm({
               autoComplete="password"
               autoCorrect="off"
               disabled={isLoading}
-              className="mb-2"
+              className="mb-2 border-white/50"
               {...register("password")}
             />
             {isRegister && (
               <>
-                <Label htmlFor="confirmPassword">Password</Label>
+                <Label htmlFor="confirmPassword">Confirm Password</Label>
                 <Input
                   id="confirmPassword"
                   type="password"
                   placeholder="Confirm password"
                   autoCapitalize="none"
-                  autoComplete="password"
+                  autoComplete="Confirm password"
                   autoCorrect="off"
                   disabled={isLoading}
                   {...register("confirmPassword")}
@@ -142,7 +139,12 @@ export function UserAuthForm({
             )}
             {errors?.email && (
               <p className="px-1 text-xs text-red-600">
-                {errors.email.message}
+                Email must contain at least 3 character(s)
+              </p>
+            )}
+            {errors?.password && (
+              <p className="px-1 text-xs text-red-600">
+                Password must contain at least 3 character(s)
               </p>
             )}
           </div>

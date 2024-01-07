@@ -12,7 +12,7 @@ import {
 import { UserAvatar } from "@/components/user-avatar";
 import { useRouter } from "next/navigation";
 import { clientSideApi } from "@/trpc/react";
-import { supabaseComponentClient as supabase } from "@/client/supabase";
+import { supabase } from "@/client/supabase";
 
 export function UserAccountNav() {
   const router = useRouter();
@@ -53,8 +53,13 @@ export function UserAccountNav() {
           className="cursor-pointer"
           onSelect={async (event) => {
             event.preventDefault();
-            await supabase.auth.signOut();
-            router.refresh();
+            try {
+              await supabase.auth.signOut();
+            } catch (e) {
+              console.error("Sign out error: ", e);
+            }
+            // router.refresh();
+            console.log("HIT");
             router.push("/login");
           }}
         >
