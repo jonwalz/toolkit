@@ -9,7 +9,8 @@ export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
 
-  if (code) {
+  console.log("code", code);
+  if (typeof code === "string") {
     const supabase = supabaseServerClient();
     await supabase.auth.exchangeCodeForSession(code);
   }
