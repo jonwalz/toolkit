@@ -2,7 +2,6 @@ import { createServerClient, CookieOptions } from "@supabase/ssr";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// A function that checks if the pathname is in the list of urls
 function isUrl(request: NextRequest, urls: string[]) {
   return urls.some((url) => request.nextUrl.pathname.startsWith(url));
 }
@@ -50,8 +49,6 @@ export async function middleware(request: NextRequest) {
     },
   );
 
-  await supabase.auth.getSession();
-
   const { data, error: sessionError } = await supabase.auth.getSession();
 
   if (sessionError && isUrl(request, ["/login", "/register"])) {
@@ -81,6 +78,8 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname !== "/login" &&
     request.nextUrl.pathname !== "/register"
   ) {
+    console.log("No session found", data.session?.user);
+    console.log("Redirecting to /login");
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
