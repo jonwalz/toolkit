@@ -16,7 +16,8 @@ const formSchema = z.object({
   wipTime: z.string(),
   selfCare: z.string(),
   wordCount: z.preprocess(
-    (value) => (value === "" ? undefined : value),
+    // @ts-expect-error unknown value will be a string
+    (value) => (value === "" ? undefined : parseFloat(value)),
     z.number().nullable().optional().default(null),
   ),
   progressParagraph: z.string(),
@@ -54,8 +55,6 @@ export function ProgressForm() {
     const checkedWordCount = data.wordCount ? data.wordCount : undefined;
     createNewProgressEntry.mutate({ ...data, wordCount: checkedWordCount });
   };
-
-  console.log("ERRORS: ", errors);
 
   return (
     <div className="grid gap-6">
@@ -95,7 +94,11 @@ export function ProgressForm() {
             />
           </Label>
         </div>
-
+        {Object.keys(errors).length > 0 && (
+          <p className="px-1 text-xs text-red-600">
+            Something went wrong. Please try again.
+          </p>
+        )}
         <button type="submit" className={cn(buttonVariants(), "ml-auto mt-2")}>
           Submit
         </button>

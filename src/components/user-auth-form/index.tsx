@@ -93,6 +93,26 @@ export function UserAuthForm({
     setIsLoading(false);
   }
 
+  async function onSignInWithGoogle() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        queryParams: {
+          access_type: "offline",
+          prompt: "consent",
+        },
+      },
+    });
+
+    if (error?.message === "OAuth popup closed by user") {
+      toast({
+        title: "Something went wrong.",
+        description: "Please refresh the page and try again.",
+        variant: "destructive",
+      });
+    }
+  }
+
   return (
     <div className={cn("grid gap-6", className)} {...props}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -107,7 +127,7 @@ export function UserAuthForm({
               autoComplete="email"
               autoCorrect="off"
               disabled={isLoading}
-              className="mb-4 border-white/50"
+              className="mb-4"
               {...register("email")}
             />
             <Label htmlFor="password">Password</Label>
@@ -119,7 +139,7 @@ export function UserAuthForm({
               autoComplete="password"
               autoCorrect="off"
               disabled={isLoading}
-              className="mb-2 border-white/50"
+              className="mb-4"
               {...register("password")}
             />
             {isRegister && (
@@ -133,6 +153,7 @@ export function UserAuthForm({
                   autoComplete="Confirm password"
                   autoCorrect="off"
                   disabled={isLoading}
+                  className="mb-4"
                   {...register("confirmPassword")}
                 />
               </>
@@ -168,7 +189,7 @@ export function UserAuthForm({
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
         ) : ( */}
       <div className="flex w-full justify-center">
-        <button className="gsi-material-button">
+        <button className="gsi-material-button" onClick={onSignInWithGoogle}>
           <div className="gsi-material-button-state"></div>
           <div className="gsi-material-button-content-wrapper">
             <div className="gsi-material-button-icon">
