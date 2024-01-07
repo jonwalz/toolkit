@@ -94,6 +94,14 @@ Then link the supabase project:
 supabase link
 ```
 
+## Deployments
+
+This project is hosted on Cloudflare.
+
+To tail server logs locally, you'll need to install the `wrangler` cli.
+
+Instructions can be found here: https://developers.cloudflare.com/workers/wrangler/install-and-update/
+
 ## License
 
 This project is licensed under the MIT License.
