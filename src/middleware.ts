@@ -7,6 +7,11 @@ function isUrl(request: NextRequest, urls: string[]) {
 }
 
 export async function middleware(request: NextRequest) {
+  if (request.nextUrl.pathname.startsWith("/auth")) {
+    console.log("Skipping auth middleware for /auth");
+    return NextResponse.next();
+  }
+
   let response = NextResponse.next({
     request: {
       headers: request.headers,
