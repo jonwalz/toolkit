@@ -8,7 +8,7 @@
     "lint": "next lint",
     "start": "next start",
     "db-types": "supabase gen types typescript --linked > ./src/types/db.ts",
-    "test": "vitest --config ./test/vitest.config.js"
+    "test": "vitest --config ./test/vitest.config.mjs"
   },
   "engines": {
     "node": "20.x",
