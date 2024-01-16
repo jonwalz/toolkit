@@ -33,6 +33,11 @@ export async function middleware(request: NextRequest) {
               headers: request.headers,
             },
           });
+          response.cookies.set({
+            name,
+            value,
+            ...options,
+          });
         },
         remove(name: string, options: CookieOptions) {
           request.cookies.set({
@@ -49,8 +54,6 @@ export async function middleware(request: NextRequest) {
       },
     },
   );
-
-  await supabase.auth.getSession();
 
   const { data, error: sessionError } = await supabase.auth.getSession();
 
@@ -81,6 +84,7 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname !== "/login" &&
     request.nextUrl.pathname !== "/register"
   ) {
+    console.log("\n No session so it doesn't get to the auth route \n");
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
@@ -96,6 +100,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    "/((?!_next/static|_next/image|favicon.ico).*)",
+    "/((?!_next/static|_next/image|favicon.ico|auth/callback).*)",
   ],
 };

@@ -80,6 +80,7 @@ export function UserAuthForm({
       });
 
       if (resp.error) {
+        console.log("Login error:", resp.error);
         toast({
           title: "Something went wrong.",
           description:
