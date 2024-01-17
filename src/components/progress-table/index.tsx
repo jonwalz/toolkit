@@ -19,7 +19,7 @@ import { clientSideApi } from "@/trpc/react";
 
 export function ProgressTable() {
   const { data = [], isLoading } =
-    clientSideApi.progress.getProgress.useQuery();
+    clientSideApi.progress.getAllProgress.useQuery();
 
   const table = useReactTable({
     data,

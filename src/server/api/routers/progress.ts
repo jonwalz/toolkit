@@ -4,7 +4,7 @@ import { supabaseServerClient } from "@/server/vendor/supabase";
 import { z } from "zod";
 
 export const progressRouter = createTRPCRouter({
-  getProgress: publicProcedure.query(async () => {
+  getAllProgress: publicProcedure.query(async () => {
     const { data: progress, error } = await supabaseServerClient()
       .from("progress")
       .select("*")
@@ -41,6 +41,38 @@ export const progressRouter = createTRPCRouter({
             progress_paragraph: input.progressParagraph,
           },
         ]);
+
+      if (error) {
+        console.log("Progress entry error: ", error.message);
+        throw error;
+      }
+
+      return progress;
+    }),
+  updateProgress: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        date: z.string(),
+        play: z.string(),
+        wipTime: z.string(),
+        selfCare: z.string(),
+        wordCount: z.number().or(z.undefined()),
+        progressParagraph: z.string(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      const { data: progress, error } = await supabaseServerClient()
+        .from("progress")
+        .update({
+          date: input.date,
+          play: input.play,
+          wip_time: input.wipTime,
+          self_care: input.selfCare,
+          word_count: input.wordCount ?? null,
+          progress_paragraph: input.progressParagraph,
+        })
+        .eq("id", input.id);
 
       if (error) {
         console.log("Progress entry error: ", error.message);

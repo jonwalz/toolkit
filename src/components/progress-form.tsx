@@ -15,45 +15,63 @@ const formSchema = z.object({
   play: z.string(),
   wipTime: z.string(),
   selfCare: z.string(),
-  wordCount: z.preprocess(
-    // @ts-expect-error unknown value will be a string
-    (value) => (value === "" ? undefined : parseFloat(value)),
-    z.number().nullable().optional().default(null),
-  ),
+  wordCount: z
+    .string()
+    .transform((value) => (value === "" ? null : parseFloat(value)))
+    .nullable()
+    .optional(),
   progressParagraph: z.string(),
 });
 
 type FormData = z.infer<typeof formSchema>;
 
-export function ProgressForm() {
+const defaultValues: FormData = {
+  date: new Date().toDateString(),
+  play: "",
+  wipTime: "",
+  selfCare: "",
+  wordCount: null,
+  progressParagraph: "",
+};
+
+export function ProgressForm({
+  entryData,
+  id,
+}: {
+  entryData?: FormData;
+  id?: string;
+}) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      date: new Date().toDateString(),
-      play: "",
-      wipTime: "",
-      selfCare: "",
-      wordCount: null,
-      progressParagraph: "",
-    },
+    defaultValues: entryData ?? defaultValues,
   });
 
   const router = useRouter();
 
-  const createNewProgressEntry =
-    clientSideApi.progress.createProgress.useMutation({
-      onSuccess: () => {
-        router.push("/dashboard/progress");
-      },
-    });
+  const { createProgress, updateProgress } = clientSideApi.progress;
+  const createNewProgressEntry = createProgress.useMutation({
+    onSuccess: () => router.push("/dashboard/progress"),
+  });
+
+  const updateProgressEntry = updateProgress.useMutation({
+    onSuccess: () => router.push("/dashboard/progress"),
+  });
 
   const onSubmit = (data: FormData) => {
     const checkedWordCount = data.wordCount ? data.wordCount : undefined;
-    createNewProgressEntry.mutate({ ...data, wordCount: checkedWordCount });
+    if (id) {
+      updateProgressEntry.mutate({
+        ...data,
+        wordCount: checkedWordCount,
+        id: id,
+      });
+    } else {
+      createNewProgressEntry.mutate({ ...data, wordCount: checkedWordCount });
+    }
   };
 
   return (

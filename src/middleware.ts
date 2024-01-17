@@ -84,7 +84,6 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname !== "/login" &&
     request.nextUrl.pathname !== "/register"
   ) {
-    console.log("\n No session so it doesn't get to the auth route \n");
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
