@@ -16,7 +16,17 @@ const snaplet = new SnapletClient({
 });
 
 // create 10 users
-await snaplet.users((x) => x(10));
+await snaplet.users((x) =>
+  x(10, (_) => {
+    return {
+      aud: "authenticated",
+      role: "authenticated",
+      is_anonymous: false,
+      encrypted_password:
+        "$2a$10$ug2qheZjeUum1Ge6yaVzjuUuwlOwwiT4Ng2i7A4uIOqi4VAxAW2ei", // Password: asdfasdf
+    };
+  }),
+);
 
 // Clears all existing data in the database, but keep the structure
 await snaplet.$resetDatabase();

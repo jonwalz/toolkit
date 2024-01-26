@@ -87,6 +87,10 @@ To get the local studio url, run:
 supabase status
 ```
 
+## Snaplet
+
+> Note: This does not work correctly yet.
+
 To seed database, we use (Snaplet)[https://docs.snaplet.dev/recipes/supabase]
 
 Edit the `seed.mts` file, then run:
