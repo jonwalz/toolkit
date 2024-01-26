@@ -89,6 +89,22 @@ supabase status
 
 To seed database, we use (Snaplet)[https://docs.snaplet.dev/recipes/supabase]
 
+Edit the `seed.mts` file, then run:
+
+```
+npx tsx seed.mts > supabase/seed.sql
+
+```
+
+This should generate a SQL script to `seed.sql`.
+
+To execute the sql script, run:
+
+```
+supabase db reset
+
+```
+
 To generate typescript types, you'll need to first login with supabase cli:
 
 ```bash

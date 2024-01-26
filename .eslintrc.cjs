@@ -37,6 +37,7 @@ const config = {
       },
     ],
   },
+  ignorePatterns: ["seed.mts"],
 };
 
 module.exports = config;

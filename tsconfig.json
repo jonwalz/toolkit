@@ -43,7 +43,8 @@
     "**/*.mjs",
     ".next/types/**/*.ts",
     "tailwind.config.js",
-    "test/vitest.config.mjs"
+    "test/vitest.config.mjs",
+    "seed.mts"
   ],
   "exclude": ["node_modules"]
 }
