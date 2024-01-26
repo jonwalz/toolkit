@@ -69,10 +69,15 @@ DB management https://supabase.com/dashboard/project/ivyetfewzyvpkmjdtyiy
 
 To run a supabase DB instance locally, first install docker.
 
+`brew install supabase/tap/supabase`
+
 Then you'll need to install the [supabase CLI](https://supabase.com/docs/guides/cli) and run
 
 ```bash
+# If you've never initialized supabase:
 supabase init
+
+# This will setup the supabase docker container and start the database:
 supabase start
 ```
 
@@ -81,6 +86,8 @@ To get the local studio url, run:
 ```
 supabase status
 ```
+
+To seed database, we use (Snaplet)[https://docs.snaplet.dev/recipes/supabase]
 
 To generate typescript types, you'll need to first login with supabase cli:
 
