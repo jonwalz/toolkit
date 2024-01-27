@@ -1,0 +1,166 @@
+{
+  "date": "2024-01-26T21:30:22.365Z",
+  "name": "ss-local-value-781942",
+  "snapshotId": "clrv5os030jaylyq6ilhkyjqh",
+  "tags": [
+    "onboarding"
+  ],
+  "origin": "CLOUD",
+  "tables": [
+    {
+      "bytes": 0,
+      "table": "audit_log_entries",
+      "schema": "auth",
+      "filename": "auth.audit_log_entries.csv",
+      "copiedRows": 0,
+      "timeToDump": 0,
+      "timeToCompress": 0
+    },
+    {
+      "bytes": 0,
+      "table": "flow_state",
+      "schema": "auth",
+      "filename": "auth.flow_state.csv",
+      "copiedRows": 0,
+      "timeToDump": 0,
+      "timeToCompress": 0
+    },
+    {
+      "bytes": 2977,
+      "table": "identities",
+      "schema": "auth",
+      "filename": "auth.identities.csv",
+      "copiedRows": 11,
+      "timeToDump": 143,
+      "timeToCompress": 0
+    },
+    {
+      "bytes": 0,
+      "table": "instances",
+      "schema": "auth",
+      "filename": "auth.instances.csv",
+      "copiedRows": 0,
+      "timeToDump": 0,
+      "timeToCompress": 0
+    },
+    {
+      "bytes": 219,
+      "table": "mfa_amr_claims",
+      "schema": "auth",
+      "filename": "auth.mfa_amr_claims.csv",
+      "copiedRows": 1,
+      "timeToDump": 95,
+      "timeToCompress": 0
+    },
+    {
+      "bytes": 0,
+      "table": "mfa_challenges",
+      "schema": "auth",
+      "filename": "auth.mfa_challenges.csv",
+      "copiedRows": 0,
+      "timeToDump": 0,
+      "timeToCompress": 0
+    },
+    {
+      "bytes": 0,
+      "table": "mfa_factors",
+      "schema": "auth",
+      "filename": "auth.mfa_factors.csv",
+      "copiedRows": 0,
+      "timeToDump": 0,
+      "timeToCompress": 0
+    },
+    {
+      "bytes": 92,
+      "table": "notes",
+      "schema": "public",
+      "filename": "public.notes.csv",
+      "copiedRows": 1,
+      "timeToDump": 94,
+      "timeToCompress": 0
+    },
+    {
+      "bytes": 2543,
+      "table": "progress",
+      "schema": "public",
+      "filename": "public.progress.csv",
+      "copiedRows": 15,
+      "timeToDump": 104,
+      "timeToCompress": 0
+    },
+    {
+      "bytes": 3748,
+      "table": "refresh_tokens",
+      "schema": "auth",
+      "filename": "auth.refresh_tokens.csv",
+      "copiedRows": 17,
+      "timeToDump": 102,
+      "timeToCompress": 0
+    },
+    {
+      "bytes": 0,
+      "table": "saml_providers",
+      "schema": "auth",
+      "filename": "auth.saml_providers.csv",
+      "copiedRows": 0,
+      "timeToDump": 0,
+      "timeToCompress": 0
+    },
+    {
+      "bytes": 0,
+      "table": "saml_relay_states",
+      "schema": "auth",
+      "filename": "auth.saml_relay_states.csv",
+      "copiedRows": 0,
+      "timeToDump": 0,
+      "timeToCompress": 0
+    },
+    {
+      "bytes": 0,
+      "table": "schema_migrations",
+      "schema": "auth",
+      "filename": "auth.schema_migrations.csv",
+      "copiedRows": 0,
+      "timeToDump": 0,
+      "timeToCompress": 0
+    },
+    {
+      "bytes": 348,
+      "table": "sessions",
+      "schema": "auth",
+      "filename": "auth.sessions.csv",
+      "copiedRows": 1,
+      "timeToDump": 96,
+      "timeToCompress": 0
+    },
+    {
+      "bytes": 0,
+      "table": "sso_domains",
+      "schema": "auth",
+      "filename": "auth.sso_domains.csv",
+      "copiedRows": 0,
+      "timeToDump": 0,
+      "timeToCompress": 0
+    },
+    {
+      "bytes": 0,
+      "table": "sso_providers",
+      "schema": "auth",
+      "filename": "auth.sso_providers.csv",
+      "copiedRows": 0,
+      "timeToDump": 0,
+      "timeToCompress": 0
+    },
+    {
+      "bytes": 5196,
+      "table": "users",
+      "schema": "auth",
+      "filename": "auth.users.csv",
+      "copiedRows": 9,
+      "timeToDump": 114,
+      "timeToCompress": 0
+    }
+  ],
+  "totalSize": 294478,
+  "isSupabaseConnection": true
+}
