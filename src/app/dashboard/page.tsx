@@ -13,33 +13,31 @@ export default function Home() {
           "flex min-h-[400px] flex-col justify-center rounded-md border p-8 animate-in fade-in-50"
         }
       >
-        <p className="mb-2 mt-2 text-sm font-normal leading-6 text-muted-foreground">
+        <p className="mb-2 mt-2 text-sm font-normal leading-6">
           Our brains, and ESPECIALLY ADHD/neurodiverse brains, need “evidence”
           of work. It’s like gamifying something. With our digital age it can be
           easy to forget how much we’ve worked on a book and how many pages have
           actually been written, because we look at our documents on the screen.
         </p>
-        <p className="mb-2 mt-2 text-sm font-normal leading-6 text-muted-foreground">
+        <p className="mb-2 mt-2 text-sm font-normal leading-6">
           Our brains like to see a real, physical manifestation of our writing.
           But writing is so much more than just putting words on the page, and
           that’s what this tracker helps you recognize and track. It tracks
           everything that helps you write.
         </p>
-        <p className="mb-2 mt-2 text-sm font-normal leading-6 text-muted-foreground">
+        <p className="mb-2 mt-2 text-sm font-normal leading-6">
           First, let's talk about what you'll track:
         </p>
-        <h2 className="mb-4 mt-4 font-extrabold leading-6 text-muted-foreground underline">
-          Play
-        </h2>
-        <p className="mb-2 mt-2 text-sm font-normal leading-6 text-muted-foreground">
+        <h2 className="mb-4 mt-4 font-extrabold leading-6 underline">Play</h2>
+        <p className="mb-2 mt-2 text-sm font-normal leading-6">
           Making art or having fun for play's sake. Not for consumption or to
           impress anyone. To literally just create for the joy of it.
           Rapidwriting counts, as does freewriting!
         </p>
-        <h2 className="mb-4 mt-2 font-extrabold leading-6 text-muted-foreground underline">
+        <h2 className="mb-4 mt-2 font-extrabold leading-6 underline">
           Here are some ideas to get you started:
         </h2>
-        <ul className="mb-2 mt-2 text-sm font-normal leading-6 text-muted-foreground">
+        <ul className="mb-2 mt-2 text-sm font-normal leading-6">
           <li className="mb-2">Freewriting</li>
           <li className="mb-2">Listening to music</li>
           <li className="mb-2">Coloring</li>
@@ -53,10 +51,10 @@ export default function Home() {
           <li className="mb-2">Daydreaming</li>
           <li className="mb-2">Painting</li>
         </ul>
-        <h2 className="mt-4 font-extrabold leading-6 text-muted-foreground underline">
+        <h2 className="mt-4 font-extrabold leading-6 underline">
           Benefits of Play:
         </h2>
-        <p className="mb-2 mt-2 text-sm font-normal leading-6 text-muted-foreground">
+        <p className="mb-2 mt-2 text-sm font-normal leading-6">
           Our minds are currently trained to do something because it’s
           “productive.” We want to make a product out of everything in
           capitalism. Play is about letting go of the demand to always be
@@ -65,30 +63,30 @@ export default function Home() {
           that we can surrender our fears of making mistakes—the things that
           often cause our resistance.
         </p>
-        <p className="mb-2 mt-2 text-sm font-normal leading-6 text-muted-foreground">
+        <p className="mb-2 mt-2 text-sm font-normal leading-6">
           Brenda Ueland says in her book If You Want to Write: "So you see the
           imagination needs moodling--long, inefficient, happy idling and
           puttering." Play puts you in the creative flow. It gives your brain
           permission to be free.
         </p>
-        <p className="mb-2 mt-2 text-sm font-normal leading-6 text-muted-foreground">
+        <p className="mb-2 mt-2 text-sm font-normal leading-6">
           Our right hemisphere is often dominated by the left. Play gives your
           right brain the stage! This helps you have more imagination on the
           page when you enter WIP time. It's an antidote to perfectionism. It’s
           important. You don't have to do it for long. Just 5 minutes.
         </p>
-        <h2 className="mb-2 mt-4 font-extrabold leading-6 text-muted-foreground underline">
+        <h2 className="mb-2 mt-4 font-extrabold leading-6  underline">
           WIP Time
         </h2>
-        <p className="mb-2 mt-2 text-sm font-normal leading-6 text-muted-foreground">
+        <p className="mb-2 mt-2 text-sm font-normal leading-6">
           This is where you work on writing. That can be anything: reading a
           craft/creativity book, developing characters, developing an outline,
           researching, finding an idea, etc.
         </p>
-        <p className="mb-4 mt-2 text-sm font-normal leading-6 text-muted-foreground">
+        <p className="mb-4 mt-2 text-sm font-normal leading-6">
           Here are some examples of WIP time:
         </p>
-        <ul className="mb-2 mt-2 text-sm font-normal leading-6 text-muted-foreground">
+        <ul className="mb-2 mt-2 text-sm font-normal leading-6">
           <li className="mb-2">
             Showing up at the page and writing a sentence.
           </li>
@@ -110,23 +108,23 @@ export default function Home() {
           <li className="mb-2">Getting feedback</li>
           <li className="mb-2">Taking a writing class</li>
           <li className="mb-2">The list goes on</li>
-          <p className="mb-2 mt-2 text-sm font-normal leading-6 text-muted-foreground">
+          <p className="mb-2 mt-2 text-sm font-normal leading-6 ">
             It’s basically anything that is helping you create words and make
             your writing career happen.
           </p>
         </ul>
-        <h2 className="mb-4 mt-4 font-extrabold leading-6 text-muted-foreground underline">
+        <h2 className="mb-4 mt-4 font-extrabold leading-6  underline">
           Self Care
         </h2>
-        <p className="mb-2 mt-2 text-sm font-normal leading-6 text-muted-foreground">
+        <p className="mb-2 mt-2 text-sm font-normal leading-6 ">
           It's best to do self care slowly when first building a habit. First,
           go to the gym once or twice a week. And then build from there.
         </p>
-        <p className="mb-2 mt-2 text-sm font-normal leading-6 text-muted-foreground">
+        <p className="mb-2 mt-2 text-sm font-normal leading-6 ">
           Self-Care can look like:
         </p>
 
-        <ul className="mb-2 mt-2 text-sm font-normal leading-6 text-muted-foreground">
+        <ul className="mb-2 mt-2 text-sm font-normal leading-6 ">
           <li className="mb-2">Movement (gym, dance, swim, etc)</li>
           <li className="mb-2">Stretching</li>
           <li className="mb-2">Taking a walk</li>
@@ -138,16 +136,16 @@ export default function Home() {
           <li className="mb-2">Going outside</li>
           <li className="mb-2">Anything that feeds your soul</li>
         </ul>
-        <h2 className="mb-4 mt-4 font-extrabold leading-6 text-muted-foreground underline">
+        <h2 className="mb-4 mt-4 font-extrabold leading-6  underline">
           Benefits of Self-Care:
         </h2>
 
-        <p className="mb-2 mt-2 text-sm font-normal leading-6 text-muted-foreground">
+        <p className="mb-2 mt-2 text-sm font-normal leading-6 ">
           A lot of us skimp on this because it’s hard work. But if we don’t
           practice self-care, we can’t expect out bodies and minds to show up
           the way we want them to.
         </p>
-        <p className="mb-2 mt-2 text-sm font-normal leading-6 text-muted-foreground">
+        <p className="mb-2 mt-2 text-sm font-normal leading-6 ">
           Movement is helpful for the brain because there is evidence that it
           improves creativity, reasoning, attention, motivation, and problem
           solving. It also increases the growth of new neurons AND the
@@ -156,11 +154,11 @@ export default function Home() {
           dopamine, and norepinephrine, which helps with anxiety and depression.
         </p>
 
-        <p className="mb-2 mt-2 text-sm font-normal leading-6 text-muted-foreground">
+        <p className="mb-2 mt-2 text-sm font-normal leading-6 ">
           These things are also critical to our ability to write, because it
           helps us pay attention, focus, and improve cognitive ability.
         </p>
-        <p className="mb-2 mt-2 text-sm font-normal leading-6 text-muted-foreground">
+        <p className="mb-2 mt-2 text-sm font-normal leading-6 ">
           Let me say this: movement does not have to be about “losing weight” or
           any other toxic fatphobic thing. It’s also not accessible to all
           people, so do what works best for you. I personally exercise to help
@@ -168,18 +166,18 @@ export default function Home() {
           “look good.” The goal can be whatever you need it to be.
         </p>
 
-        <h2 className="mb-4 mt-2 font-extrabold leading-6 text-muted-foreground underline">
+        <h2 className="mb-4 mt-2 font-extrabold leading-6  underline">
           The Paragraph:
         </h2>
-        <p className="mb-2 mt-2 text-sm font-normal leading-6 text-muted-foreground">
+        <p className="mb-2 mt-2 text-sm font-normal leading-6 ">
           This is sort of a journal/diary entry on how your writing has gone for
           you today.
         </p>
-        <p className="mb-2 mt-2 text-sm font-normal leading-6 text-muted-foreground">
+        <p className="mb-2 mt-2 text-sm font-normal leading-6 ">
           You can chronicle:
         </p>
 
-        <ul className="mb-2 mt-2 text-sm font-normal leading-6 text-muted-foreground">
+        <ul className="mb-2 mt-2 text-sm font-normal leading-6 ">
           <li className="mb-2">Your past as a writer</li>
           <li className="mb-2">
             Record your struggles and triumphs (specifically in writing)
@@ -199,7 +197,7 @@ export default function Home() {
             book).
           </li>
         </ul>
-        <p className="mb-2 mt-2 text-sm font-normal leading-6 text-muted-foreground">
+        <p className="mb-2 mt-2 text-sm font-normal leading-6 ">
           Benefits of the paragraph: It will show you the journey of your
           creativity. You can track your mood and mindset over different aspects
           of your work and see patterns. It’s also a great place to vent or
