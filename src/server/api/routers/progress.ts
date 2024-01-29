@@ -4,19 +4,31 @@ import { supabaseServerClient } from "@/server/vendor/supabase";
 import { z } from "zod";
 
 export const progressRouter = createTRPCRouter({
-  getAllProgress: publicProcedure.query(async () => {
-    const { data: progress, error } = await supabaseServerClient()
-      .from("progress")
-      .select("*")
-      .order("date", { ascending: true });
+  getAllProgress: publicProcedure
+    .input(
+      z.object({
+        pageIndex: z.number().default(0),
+        pageSize: z.number().default(10),
+      }),
+    )
+    .query(async ({ input }) => {
+      const { pageIndex, pageSize } = input;
+      const startIndex = pageIndex * pageSize;
+      const endIndex = startIndex + pageSize - 1;
 
-    if (error) {
-      console.log("Progress entry error: ", error.message);
-      throw error;
-    }
+      const { data: progress, error } = await supabaseServerClient()
+        .from("progress")
+        .select("*")
+        .order("date", { ascending: false })
+        .range(startIndex, endIndex);
 
-    return progress;
-  }),
+      if (error) {
+        console.log("Progress entry error: ", error.message);
+        throw error;
+      }
+
+      return progress;
+    }),
   createProgress: publicProcedure
     .input(
       z.object({

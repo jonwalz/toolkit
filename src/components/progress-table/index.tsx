@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  PaginationState,
   flexRender,
   getCoreRowModel,
   useReactTable,
@@ -16,15 +17,50 @@ import {
 } from "@/components/ui/table";
 import { columns } from "./columns";
 import { clientSideApi } from "@/trpc/react";
+import { useMemo, useState } from "react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "../ui/pagination";
 
 export function ProgressTable() {
+  const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  });
+
+  const fetchDataOptions = {
+    pageIndex,
+    pageSize,
+  };
+
   const { data = [], isLoading } =
-    clientSideApi.progress.getAllProgress.useQuery();
+    clientSideApi.progress.getAllProgress.useQuery(fetchDataOptions, {
+      keepPreviousData: true,
+    });
+
+  const pagination = useMemo(
+    () => ({
+      pageIndex,
+      pageSize,
+    }),
+    [pageIndex, pageSize],
+  );
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    manualPagination: true,
+    state: {
+      pagination,
+    },
+    onPaginationChange: setPagination,
   });
 
   return (
@@ -65,12 +101,31 @@ export function ProgressTable() {
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                {isLoading ? "Loading..." : "No results."}
+                {isLoading ? "Loading..." : "No entries."}
               </TableCell>
             </TableRow>
           )}
         </TableBody>
       </Table>
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious
+              isActive={pageIndex > 1}
+              onClick={() => table.previousPage()}
+            />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="#">1</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext onClick={() => table.nextPage()} />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     </div>
   );
 }
