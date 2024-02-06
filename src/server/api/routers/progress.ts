@@ -1,4 +1,8 @@
-import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "@/server/api/trpc";
 
 import { supabaseServerClient } from "@/server/vendor/supabase";
 import { z } from "zod";
@@ -26,10 +30,22 @@ export const progressRouter = createTRPCRouter({
         console.log("Progress entry error: ", error.message);
         throw error;
       }
+      // To get the total number of pages
+      const { data: totalCount, error: countError } =
+        await supabaseServerClient()
+          .from("progress")
+          .select("*", { count: "exact" });
 
-      return progress;
+      if (countError) {
+        console.log("Total count error: ", countError.message);
+        throw countError;
+      }
+
+      const totalPages = Math.ceil(totalCount?.length / pageSize);
+
+      return { progress, totalPages };
     }),
-  createProgress: publicProcedure
+  createProgress: protectedProcedure
     .input(
       z.object({
         date: z.string(),

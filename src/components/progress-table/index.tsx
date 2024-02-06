@@ -39,10 +39,14 @@ export function ProgressTable() {
     pageSize,
   };
 
-  const { data = [], isLoading } =
-    clientSideApi.progress.getAllProgress.useQuery(fetchDataOptions, {
+  const { data, isLoading } = clientSideApi.progress.getAllProgress.useQuery(
+    fetchDataOptions,
+    {
       keepPreviousData: true,
-    });
+    },
+  );
+
+  const { progress, totalPages } = data ?? { progress: [], totalPages: 0 };
 
   const pagination = useMemo(
     () => ({
@@ -53,7 +57,7 @@ export function ProgressTable() {
   );
 
   const table = useReactTable({
-    data,
+    data: progress,
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
@@ -120,6 +124,9 @@ export function ProgressTable() {
           </PaginationItem>
           <PaginationItem>
             <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="#">{totalPages}</PaginationLink>
           </PaginationItem>
           <PaginationItem>
             <PaginationNext onClick={() => table.nextPage()} />

@@ -10,6 +10,7 @@ import { TRPCError, initTRPC } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 import { NextRequest, NextResponse } from "next/server";
+import { Session } from "@supabase/supabase-js";
 
 /**
  * 1. CONTEXT
@@ -22,6 +23,7 @@ import { NextRequest, NextResponse } from "next/server";
 interface CreateContextOptions {
   req: NextRequest;
   res?: NextResponse;
+  session?: Session;
 }
 
 /**
@@ -39,6 +41,7 @@ export const createInnerTRPCContext = (opts?: CreateContextOptions) => {
     headers: opts?.req.headers,
     req: opts?.req,
     res: opts?.res,
+    session: opts?.session,
   };
 };
 
@@ -51,6 +54,7 @@ export const createInnerTRPCContext = (opts?: CreateContextOptions) => {
 export const createTRPCContext = (opts: {
   req: NextRequest;
   res?: NextResponse;
+  session?: Session;
 }) => {
   return createInnerTRPCContext(opts && { ...opts });
 };
@@ -101,15 +105,15 @@ export const createTRPCRouter = t.router;
 export const publicProcedure = t.procedure;
 
 // TODO: Add session to context in middleware file
-// const isAuthed = t.middleware(({ ctx, next }) => {
-//   if (!ctx.req || !ctx.session.user) {
-//     throw new TRPCError({ code: "UNAUTHORIZED" });
-//   }
-//   return next({
-//     ctx: {
-//       // infers the `session` as non-nullable
-//       session: { ...ctx.session, user: ctx.session.user },
-//     },
-//   });
-// });
-// export const protectedProcedure = t.procedure.use(isAuthed);
+const isAuthed = t.middleware(({ ctx, next }) => {
+  if (!ctx.req || !ctx.session?.user) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  return next({
+    ctx: {
+      // infers the `session` as non-nullable
+      session: { ...ctx.session, user: ctx.session.user },
+    },
+  });
+});
+export const protectedProcedure = t.procedure.use(isAuthed);
