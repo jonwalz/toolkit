@@ -27,6 +27,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "../ui/pagination";
+import { useWindowSize } from "@/hooks/use-window-size";
 
 export function ProgressTable() {
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
@@ -56,6 +57,8 @@ export function ProgressTable() {
     [pageIndex, pageSize],
   );
 
+  const { width } = useWindowSize();
+
   const table = useReactTable({
     data: progress,
     columns,
@@ -63,6 +66,12 @@ export function ProgressTable() {
     manualPagination: true,
     state: {
       pagination,
+      columnVisibility: {
+        play: width > 768,
+        word_count: width > 768,
+        self_care: width > 768,
+        wip_time: width > 768,
+      },
     },
     onPaginationChange: setPagination,
   });
