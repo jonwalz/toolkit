@@ -77,7 +77,7 @@ export function ProgressForm({
   return (
     <div className="grid gap-6">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="lg:grid-cols-2p grid grid-cols-1 gap-4">
           <div className="col-span-1 sm:col-span-1">
             <Label>
               Date:

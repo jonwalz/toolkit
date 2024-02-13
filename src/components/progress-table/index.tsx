@@ -68,8 +68,8 @@ export function ProgressTable() {
       pagination,
       columnVisibility: {
         play: width > 768,
-        word_count: width > 768,
-        self_care: width > 768,
+        word_count: width > 1000,
+        self_care: width > 890,
         wip_time: width > 768,
       },
     },
