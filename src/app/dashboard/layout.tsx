@@ -27,7 +27,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           <aside className="hidden w-[240px] flex-col md:flex">
             <DashboardNav items={dashboardConfig.mainNav} />
           </aside>
-          <main className="flex w-full flex-1 flex-col">{children}</main>
+          <main className="flex w-full max-w-[660px] flex-1 flex-col">
+            {children}
+          </main>
         </div>
         <SiteFooter className="border-t" />
       </div>

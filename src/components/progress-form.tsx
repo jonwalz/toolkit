@@ -77,7 +77,7 @@ export function ProgressForm({
   return (
     <div className="grid gap-6">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="lg:grid-cols-2p grid grid-cols-1 gap-4">
+        <div className="lg:grid-cols-2p  grid grid-cols-1 gap-4">
           <div className="col-span-1 sm:col-span-1">
             <Label>
               Date:
@@ -107,7 +107,7 @@ export function ProgressForm({
           <Label>
             Progress Paragraph:
             <Textarea
-              className="mb-2 mt-2 h-full"
+              className="mb-2 mt-2"
               {...register("progressParagraph")}
             />
           </Label>

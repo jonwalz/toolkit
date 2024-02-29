@@ -1,5 +1,23 @@
-export const runtime = 'edge';
+"use client";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+
+export const runtime = "edge";
 
 export default function Edit() {
-  return <div>Edit</div>;
+  const router = useRouter();
+
+  useEffect(() => {
+    async function handleRouteChange() {
+      try {
+        await router.push("/progress");
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    void handleRouteChange();
+  }, [router]);
+
+  return null;
 }
