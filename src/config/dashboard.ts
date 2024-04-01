@@ -5,32 +5,32 @@ export const dashboardConfig: DashboardConfig = {
     {
       title: "Progress log",
       href: "/dashboard/progress",
-      icon: "post",
+      icon: "penTool",
     },
     {
       title: "Story accomplishments",
       href: "/dashboard/accomplishments",
-      icon: "post",
+      icon: "award",
     },
     {
       title: "Project Targets",
       href: "/dashboard/targets",
-      icon: "post",
+      icon: "crosshair",
     },
     {
       title: "Word count",
       href: "/dashboard/count",
-      icon: "post",
+      icon: "calculator",
     },
     {
       title: "Mindset",
       href: "/dashboard/mindset",
-      icon: "post",
+      icon: "smilePlus",
     },
     {
       title: "Journal prompts",
       href: "/dashboard/journal",
-      icon: "post",
+      icon: "pencilLine",
     },
   ],
 };
