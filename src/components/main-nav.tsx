@@ -20,7 +20,7 @@ export function MainNav({ items, children }: MainNavProps) {
   return (
     <div className="flex items-center gap-2">
       <UserAccountNav />
-      test@test.com
+
       <button
         className="flex items-center space-x-2 md:hidden"
         onClick={handleShowMobileMenu}

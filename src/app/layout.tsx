@@ -27,7 +27,7 @@ export default function RootLayout({
       <head />
       <body
         className={cn(
-          "min-h-screen overscroll-y-none bg-background font-sans antialiased",
+          "bg-custom-gradient min-h-screen overscroll-y-none font-sans antialiased",
           inter.variable,
         )}
       >

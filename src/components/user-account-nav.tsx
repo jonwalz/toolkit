@@ -13,6 +13,7 @@ import { UserAvatar } from "@/components/user-avatar";
 import { useRouter } from "next/navigation";
 import { clientSideApi } from "@/trpc/react";
 import { supabase } from "@/client/supabase";
+// import { ModeToggle } from "./mode-toggle";
 
 export function UserAccountNav() {
   const router = useRouter();
@@ -20,14 +21,15 @@ export function UserAccountNav() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger className="flex items-center gap-2">
         <UserAvatar
           // user={{ name: user.name || null, image: user.image || null }}
           user={{ email: user?.email ?? "Welcome" }}
           className="h-8 w-8"
         />
+        test@test.com
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="start">
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
             {/* {user. && <p className="font-medium">{user.name}</p>} */}
@@ -51,6 +53,8 @@ export function UserAccountNav() {
         <DropdownMenuItem asChild>
           <Link href="/dashboard/settings">Settings</Link>
         </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        {/* <ModeToggle /> */}
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="cursor-pointer"
