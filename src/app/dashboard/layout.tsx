@@ -5,9 +5,11 @@ import { dashboardConfig } from "@/config/dashboard";
 import { MainNav } from "@/components/main-nav";
 import { DashboardNav } from "@/components/nav";
 import { SiteFooter } from "@/components/site-footer";
-import { UserAccountNav } from "@/components/user-account-nav";
 import { TRPCReactProvider } from "@/trpc/react";
 import { cookies } from "next/headers";
+import Link from "next/link";
+import { Icons } from "@/components/icons";
+import { siteConfig } from "@/config/site";
 
 interface DashboardLayoutProps {
   children?: React.ReactNode;
@@ -16,23 +18,29 @@ interface DashboardLayoutProps {
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <TRPCReactProvider cookies={cookies().toString()}>
-      <div className="flex min-h-screen flex-col space-y-6">
-        <header className="sticky top-0 z-40 border-b bg-background">
-          <div className="container flex h-16 items-center justify-between py-4">
-            <MainNav items={dashboardConfig.mainNav} />
-            <UserAccountNav />
-          </div>
-        </header>
-        <div className="grid flex-1 gap-12 px-3 md:container md:grid-cols-[240px_1fr]">
-          <aside className="hidden w-[240px] flex-col md:flex">
-            <DashboardNav items={dashboardConfig.mainNav} />
-          </aside>
-          <main className="flex w-full max-w-[660px] flex-1 flex-col">
+      <div className="flex min-h-screen">
+        <aside className="container hidden h-16 w-[240px] flex-col gap-6 bg-white py-4 pl-4 md:flex">
+          <MainNav items={dashboardConfig.mainNav} />
+          <DashboardNav items={dashboardConfig.mainNav} />
+        </aside>
+        <div className="bg-custom-gradient min-h-screen flex-1 gap-12 md:container md:grid-cols-[240px_1fr]">
+          <main className="flex w-full max-w-full flex-col ">
+            <header className="container sticky z-40 mt-2 flex h-16 max-w-[50%] items-center justify-center rounded-full border-b bg-background py-4">
+              <Link
+                href="/"
+                className="hidden items-center space-x-2 pl-2 md:flex"
+              >
+                <Icons.logo className="w-4" />
+                <span className="hidden font-bold sm:inline-block">
+                  {siteConfig.title}
+                </span>
+              </Link>
+            </header>
             {children}
           </main>
         </div>
-        <SiteFooter className="border-t" />
       </div>
+      <SiteFooter className="border-t" />
     </TRPCReactProvider>
   );
 }

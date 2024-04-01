@@ -1,12 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 
 import { MainNavItem } from "@/types";
-import { siteConfig } from "@/config/site";
 import { Icons } from "@/components/icons";
 import { MobileNav } from "@/components/mobile-nav";
+import { UserAccountNav } from "./user-account-nav";
 
 interface MainNavProps {
   items?: MainNavItem[];
@@ -19,13 +18,9 @@ export function MainNav({ items, children }: MainNavProps) {
   const handleShowMobileMenu = () => setShowMobileMenu(!showMobileMenu);
 
   return (
-    <div className="flex gap-6 md:gap-10">
-      <Link href="/" className="hidden items-center space-x-2 md:flex">
-        <Icons.logo className="w-4" />
-        <span className="hidden font-bold sm:inline-block">
-          {siteConfig.title}
-        </span>
-      </Link>
+    <div className="flex items-center gap-2">
+      <UserAccountNav />
+      test@test.com
       <button
         className="flex items-center space-x-2 md:hidden"
         onClick={handleShowMobileMenu}

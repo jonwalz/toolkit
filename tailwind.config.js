@@ -16,6 +16,10 @@ const config = {
       },
     },
     extend: {
+      backgroundImage: {
+        "custom-gradient":
+          "radial-gradient(circle, rgba(216,240,252,1) 0%, rgba(148,187,233,1) 100%)",
+      },
       colors: {
         border: "hsl(var(--border))",
         ring: "hsl(var(--ring))",

@@ -1,13 +1,12 @@
 import "@/styles/globals.css";
 
-import { Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
 import { siteConfig } from "@/config/site";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 
-
-const inter = Inter({
+const inter = Montserrat({
   subsets: ["latin"],
   variable: "--font-sans",
 });
@@ -24,12 +23,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en"suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head />
-      <body className={cn(
-          "min-h-screen bg-background antialiased overscroll-y-none font-sans",
+      <body
+        className={cn(
+          "min-h-screen overscroll-y-none bg-background font-sans antialiased",
           inter.variable,
-        )}>
+        )}
+      >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
           <Toaster />

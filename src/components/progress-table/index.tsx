@@ -86,14 +86,14 @@ export function ProgressTable() {
   });
 
   return (
-    <div className="rounded-md border">
-      <Table>
-        <TableHeader>
+    <>
+      <Table className="overflow-hidden rounded-xl bg-white">
+        <TableHeader className="rounded-xl bg-gray-200">
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id} className="whitespace-nowrap">
+                  <TableHead key={header.id} className="h-10 whitespace-nowrap">
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -151,6 +151,6 @@ export function ProgressTable() {
           </PaginationItem>
         </PaginationContent>
       </Pagination>
-    </div>
+    </>
   );
 }

@@ -31,11 +31,14 @@ export function UserAccountNav() {
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
             {/* {user. && <p className="font-medium">{user.name}</p>} */}
-            {user?.email && (
+            {/* {user?.email && (
               <p className="w-[200px] truncate text-sm text-muted-foreground">
                 {user?.email}
               </p>
-            )}
+            )} */}
+            <p className="w-[200px] truncate text-sm text-muted-foreground">
+              test@test.com
+            </p>
           </div>
         </div>
         <DropdownMenuSeparator />

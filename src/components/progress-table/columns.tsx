@@ -36,11 +36,6 @@ export const columns = [
     header: "WIP Time",
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor("word_count", {
-    id: "word_count",
-    header: "Word Count",
-    cell: (info) => info.getValue(),
-  }),
   columnHelper.accessor("id", {
     id: "id",
     header: "Edit",
