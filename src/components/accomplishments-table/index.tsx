@@ -1,12 +1,11 @@
 "use client";
 
 import {
-  PaginationState,
-  flexRender,
-  getCoreRowModel,
   useReactTable,
+  getCoreRowModel,
+  flexRender,
+  PaginationState,
 } from "@tanstack/react-table";
-
 import {
   Table,
   TableBody,
@@ -15,45 +14,47 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useMemo, useState } from "react";
 import { columns } from "./columns";
-import { useEffect, useMemo, useState } from "react";
+import { clientSideApi } from "@/trpc/react";
+import { PaginationItem } from "@nextui-org/react";
 import {
-  Pagination,
   PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
   PaginationPrevious,
+  PaginationLink,
+  PaginationEllipsis,
+  PaginationNext,
+  Pagination,
 } from "../ui/pagination";
 import { useWindowSize } from "@/hooks/use-window-size";
-import { ProgressResponse, getAllProgress } from "@/server/functions";
 
-export function ProgressTable() {
+export function StoryAccomplishmentsTable() {
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   });
-  const [data, setData] = useState<ProgressResponse>();
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    async function fetchData() {
-      setIsLoading(true);
-      try {
-        const data = await getAllProgress(pageIndex, pageSize);
-        setData(data);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setIsLoading(false);
-      }
-    }
+  const fetchDataOptions = {
+    pageIndex,
+    pageSize,
+  };
 
-    void fetchData();
-  }, [pageIndex, pageSize]);
+  const { data, isLoading, error } =
+    clientSideApi.accomplishments.getAllAccomplishments.useQuery(
+      fetchDataOptions,
+      {
+        keepPreviousData: true,
+      },
+    );
 
-  const { progress, totalPages } = data ?? { progress: [], totalPages: 0 };
+  if (error) {
+    console.log("error", error);
+  }
+
+  const { accomplishments, totalPages } = data ?? {
+    accomplishments: [],
+    totalPages: 0,
+  };
 
   const pagination = useMemo(
     () => ({
@@ -64,12 +65,11 @@ export function ProgressTable() {
   );
 
   const { width } = useWindowSize();
-
   const table = useReactTable({
-    data: progress,
+    data: accomplishments,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    manualPagination: true,
+    onPaginationChange: setPagination,
     state: {
       pagination,
       columnVisibility: {
@@ -79,7 +79,6 @@ export function ProgressTable() {
         wip_time: width > 768,
       },
     },
-    onPaginationChange: setPagination,
   });
 
   return (
@@ -88,30 +87,23 @@ export function ProgressTable() {
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id} className="whitespace-nowrap">
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
-                  </TableHead>
-                );
-              })}
+              {headerGroup.headers.map((header) => (
+                <TableHead key={header.id} className="whitespace-nowrap">
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
+                </TableHead>
+              ))}
             </TableRow>
           ))}
         </TableHeader>
         <TableBody>
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
+              <TableRow key={row.id}>
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id} className="max-w-[100px] truncate">
+                  <TableCell key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
