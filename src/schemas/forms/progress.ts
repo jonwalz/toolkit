@@ -11,4 +11,5 @@ export const progressSchema = z.object({
     .nullable()
     .optional(),
   progressParagraph: z.string(),
+  id: z.string().optional(),
 });

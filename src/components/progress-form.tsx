@@ -7,8 +7,9 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
-import { clientSideApi } from "@/trpc/react";
-import { useRouter } from "next/navigation";
+import { createNewProgressEntry } from "@/server/functions/createNewProgressEntry";
+import { useRef } from "react";
+import { updateProgressEntry } from "@/server/functions/updateProgressEntry";
 
 const formSchema = z.object({
   date: z.string(),
@@ -21,6 +22,7 @@ const formSchema = z.object({
     .nullable()
     .optional(),
   progressParagraph: z.string(),
+  id: z.string().optional(),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -41,42 +43,31 @@ export function ProgressForm({
   entryData?: FormData;
   id?: string;
 }) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
+  const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: entryData ?? defaultValues,
   });
 
-  const router = useRouter();
+  const {
+    register,
+    formState: { errors },
+  } = form;
 
-  const { createProgress, updateProgress } = clientSideApi.progress;
-  const createNewProgressEntry = createProgress.useMutation({
-    onSuccess: () => router.push("/dashboard/progress"),
-  });
+  // const router = useRouter();
 
-  const updateProgressEntry = updateProgress.useMutation({
-    onSuccess: () => router.push("/dashboard/progress"),
-  });
+  // const { updateProgress } = clientSideApi.progress;
 
-  const onSubmit = (data: FormData) => {
-    const checkedWordCount = data.wordCount ? data.wordCount : undefined;
-    if (id) {
-      updateProgressEntry.mutate({
-        ...data,
-        wordCount: checkedWordCount,
-        id: id,
-      });
-    } else {
-      createNewProgressEntry.mutate({ ...data, wordCount: checkedWordCount });
-    }
-  };
+  // const updateProgressEntry = updateProgress.useMutation({
+  //   onSuccess: () => router.push("/dashboard/progress"),
+  // });
+
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const action = id ? updateProgressEntry : createNewProgressEntry;
 
   return (
     <div className="grid gap-6">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form ref={formRef} action={action}>
         <div className="lg:grid-cols-2p  grid grid-cols-1 gap-4">
           <div className="col-span-1 sm:col-span-1">
             <Label>
@@ -111,6 +102,7 @@ export function ProgressForm({
               {...register("progressParagraph")}
             />
           </Label>
+          {id && <Input type="hidden" {...register("id")} value={id} />}
         </div>
         {Object.keys(errors).length > 0 && (
           <p className="px-1 text-xs text-red-600">

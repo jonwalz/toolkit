@@ -1,6 +1,6 @@
 "use server";
 
-import { supabaseServerClient } from "./vendor/supabase";
+import { supabaseServerClient } from "../vendor/supabase";
 
 type ProgressEntries = {
   created_at: string;

@@ -27,7 +27,10 @@ import {
   PaginationPrevious,
 } from "../ui/pagination";
 import { useWindowSize } from "@/hooks/use-window-size";
-import { ProgressResponse, getAllProgress } from "@/server/functions";
+import {
+  ProgressResponse,
+  getAllProgress,
+} from "@/server/functions/getAllProgress";
 
 export function ProgressTable() {
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
