@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 
 import {
@@ -10,21 +8,19 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { UserAvatar } from "@/components/user-avatar";
-import { useRouter } from "next/navigation";
-import { clientSideApi } from "@/trpc/react";
-import { supabase } from "@/client/supabase";
-// import { ModeToggle } from "./mode-toggle";
+import { ModeToggle } from "./mode-toggle";
+import { supabaseServerClient } from "@/server/vendor/supabase";
+import { LogOutMenuItem } from "./log-out-menu-item";
 
-export function UserAccountNav() {
-  const router = useRouter();
-  const { data: user } = clientSideApi.user.getUser.useQuery();
+export async function UserAccountNav() {
+  const user = await supabaseServerClient().auth.getUser();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center gap-2">
         <UserAvatar
-          // user={{ name: user.name || null, image: user.image || null }}
-          user={{ email: user?.email ?? "Welcome" }}
+          // user={{ email: user?.user?.email ?? "Welcome" }}
+          user={{ email: "test" }}
           className="h-8 w-8"
         />
         test@test.com
@@ -33,11 +29,11 @@ export function UserAccountNav() {
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
             {/* {user. && <p className="font-medium">{user.name}</p>} */}
-            {/* {user?.email && (
+            {user?.data.user?.email && (
               <p className="w-[200px] truncate text-sm text-muted-foreground">
-                {user?.email}
+                {user?.data.user?.email}
               </p>
-            )} */}
+            )}
             <p className="w-[200px] truncate text-sm text-muted-foreground">
               test@test.com
             </p>
@@ -54,22 +50,9 @@ export function UserAccountNav() {
           <Link href="/dashboard/settings">Settings</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        {/* <ModeToggle /> */}
+        <ModeToggle />
         <DropdownMenuSeparator />
-        <DropdownMenuItem
-          className="cursor-pointer"
-          onSelect={async (event) => {
-            event.preventDefault();
-            try {
-              await supabase.auth.signOut();
-            } catch (e) {
-              console.error("Sign out error: ", e);
-            }
-            router.push("/login");
-          }}
-        >
-          Sign out
-        </DropdownMenuItem>
+        <LogOutMenuItem />
       </DropdownMenuContent>
     </DropdownMenu>
   );

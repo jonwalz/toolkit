@@ -8,7 +8,10 @@ export function Shell({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cn("grid items-start gap-8 py-6", className)} {...props}>
+    <div
+      className={cn("grid items-start gap-8 px-4 py-6", className)}
+      {...props}
+    >
       {children}
     </div>
   );

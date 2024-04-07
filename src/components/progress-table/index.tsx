@@ -87,8 +87,8 @@ export function ProgressTable() {
 
   return (
     <>
-      <Table className="overflow-hidden rounded-xl bg-white">
-        <TableHeader className="rounded-xl bg-gray-200">
+      <Table className="overflow-hidden rounded-xl bg-white dark:bg-[rgba(55,70,85,1)]">
+        <TableHeader className="rounded-xl bg-gray-200 dark:bg-[rgba(45,60,75,1)]">
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {

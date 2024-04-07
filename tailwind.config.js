@@ -18,7 +18,9 @@ const config = {
     extend: {
       backgroundImage: {
         "custom-gradient":
-          "radial-gradient(circle, rgba(216,240,252,1) 0%, rgba(148,187,233,1) 100%)",
+          "radial-gradient(circle, rgba(216,240,252,1) 0%, rgba(148,187,233,0.7) 100%)",
+        "custom-gradient-dark":
+          "radial-gradient(circle, rgba(45,60,75,1) 0%, rgba(35,50,65,0.7) 100%)",
       },
       colors: {
         border: "hsl(var(--border))",

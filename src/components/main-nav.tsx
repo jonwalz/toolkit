@@ -5,7 +5,6 @@ import { useState } from "react";
 import { MainNavItem } from "@/types";
 import { Icons } from "@/components/icons";
 import { MobileNav } from "@/components/mobile-nav";
-import { UserAccountNav } from "./user-account-nav";
 
 interface MainNavProps {
   items?: MainNavItem[];
@@ -19,8 +18,7 @@ export function MainNav({ items, children }: MainNavProps) {
 
   return (
     <div className="flex items-center gap-2">
-      <UserAccountNav />
-
+      {children}
       <button
         className="flex items-center space-x-2 md:hidden"
         onClick={handleShowMobileMenu}
@@ -28,9 +26,7 @@ export function MainNav({ items, children }: MainNavProps) {
         {showMobileMenu ? <Icons.close /> : <Icons.logo className="max-w-4" />}
         <span className="font-bold">Menu</span>
       </button>
-      {showMobileMenu && items && (
-        <MobileNav items={items}>{children}</MobileNav>
-      )}
+      {showMobileMenu && items && <MobileNav items={items} />}
     </div>
   );
 }

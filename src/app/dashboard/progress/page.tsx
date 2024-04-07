@@ -13,7 +13,7 @@ export default function Progress() {
         <DashboardHeader heading="Progress log" />
         <Link
           href="/dashboard/progress/new"
-          className={buttonVariants({ variant: "default" })}
+          className={buttonVariants({ variant: "default", size: "sm" })}
         >
           New
         </Link>
