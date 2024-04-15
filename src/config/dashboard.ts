@@ -8,7 +8,7 @@ export const dashboardConfig: DashboardConfig = {
       icon: "penTool",
     },
     {
-      title: "Story Wins",
+      title: "Accomplishments",
       href: "/dashboard/accomplishments",
       icon: "award",
     },

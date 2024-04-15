@@ -14,9 +14,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { columns } from "./columns";
-import { clientSideApi } from "@/trpc/react";
 import { PaginationItem } from "@nextui-org/react";
 import {
   PaginationContent,
@@ -26,30 +25,42 @@ import {
   PaginationNext,
   Pagination,
 } from "../ui/pagination";
-import { useWindowSize } from "@/hooks/use-window-size";
+import {
+  AccomplishmentResponse,
+  getAllAccomplishments,
+} from "@/server/functions/getAllAccomplishments";
 
 export function StoryAccomplishmentsTable() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState<AccomplishmentResponse>({
+    accomplishments: [],
+    totalPages: 0,
+  });
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   });
 
-  const fetchDataOptions = {
-    pageIndex,
-    pageSize,
-  };
+  useEffect(() => {
+    async function fetchData() {
+      setIsLoading(true);
+      try {
+        const fetchDataOptions = {
+          pageIndex,
+          pageSize,
+        };
 
-  const { data, isLoading, error } =
-    clientSideApi.accomplishments.getAllAccomplishments.useQuery(
-      fetchDataOptions,
-      {
-        keepPreviousData: true,
-      },
-    );
+        const data = await getAllAccomplishments(fetchDataOptions);
+        setData(data);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setIsLoading(false);
+      }
+    }
 
-  if (error) {
-    console.log("error", error);
-  }
+    void fetchData();
+  }, [pageIndex, pageSize]);
 
   const { accomplishments, totalPages } = data ?? {
     accomplishments: [],
@@ -64,7 +75,6 @@ export function StoryAccomplishmentsTable() {
     [pageIndex, pageSize],
   );
 
-  const { width } = useWindowSize();
   const table = useReactTable({
     data: accomplishments,
     columns,
@@ -72,12 +82,6 @@ export function StoryAccomplishmentsTable() {
     onPaginationChange: setPagination,
     state: {
       pagination,
-      columnVisibility: {
-        play: width > 768,
-        word_count: width > 1000,
-        self_care: width > 890,
-        wip_time: width > 768,
-      },
     },
   });
 

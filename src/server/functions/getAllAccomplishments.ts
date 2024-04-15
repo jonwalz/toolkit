@@ -1,22 +1,25 @@
 "use server";
 
-import { ProgressEntry } from "@/components/progress-table/columns";
+import { StoryAccomplishmentEntry } from "@/components/accomplishments-table/columns";
 import { supabaseServerClient } from "../vendor/supabase";
 
-export type ProgressResponse = {
-  progress: ProgressEntry[];
+export type AccomplishmentResponse = {
+  accomplishments: StoryAccomplishmentEntry[];
   totalPages: number;
 };
 
-export async function getAllProgress(
-  pageIndex: number,
-  pageSize: number,
-): Promise<ProgressResponse> {
+export async function getAllAccomplishments({
+  pageIndex,
+  pageSize,
+}: {
+  pageIndex: number;
+  pageSize: number;
+}): Promise<AccomplishmentResponse> {
   const startIndex = pageIndex * pageSize;
   const endIndex = startIndex + pageSize - 1;
 
-  const { data: progress, error } = await supabaseServerClient()
-    .from("progress")
+  const { data: accomplishments, error } = await supabaseServerClient()
+    .from("storyAccomplishments")
     .select("*")
     .order("date", { ascending: false })
     .range(startIndex, endIndex);
@@ -25,6 +28,7 @@ export async function getAllProgress(
     console.log("Progress entry error: ", error.message);
     throw error;
   }
+
   // To get the total number of pages
   const { data: totalCount, error: countError } = await supabaseServerClient()
     .from("progress")
@@ -37,8 +41,8 @@ export async function getAllProgress(
 
   const totalPages = Math.ceil(totalCount?.length / pageSize);
 
-  return { progress, totalPages } as {
-    progress: ProgressEntry[];
+  return { accomplishments, totalPages } as {
+    accomplishments: StoryAccomplishmentEntry[];
     totalPages: number;
   };
 }

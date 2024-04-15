@@ -6,9 +6,9 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { Icons } from "../icons";
 import Link from "next/link";
 
-type Progress = Database["public"]["Tables"]["progress"]["Row"];
+export type ProgressEntry = Database["public"]["Tables"]["progress"]["Row"];
 
-const columnHelper = createColumnHelper<Progress>();
+const columnHelper = createColumnHelper<ProgressEntry>();
 
 export const columns = [
   columnHelper.accessor("date", {

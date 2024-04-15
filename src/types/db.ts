@@ -1,4 +1,3 @@
-
 export type Json =
   | string
   | number
@@ -104,6 +103,33 @@ export interface Database {
             referencedColumns: ["id"]
           }
         ]
+      }
+      storyAccomplishments: {
+        Row: {
+          created_at: string
+          date: string | null
+          entry_date: string | null
+          id: number
+          nextSteps: string | null
+          storyAccomplishments: string | null
+        }
+        Insert: {
+          created_at?: string
+          date?: string | null
+          entry_date?: string | null
+          id?: number
+          nextSteps?: string | null
+          storyAccomplishments?: string | null
+        }
+        Update: {
+          created_at?: string
+          date?: string | null
+          entry_date?: string | null
+          id?: number
+          nextSteps?: string | null
+          storyAccomplishments?: string | null
+        }
+        Relationships: []
       }
     }
     Views: {
@@ -379,3 +405,4 @@ export type Enums<
   : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
   ? Database["public"]["Enums"][PublicEnumNameOrOptions]
   : never
+

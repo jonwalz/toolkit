@@ -12,7 +12,7 @@ export default function Accomplishments() {
       <div className="flex justify-between">
         <DashboardHeader heading="Story Accomplishments" />
         <Link
-          href="/dashboard/progress/new"
+          href="/dashboard/accomplishments/new"
           className={buttonVariants({ variant: "default" })}
         >
           New
