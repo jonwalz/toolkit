@@ -30,5 +30,5 @@ export async function updateAccomplishmentEntry(formData: FormData) {
     throw parsed.error;
   }
 
-  redirect("/dashboard/progress");
+  redirect("/accomplishments/progress");
 }

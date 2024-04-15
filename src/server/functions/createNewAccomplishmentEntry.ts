@@ -25,5 +25,5 @@ export async function createNewProgressEntry(formData: FormData) {
     }
   }
 
-  redirect("/dashboard/progress");
+  redirect("/accomplishments/progress");
 }

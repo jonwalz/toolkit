@@ -53,14 +53,6 @@ export function ProgressForm({
     formState: { errors },
   } = form;
 
-  // const router = useRouter();
-
-  // const { updateProgress } = clientSideApi.progress;
-
-  // const updateProgressEntry = updateProgress.useMutation({
-  //   onSuccess: () => router.push("/dashboard/progress"),
-  // });
-
   const formRef = useRef<HTMLFormElement>(null);
 
   const action = id ? updateProgressEntry : createNewProgressEntry;
