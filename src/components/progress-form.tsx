@@ -12,23 +12,23 @@ import { useRef } from "react";
 import { updateProgressEntry } from "@/server/functions/updateProgressEntry";
 
 const formSchema = z.object({
-  date: z.string(),
-  play: z.string(),
-  wipTime: z.string(),
-  selfCare: z.string(),
+  date: z.string().min(1, "Date is required"),
+  play: z.string().min(1, "Play is required"),
+  wipTime: z.string().min(1, "WIP Time is required"),
+  selfCare: z.string().min(1, "Self Care is required"),
   wordCount: z
     .string()
     .transform((value) => (value === "" ? null : parseFloat(value)))
     .nullable()
     .optional(),
-  progressParagraph: z.string(),
+  progressParagraph: z.string().min(1, "Progress Paragraph is required"),
   id: z.string().optional(),
 });
 
 type FormData = z.infer<typeof formSchema>;
 
 const defaultValues: FormData = {
-  date: new Date().toDateString(),
+  date: new Date().toISOString().split("T")[0]!,
   play: "",
   wipTime: "",
   selfCare: "",
@@ -46,11 +46,12 @@ export function ProgressForm({
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: entryData ?? defaultValues,
+    mode: "onChange",
   });
 
   const {
     register,
-    formState: { errors },
+    formState: { errors, isValid },
   } = form;
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -65,18 +66,32 @@ export function ProgressForm({
             <Label>
               Date:
               <Input className="mb-2" type="date" {...register("date")} />
+              {errors.date && (
+                <p className="text-xs text-red-600">{errors.date.message}</p>
+              )}
             </Label>
             <Label>
               Play:
               <Input className="mb-2" {...register("play")} />
+              {errors.play && (
+                <p className="text-xs text-red-600">{errors.play.message}</p>
+              )}
             </Label>
             <Label>
               WIP Time:
               <Input className="mb-2" {...register("wipTime")} />
+              {errors.wipTime && (
+                <p className="text-xs text-red-600">{errors.wipTime.message}</p>
+              )}
             </Label>
             <Label>
               Self Care:
               <Input className="mb-2" {...register("selfCare")} />
+              {errors.selfCare && (
+                <p className="text-xs text-red-600">
+                  {errors.selfCare.message}
+                </p>
+              )}
             </Label>
             <Label>
               Word Count (Optional):
@@ -85,6 +100,11 @@ export function ProgressForm({
                 type="number"
                 {...register("wordCount")}
               />
+              {errors.wordCount && (
+                <p className="text-xs text-red-600">
+                  {errors.wordCount.message}
+                </p>
+              )}
             </Label>
           </div>
           <Label>
@@ -93,15 +113,24 @@ export function ProgressForm({
               className="mb-2 mt-2"
               {...register("progressParagraph")}
             />
+            {errors.progressParagraph && (
+              <p className="text-xs text-red-600">
+                {errors.progressParagraph.message}
+              </p>
+            )}
           </Label>
           {id && <Input type="hidden" {...register("id")} value={id} />}
         </div>
         {Object.keys(errors).length > 0 && (
           <p className="px-1 text-xs text-red-600">
-            Something went wrong. Please try again.
+            Please fill in all required fields
           </p>
         )}
-        <button type="submit" className={cn(buttonVariants(), "ml-auto mt-2")}>
+        <button
+          type="submit"
+          className={cn(buttonVariants(), "ml-auto mt-2")}
+          disabled={!isValid}
+        >
           Submit
         </button>
       </form>

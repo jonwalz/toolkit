@@ -11,9 +11,9 @@ import { updateAccomplishmentEntry } from "@/server/functions/updateAccomplishme
 import { createNewAccomplishmentEntry } from "@/server/functions/createNewAccomplishmentEntry";
 
 const formSchema = z.object({
-  date: z.string(),
-  accomplishment: z.string(),
-  next_step: z.string(),
+  date: z.string().min(1, "Date is required"),
+  accomplishment: z.string().min(1, "Accomplishment is required"),
+  next_step: z.string().min(1, "Next Step is required"),
   id: z.string().optional(),
 });
 
@@ -39,7 +39,7 @@ export function AccomplishmentForm({
 
   const {
     register,
-    formState: { errors },
+    formState: { errors, isValid },
   } = form;
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -54,14 +54,29 @@ export function AccomplishmentForm({
             <Label>
               Date:
               <Input className="mb-2" type="date" {...register("date")} />
+              {errors.date && (
+                <p className="px-1 text-xs text-red-600">
+                  {errors.date.message}
+                </p>
+              )}
             </Label>
             <Label>
               Accomplishment:
               <Input className="mb-2" {...register("accomplishment")} />
+              {errors.accomplishment && (
+                <p className="px-1 text-xs text-red-600">
+                  {errors.accomplishment.message}
+                </p>
+              )}
             </Label>
             <Label>
               Next Step:
               <Input className="mb-2" {...register("next_step")} />
+              {errors.next_step && (
+                <p className="px-1 text-xs text-red-600">
+                  {errors.next_step.message}
+                </p>
+              )}
             </Label>
           </div>
           {id && <Input type="hidden" {...register("id")} value={id} />}
@@ -71,7 +86,11 @@ export function AccomplishmentForm({
             Something went wrong. Please try again.
           </p>
         )}
-        <button type="submit" className={cn(buttonVariants(), "ml-auto mt-2")}>
+        <button
+          type="submit"
+          className={cn(buttonVariants(), "ml-auto mt-2")}
+          disabled={!isValid}
+        >
           Submit
         </button>
       </form>
