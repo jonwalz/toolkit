@@ -65,7 +65,12 @@ export function ProgressForm({
           <div className="col-span-1 sm:col-span-1">
             <Label>
               Date:
-              <Input className="mb-2" type="date" {...register("date")} />
+              <Input
+                className="mb-2"
+                type="date"
+                defaultValue={defaultValues.date}
+                {...register("date")}
+              />
               {errors.date && (
                 <p className="text-xs text-red-600">{errors.date.message}</p>
               )}
