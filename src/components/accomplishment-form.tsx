@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
 import { useRef } from "react";
 import { updateAccomplishmentEntry } from "@/server/functions/updateAccomplishmentEntry";
+import { createNewAccomplishmentEntry } from "@/server/functions/createNewAccomplishmentEntry";
 
 const formSchema = z.object({
   date: z.string(),
@@ -43,7 +44,7 @@ export function AccomplishmentForm({
 
   const formRef = useRef<HTMLFormElement>(null);
 
-  const action = id ? updateAccomplishmentEntry : updateAccomplishmentEntry;
+  const action = id ? updateAccomplishmentEntry : createNewAccomplishmentEntry;
 
   return (
     <div className="grid gap-6">

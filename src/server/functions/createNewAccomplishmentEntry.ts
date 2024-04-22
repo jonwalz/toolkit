@@ -4,7 +4,7 @@ import { supabaseServerClient } from "../vendor/supabase";
 import { redirect } from "next/navigation";
 import { accomplishmentSchema } from "@/schemas/forms/accomplishment";
 
-export async function createNewProgressEntry(formData: FormData) {
+export async function createNewAccomplishmentEntry(formData: FormData) {
   const data = Object.fromEntries(formData);
   const parsed = await accomplishmentSchema.safeParseAsync(data);
 
@@ -14,8 +14,8 @@ export async function createNewProgressEntry(formData: FormData) {
       .insert([
         {
           date: parsed.data.date,
-          accomplishment: parsed.data.accomplishment,
-          next_step: parsed.data.next_step,
+          storyAccomplishments: parsed.data.accomplishment,
+          nextSteps: parsed.data.next_step,
         },
       ]);
 
@@ -25,5 +25,5 @@ export async function createNewProgressEntry(formData: FormData) {
     }
   }
 
-  redirect("/accomplishments/progress");
+  redirect("/dashboard/accomplishments");
 }
