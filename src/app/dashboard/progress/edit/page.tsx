@@ -1,8 +1,9 @@
 "use client";
+
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 export default function Edit() {
   const router = useRouter();

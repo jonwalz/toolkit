@@ -10,18 +10,20 @@ import { buttonVariants } from "./ui/button";
 import { createNewProgressEntry } from "@/server/functions/createNewProgressEntry";
 import { useRef } from "react";
 import { updateProgressEntry } from "@/server/functions/updateProgressEntry";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { deleteProgressEntry } from "@/server/functions/deleteProgressEntry";
 
 const formSchema = z.object({
-  date: z.string().min(1, "Date is required"),
-  play: z.string().min(1, "Play is required"),
-  wipTime: z.string().min(1, "WIP Time is required"),
-  selfCare: z.string().min(1, "Self Care is required"),
+  date: z.string().optional(),
+  play: z.string().optional(),
+  wipTime: z.string().optional(),
+  selfCare: z.string().optional(),
   wordCount: z
     .string()
     .transform((value) => (value === "" ? null : parseFloat(value)))
     .nullable()
     .optional(),
-  progressParagraph: z.string().min(1, "Progress Paragraph is required"),
+  progressParagraph: z.string().optional(),
   id: z.string().optional(),
 });
 
@@ -61,7 +63,7 @@ export function ProgressForm({
   return (
     <div className="grid gap-6">
       <form ref={formRef} action={action}>
-        <div className="lg:grid-cols-2p  grid grid-cols-1 gap-4">
+        <div className="grid  grid-cols-1 gap-4 lg:grid-cols-2">
           <div className="col-span-1 sm:col-span-1">
             <Label>
               Date:
@@ -115,7 +117,7 @@ export function ProgressForm({
           <Label>
             Progress Paragraph:
             <Textarea
-              className="mb-2 mt-2"
+              className="mb-2 mt-2 h-[80%]"
               {...register("progressParagraph")}
             />
             {errors.progressParagraph && (
@@ -131,13 +133,43 @@ export function ProgressForm({
             Please fill in all required fields
           </p>
         )}
-        <button
-          type="submit"
-          className={cn(buttonVariants(), "ml-auto mt-2")}
-          disabled={!isValid}
-        >
-          Submit
-        </button>
+        <div className="flex justify-between">
+          <button
+            type="submit"
+            className={cn(buttonVariants(), "mt-2 justify-self-start")}
+            disabled={!isValid}
+          >
+            Submit
+          </button>
+          {id && (
+            <Popover>
+              <PopoverTrigger asChild>
+                <button
+                  type="button"
+                  className={cn(
+                    buttonVariants({ variant: "destructive" }),
+                    "ml-auto mt-2",
+                  )}
+                >
+                  Delete
+                </button>
+              </PopoverTrigger>
+              <PopoverContent align="end">
+                <div>Are you sure you want to delete this entry?</div>
+                <button
+                  type="button"
+                  onClick={() => deleteProgressEntry(id)}
+                  className={cn(
+                    buttonVariants({ variant: "destructive" }),
+                    "mt-2",
+                  )}
+                >
+                  Confirm Delete
+                </button>
+              </PopoverContent>
+            </Popover>
+          )}
+        </div>
       </form>
     </div>
   );
