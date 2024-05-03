@@ -3,7 +3,7 @@ import { ProgressForm } from "@/components/progress-form";
 import { Shell } from "@/components/shell";
 import { supabaseServerClient } from "@/server/vendor/supabase";
 
-export const runtime = "nodejs";
+export const runtime = "edge";
 
 export default async function Edit({ params }: { params: { id: string } }) {
   const { data, error } = await supabaseServerClient()

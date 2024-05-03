@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
-export const runtime = "nodejs";
+export const runtime = "edge";
 
 export default function Edit() {
   const router = useRouter();
