@@ -10,8 +10,8 @@ const config = {
   async redirects() {
     return [
       {
-        source: "/dashboard/progress/edit",
-        destination: "/dashboard/progress",
+        source: "/progress/edit",
+        destination: "/progress",
         permanent: true,
       },
     ];

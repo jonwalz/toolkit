@@ -12,7 +12,7 @@ export default function Progress() {
       <div className="flex justify-between">
         <DashboardHeader heading="Progress log" />
         <Link
-          href="/dashboard/progress/new"
+          href="/progress/new"
           className={buttonVariants({ variant: "default", size: "sm" })}
         >
           New

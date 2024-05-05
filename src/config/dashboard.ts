@@ -4,32 +4,32 @@ export const dashboardConfig: DashboardConfig = {
   mainNav: [
     {
       title: "Progress log",
-      href: "/dashboard/progress",
+      href: "/progress",
       icon: "penTool",
     },
     {
       title: "Accomplishments",
-      href: "/dashboard/accomplishments",
+      href: "/accomplishments",
       icon: "award",
     },
     {
       title: "Project Targets",
-      href: "/dashboard/targets",
+      href: "/targets",
       icon: "crosshair",
     },
     {
       title: "Word count",
-      href: "/dashboard/count",
+      href: "/count",
       icon: "calculator",
     },
     {
       title: "Mindset",
-      href: "/dashboard/mindset",
+      href: "/mindset",
       icon: "smilePlus",
     },
     {
       title: "Journal prompts",
-      href: "/dashboard/journal",
+      href: "/journal",
       icon: "pencilLine",
     },
   ],

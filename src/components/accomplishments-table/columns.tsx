@@ -29,7 +29,7 @@ export const columns = [
     header: "Edit",
     cell: (info) => {
       return (
-        <Link href={`/dashboard/accomplishments/edit/${info.row.original.id}`}>
+        <Link href={`/accomplishments/edit/${info.row.original.id}`}>
           <Icons.logo className="w-4 hover:cursor-pointer" />
         </Link>
       );
