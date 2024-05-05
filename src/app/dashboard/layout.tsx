@@ -22,7 +22,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       </aside>
       <div className="min-h-screen flex-1 gap-12 md:container md:grid-cols-[240px_1fr]">
         <main className="flex w-full max-w-full flex-col ">
-          <header className="container sticky z-40 mt-4 flex h-12 max-w-[50%] items-center justify-center rounded-full border dark:bg-[rgba(55,70,85,1)]">
+          <header className="container sticky z-40 mt-4 flex h-12 max-w-[50%] items-center justify-center rounded-full border bg-secondary dark:bg-[rgba(55,70,85,1)]">
+            <MainNav items={dashboardConfig.mainNav} />
             <Link
               href="/"
               className="hidden items-center space-x-2 pl-2 md:flex"
