@@ -1,15 +1,12 @@
 import { DashboardHeader } from "@/components/header";
 import { ProgressForm } from "@/components/progress-form";
 import { Shell } from "@/components/shell";
-import { supabaseServerClient } from "@/server/vendor/supabase";
+import { getOneProgressEntry } from "@/server/functions/getOneProgressEntry";
 
 export const runtime = "edge";
 
 export default async function Edit({ params }: { params: { id: string } }) {
-  const { data, error } = await supabaseServerClient()
-    .from("progress")
-    .select("*")
-    .eq("id", params.id);
+  const { data, error } = await getOneProgressEntry(params.id);
 
   if (error) {
     return <div>Error: {error.message}</div>;

@@ -3,7 +3,7 @@
 import { supabaseServerClient } from "../vendor/supabase";
 import { redirect } from "next/navigation";
 
-export async function deleteProgressEntry(id: string) {
+export async function deleteProgressEntry(id: string | undefined) {
   const { error } = await supabaseServerClient()
     .from("progress")
     .delete()

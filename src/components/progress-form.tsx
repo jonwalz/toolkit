@@ -10,8 +10,15 @@ import { buttonVariants } from "./ui/button";
 import { createNewProgressEntry } from "@/server/functions/createNewProgressEntry";
 import { useRef } from "react";
 import { updateProgressEntry } from "@/server/functions/updateProgressEntry";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { deleteProgressEntry } from "@/server/functions/deleteProgressEntry";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogTrigger,
+} from "./ui/alert-dialog";
 
 const formSchema = z.object({
   date: z.string().optional(),
@@ -59,11 +66,12 @@ export function ProgressForm({
   const formRef = useRef<HTMLFormElement>(null);
 
   const action = id ? updateProgressEntry : createNewProgressEntry;
+  const deleteProgressEntryWithId = deleteProgressEntry.bind(null, id);
 
   return (
     <div className="grid gap-6">
       <form ref={formRef} action={action}>
-        <div className="grid  grid-cols-1 gap-4 lg:grid-cols-2">
+        <div className="grid  grid-cols-1 gap-x-4 lg:grid-cols-2">
           <div className="col-span-1 sm:col-span-1">
             <Label>
               Date:
@@ -101,7 +109,7 @@ export function ProgressForm({
               )}
             </Label>
             <Label>
-              Word Count (Optional):
+              Word Count:
               <Input
                 className="mb-2"
                 type="number"
@@ -114,10 +122,10 @@ export function ProgressForm({
               )}
             </Label>
           </div>
-          <Label>
+          <Label className="flex flex-col">
             Progress Paragraph:
             <Textarea
-              className="mb-2 mt-2 h-[80%]"
+              className="mb-2 mt-2 h-[100%] min-h-[200px]"
               {...register("progressParagraph")}
             />
             {errors.progressParagraph && (
@@ -142,8 +150,8 @@ export function ProgressForm({
             Submit
           </button>
           {id && (
-            <Popover>
-              <PopoverTrigger asChild>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
                 <button
                   type="button"
                   className={cn(
@@ -153,21 +161,22 @@ export function ProgressForm({
                 >
                   Delete
                 </button>
-              </PopoverTrigger>
-              <PopoverContent align="end">
+              </AlertDialogTrigger>
+              <AlertDialogContent>
                 <div>Are you sure you want to delete this entry?</div>
-                <button
-                  type="button"
-                  onClick={() => deleteProgressEntry(id)}
-                  className={cn(
-                    buttonVariants({ variant: "destructive" }),
-                    "mt-2",
-                  )}
-                >
-                  Confirm Delete
-                </button>
-              </PopoverContent>
-            </Popover>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <form action={deleteProgressEntryWithId}>
+                    <AlertDialogAction
+                      type="submit"
+                      className={cn(buttonVariants({ variant: "destructive" }))}
+                    >
+                      Confirm Delete
+                    </AlertDialogAction>
+                  </form>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           )}
         </div>
       </form>
