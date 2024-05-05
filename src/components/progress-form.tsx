@@ -10,18 +10,27 @@ import { buttonVariants } from "./ui/button";
 import { createNewProgressEntry } from "@/server/functions/createNewProgressEntry";
 import { useRef } from "react";
 import { updateProgressEntry } from "@/server/functions/updateProgressEntry";
+import { deleteProgressEntry } from "@/server/functions/deleteProgressEntry";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogTrigger,
+} from "./ui/alert-dialog";
 
 const formSchema = z.object({
-  date: z.string().min(1, "Date is required"),
-  play: z.string().min(1, "Play is required"),
-  wipTime: z.string().min(1, "WIP Time is required"),
-  selfCare: z.string().min(1, "Self Care is required"),
+  date: z.string().optional(),
+  play: z.string().optional(),
+  wipTime: z.string().optional(),
+  selfCare: z.string().optional(),
   wordCount: z
     .string()
     .transform((value) => (value === "" ? null : parseFloat(value)))
     .nullable()
     .optional(),
-  progressParagraph: z.string().min(1, "Progress Paragraph is required"),
+  progressParagraph: z.string().optional(),
   id: z.string().optional(),
 });
 
@@ -57,11 +66,12 @@ export function ProgressForm({
   const formRef = useRef<HTMLFormElement>(null);
 
   const action = id ? updateProgressEntry : createNewProgressEntry;
+  const deleteProgressEntryWithId = deleteProgressEntry.bind(null, id);
 
   return (
     <div className="grid gap-6">
       <form ref={formRef} action={action}>
-        <div className="lg:grid-cols-2p  grid grid-cols-1 gap-4">
+        <div className="grid  grid-cols-1 gap-x-4 lg:grid-cols-2">
           <div className="col-span-1 sm:col-span-1">
             <Label>
               Date:
@@ -99,7 +109,7 @@ export function ProgressForm({
               )}
             </Label>
             <Label>
-              Word Count (Optional):
+              Word Count:
               <Input
                 className="mb-2"
                 type="number"
@@ -112,10 +122,10 @@ export function ProgressForm({
               )}
             </Label>
           </div>
-          <Label>
+          <Label className="flex flex-col">
             Progress Paragraph:
             <Textarea
-              className="mb-2 mt-2"
+              className="mb-2 mt-2 h-[100%] min-h-[200px]"
               {...register("progressParagraph")}
             />
             {errors.progressParagraph && (
@@ -131,13 +141,44 @@ export function ProgressForm({
             Please fill in all required fields
           </p>
         )}
-        <button
-          type="submit"
-          className={cn(buttonVariants(), "ml-auto mt-2")}
-          disabled={!isValid}
-        >
-          Submit
-        </button>
+        <div className="flex justify-between">
+          <button
+            type="submit"
+            className={cn(buttonVariants(), "mt-2 justify-self-start")}
+            disabled={!isValid}
+          >
+            Submit
+          </button>
+          {id && (
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <button
+                  type="button"
+                  className={cn(
+                    buttonVariants({ variant: "destructive" }),
+                    "ml-auto mt-2",
+                  )}
+                >
+                  Delete
+                </button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <div>Are you sure you want to delete this entry?</div>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <form action={deleteProgressEntryWithId}>
+                    <AlertDialogAction
+                      type="submit"
+                      className={cn(buttonVariants({ variant: "destructive" }))}
+                    >
+                      Confirm Delete
+                    </AlertDialogAction>
+                  </form>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          )}
+        </div>
       </form>
     </div>
   );
