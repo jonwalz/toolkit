@@ -4,6 +4,12 @@ import { supabaseServerClient } from "../vendor/supabase";
 import { redirect } from "next/navigation";
 
 export async function deleteProgressEntry(id: string | undefined) {
+  if (!id) {
+    // This should never happen
+    console.log("Progress entry id is missing");
+    throw new Error("Progress entry id is missing");
+  }
+
   const { error } = await supabaseServerClient()
     .from("progress")
     .delete()
