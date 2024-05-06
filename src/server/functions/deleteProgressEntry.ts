@@ -21,5 +21,5 @@ export async function deleteProgressEntry(id: string | undefined) {
     throw error;
   }
 
-  redirect("/dashboard/progress");
+  redirect("/progress");
 }

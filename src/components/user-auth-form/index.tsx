@@ -114,7 +114,7 @@ export function UserAuthForm({
       });
     }
 
-    router.push("/dashboard");
+    router.push("/");
   }
 
   return (

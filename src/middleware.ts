@@ -75,8 +75,8 @@ export async function middleware(request: NextRequest) {
       request.nextUrl.pathname === "/register" ||
       request.nextUrl.pathname === "/")
   ) {
-    console.log("Redirecting to /dashboard");
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+    console.log("Redirecting to /");
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
   if (

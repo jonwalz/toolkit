@@ -33,5 +33,5 @@ export async function updateProgressEntry(formData: FormData) {
     throw parsed.error;
   }
 
-  redirect("/dashboard/progress");
+  redirect("/progress");
 }

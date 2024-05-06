@@ -25,5 +25,5 @@ export async function createNewAccomplishmentEntry(formData: FormData) {
     }
   }
 
-  redirect("/dashboard/accomplishments");
+  redirect("/accomplishments");
 }
