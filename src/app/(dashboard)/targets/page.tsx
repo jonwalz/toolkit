@@ -7,7 +7,7 @@ export default function Targets() {
   return (
     <Shell>
       <div className="flex justify-between">
-        <DashboardHeader heading="Progress log" />
+        <DashboardHeader heading="Project Targets" />
       </div>
     </Shell>
   );

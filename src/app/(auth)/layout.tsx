@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <NextUIProviderComp>
       <div className="border-t">
-        <div className="bg-background">
+        <div className="dark:bg-custom-gradient-dark">
           <div className="grid">
             <div className="col-span-4 flex flex-col items-center justify-center">
               {children}

@@ -72,8 +72,7 @@ export async function middleware(request: NextRequest) {
   if (
     data.session?.user &&
     (request.nextUrl.pathname === "/login" ||
-      request.nextUrl.pathname === "/register" ||
-      request.nextUrl.pathname === "/")
+      request.nextUrl.pathname === "/register")
   ) {
     console.log("Redirecting to /");
     return NextResponse.redirect(new URL("/", request.url));

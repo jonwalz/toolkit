@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+
 import { usePathname, useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -14,6 +15,7 @@ import { toast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/icons";
 import { asOptionalField } from "@/lib/zod";
 import { supabase } from "@/client/supabase";
+import { login, signup } from "@/app/(auth)/login/actions";
 
 const formSchema = z
   .object({
@@ -36,13 +38,16 @@ export function UserAuthForm({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   const [isLoading, setIsLoading] = React.useState(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
   });
+
   const router = useRouter();
   const pathname = usePathname();
   const isRegister = pathname === "/register";
@@ -52,43 +57,36 @@ export function UserAuthForm({
     setIsLoading(true);
 
     if (isRegister) {
-      const resp = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: `${location.origin}/auth/callback`,
-        },
-      });
+      const formData = new FormData();
+      formData.append("email", email);
+      formData.append("password", password);
 
+      const resp = await signup(formData);
       if (resp.error) {
-        // TODO: convert log to be captured by sentry or other visibility product
-        console.log("Register error:", resp.error);
+        setError("email", {
+          type: "manual",
+          message: resp.error,
+        });
+      }
+    }
+
+    if (isLogin) {
+      try {
+        const formData = new FormData();
+        formData.append("email", email);
+        formData.append("password", password);
+        const resp = await login(formData);
+        if (resp.error) {
+          throw new Error(resp.error);
+        }
+      } catch (e) {
+        console.log("Login error:", e);
         toast({
           title: "Something went wrong.",
           description: "Please refresh the page and try again.",
           variant: "destructive",
         });
-      } else {
-        router.push("/login");
       }
-    }
-
-    if (isLogin) {
-      const resp = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (resp.error) {
-        console.log("Login error:", resp.error);
-        toast({
-          title: "Something went wrong.",
-          description:
-            "Email and password combination not found. Please try again.",
-          variant: "destructive",
-        });
-      }
-      router.refresh();
     }
 
     setIsLoading(false);
@@ -173,6 +171,9 @@ export function UserAuthForm({
               </p>
             )}
           </div>
+          {/* <LoginButton isLogin={isLogin} isLoading={isLoading}>
+            {isLogin ? "Sign In with Email" : "Sign Up with Email"}
+          </LoginButton> */}
           <button className={cn(buttonVariants())} disabled={isLoading}>
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
