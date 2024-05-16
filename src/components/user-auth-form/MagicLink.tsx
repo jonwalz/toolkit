@@ -33,7 +33,6 @@ const prepareFormData = (email: string) => {
 
 const MagicLinkForm: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(false);
-  const router = useRouter();
 
   const {
     register,
