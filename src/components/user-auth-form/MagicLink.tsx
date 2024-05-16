@@ -8,6 +8,7 @@ import { toast } from "@/components/ui/use-toast";
 import { sendMagicLink } from "@/app/(auth)/login/actions";
 import InputField from "./InputField";
 import AuthButton from "./AuthButton";
+import { supabase } from "@/client/supabase";
 
 const loginSchema = z.object({
   email: z
@@ -44,12 +45,19 @@ const MagicLinkForm: React.FC = () => {
 
   const onSubmit: SubmitHandler<LoginFormData> = async ({ email }) => {
     setIsLoading(true);
-    const formData = prepareFormData(email);
+    // const formData = prepareFormData(email);
 
     try {
-      const response = await sendMagicLink(formData);
-      if (response?.error) {
-        handleAuthError(response.error);
+      const response = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          shouldCreateUser: false,
+          emailRedirectTo: "https://toolkit-e19.pages.dev/",
+        },
+      });
+      // const response = await sendMagicLink(formData);
+      if (response?.error instanceof Error) {
+        handleAuthError(response.error.message);
       } else {
         toast({
           title: "Magic link sent.",
