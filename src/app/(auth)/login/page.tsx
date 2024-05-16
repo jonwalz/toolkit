@@ -38,14 +38,14 @@ export default function LoginPage() {
           </p>
         </div>
         <UserAuthForm />
-        <p className="px-8 text-center text-sm text-muted-foreground">
+        {/* <p className="px-8 text-center text-sm text-muted-foreground">
           <Link
             href="/register"
             className="hover:text-brand underline underline-offset-4"
           >
             Don&apos;t have an account? Sign Up
           </Link>
-        </p>
+        </p> */}
       </div>
       <div className="hidden h-full bg-muted lg:block" />
     </div>

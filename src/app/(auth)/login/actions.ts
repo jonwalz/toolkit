@@ -14,10 +14,9 @@ export async function login(formData: FormData) {
     password: formData.get("password") as string,
   };
 
-  const { error } = await supabase.auth.signInWithPassword(data);
+  const response = await supabase.auth.signInWithPassword(data);
 
-  if (error) {
-    // redirect("/error");
+  if (response.error) {
     return { error: "Invalid email or password" };
   }
 
@@ -35,10 +34,39 @@ export async function signup(formData: FormData) {
     password: formData.get("password") as string,
   };
 
-  const { error } = await supabase.auth.signUp(data);
+  const response = await supabase.auth.signUp(data);
 
-  if (error) {
+  if (response.error) {
+    return { error: "Something went wrong" };
+  }
+
+  revalidatePath("/", "layout");
+  redirect("/");
+}
+
+export async function sendMagicLink(formData: FormData) {
+  const email = formData.get("email") as string;
+
+  if (!email) {
+    return { error: "Email is required" };
+  }
+
+  const supabase = createClient();
+
+  // TODO: Create exit case to check if email is valid within kartra
+
+  const response = await supabase.auth.signInWithOtp({
+    email,
+    options: {
+      shouldCreateUser: false,
+    },
+  });
+
+  console.log("RESP: ", response);
+
+  if (response.error) {
     // redirect("/error");
+    console.log("HIT");
     return { error: "Something went wrong" };
   }
 
