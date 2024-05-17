@@ -51,7 +51,7 @@ const MagicLinkForm: React.FC = () => {
       const response = await supabase.auth.signInWithOtp({
         email,
         options: {
-          shouldCreateUser: false,
+          shouldCreateUser: true,
           emailRedirectTo: "https://localhost:3001/",
         },
       });
