@@ -6,6 +6,7 @@ export const runtime = "edge";
 
 export async function GET(request: NextRequest) {
   console.log("Auth Route HIT");
+  console.log("COOKIEEEEE: ", request.cookies.getAll());
   const { searchParams } = new URL(request.url);
   const token_hash = searchParams.get("token_hash");
   const type = searchParams.get("type") as EmailOtpType | null;

@@ -57,9 +57,6 @@ export async function middleware(request: NextRequest) {
 
   const { data, error: sessionError } = await supabase.auth.getSession();
 
-  console.log("Session error: ", sessionError);
-  console.log("Session data: ", data);
-
   if (sessionError && isUrl(request, ["/login", "/register"])) {
     console.log("Session error: ", sessionError);
     const { error } = await supabase.auth.signOut();
@@ -86,6 +83,7 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname !== "/login" &&
     request.nextUrl.pathname !== "/register"
   ) {
+    console.log("No data.session.user, redirecting to /login");
     return NextResponse.redirect(new URL("/login", request.url));
   }
 

@@ -51,23 +51,21 @@ export async function sendMagicLink(formData: FormData) {
     return { error: "Email is required" };
   }
 
-  const supabase = createClient();
-
   // TODO: Create exit case to check if email is valid within kartra
+
+  // const isValid = await checkEmailKartra(email);
+
+  const supabase = createClient();
 
   const response = await supabase.auth.signInWithOtp({
     email,
     options: {
       shouldCreateUser: false,
-      emailRedirectTo: 'https://toolkit-e19.pages.dev/',
+      emailRedirectTo: "https://toolkit-e19.pages.dev/",
     },
   });
 
-  console.log("RESP: ", response);
-
   if (response.error) {
-    // redirect("/error");
-    console.log("HIT");
     return { error: "Something went wrong" };
   }
 

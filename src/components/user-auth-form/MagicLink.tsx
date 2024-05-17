@@ -5,10 +5,9 @@ import * as z from "zod";
 
 // import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
-// import { sendMagicLink } from "@/app/(auth)/login/actions";
+import { sendMagicLink } from "@/app/(auth)/login/actions";
 import InputField from "./InputField";
 import AuthButton from "./AuthButton";
-import { supabase } from "@/client/supabase";
 
 const loginSchema = z.object({
   email: z
@@ -45,24 +44,15 @@ const MagicLinkForm: React.FC = () => {
 
   const onSubmit: SubmitHandler<LoginFormData> = async ({ email }) => {
     setIsLoading(true);
-    // const formData = prepareFormData(email);
-
+    const formData = prepareFormData(email);
 
     // https://toolkit-e19.pages.dev/auth/confirm?token_hash=pkce_6caad4550fb9f3b7edab87714b25647d2964aa2c89ded845f338ab79&type=email
 
     try {
-      const response = await supabase.auth.signInWithOtp({
-        email,
-        options: {
-          shouldCreateUser: true,
-          emailRedirectTo: "https://localhost:3001/",
-        },
-      });
-      // const response = await sendMagicLink(formData);
+      const response = await sendMagicLink(formData);
 
-      console.log("RESPONSE: ", response);
-      if (response?.error instanceof Error) {
-        handleAuthError(response.error.message);
+      if (response?.error) {
+        handleAuthError(response.error);
       } else {
         toast({
           title: "Magic link sent.",

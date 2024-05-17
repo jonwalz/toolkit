@@ -116,9 +116,6 @@ ALTER TABLE ONLY "public"."progress"
 ALTER TABLE ONLY "public"."storyAccomplishments"
     ADD CONSTRAINT "storyAccomplishments_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "supabase_migrations"."schema_migrations"
-    ADD CONSTRAINT "schema_migrations_pkey" PRIMARY KEY ("version");
-
 ALTER TABLE ONLY "public"."notes"
     ADD CONSTRAINT "notes_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "auth"."users"("id");
 
