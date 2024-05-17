@@ -3,9 +3,9 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
-import { sendMagicLink } from "@/app/(auth)/login/actions";
+// import { sendMagicLink } from "@/app/(auth)/login/actions";
 import InputField from "./InputField";
 import AuthButton from "./AuthButton";
 import { supabase } from "@/client/supabase";
@@ -52,10 +52,12 @@ const MagicLinkForm: React.FC = () => {
         email,
         options: {
           shouldCreateUser: false,
-          emailRedirectTo: "https://toolkit-e19.pages.dev/",
+          emailRedirectTo: "https://localhost:3001/",
         },
       });
       // const response = await sendMagicLink(formData);
+
+      console.log("RESPONSE: ", response);
       if (response?.error instanceof Error) {
         handleAuthError(response.error.message);
       } else {
