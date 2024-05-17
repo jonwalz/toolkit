@@ -47,6 +47,9 @@ const MagicLinkForm: React.FC = () => {
     setIsLoading(true);
     // const formData = prepareFormData(email);
 
+
+    // https://toolkit-e19.pages.dev/auth/confirm?token_hash=pkce_6caad4550fb9f3b7edab87714b25647d2964aa2c89ded845f338ab79&type=email
+
     try {
       const response = await supabase.auth.signInWithOtp({
         email,

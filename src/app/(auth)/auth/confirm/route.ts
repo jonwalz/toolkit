@@ -12,6 +12,8 @@ export async function GET(request: NextRequest) {
   const redirectTo = request.nextUrl.clone();
   redirectTo.pathname = next;
 
+  console.log("Token hash: ", token_hash);
+  console.log("Type: ", type);
   if (token_hash && type) {
     const supabase = supabaseServerClient();
 
