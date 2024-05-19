@@ -165,8 +165,8 @@ export function ProgressForm({
               <AlertDialogContent>
                 <div>Are you sure you want to delete this entry?</div>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
                   <form action={deleteProgressEntryWithId}>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
                     <AlertDialogAction
                       type="submit"
                       className={cn(buttonVariants({ variant: "destructive" }))}

@@ -1,18 +1,21 @@
 "use client";
 
 import React from "react";
-// import { usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import AuthLayout from "./AuthLayout";
-// import LoginForm from "./LoginForm";
-// import RegisterForm from "./RegisterForm";
+import LoginForm from "./LoginForm";
+import RegisterForm from "./RegisterForm";
 // import { supabase } from "@/client/supabase";
 // import { toast } from "@/components/ui/use-toast";
 import MagicLinkForm from "./MagicLink";
 
-// const PATHS = {
-//   REGISTER: "/register",
-//   LOGIN: "/login",
-// };
+// Magic link does not work locally. Using user/password to develop locally
+const enableUserPassFlow = false;
+
+const PATHS = {
+  REGISTER: "/register",
+  LOGIN: "/login",
+};
 
 // const handleAuthError = (message: string) => {
 //   toast({
@@ -26,8 +29,8 @@ export function UserAuthForm({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
-  // const pathname = usePathname();
-  // const isRegister = pathname === PATHS.REGISTER;
+  const pathname = usePathname();
+  const isRegister = pathname === PATHS.REGISTER;
 
   // const onSignInWithGoogle = async () => {
   //   const { error } = await supabase.auth.signInWithOAuth({
@@ -52,7 +55,7 @@ export function UserAuthForm({
       className={className}
       {...props}
     >
-      {/* {isRegister ? <RegisterForm /> : <LoginForm />} */}
+      {enableUserPassFlow && (isRegister ? <RegisterForm /> : <LoginForm />)}
       <MagicLinkForm />
     </AuthLayout>
   );

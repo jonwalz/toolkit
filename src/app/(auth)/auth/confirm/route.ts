@@ -1,12 +1,10 @@
-import { supabaseServerClient } from "@/server/vendor/supabase";
+import { createClient } from "@/utils/supabase/server";
 import { type EmailOtpType } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
 
 export async function GET(request: NextRequest) {
-  console.log("Auth Route HIT");
-  console.log("COOKIEEEEE: ", request.cookies.getAll());
   const { searchParams } = new URL(request.url);
   const token_hash = searchParams.get("token_hash");
   const type = searchParams.get("type") as EmailOtpType | null;
@@ -14,17 +12,16 @@ export async function GET(request: NextRequest) {
   const redirectTo = request.nextUrl.clone();
   redirectTo.pathname = next;
 
-  console.log("Token hash: ", token_hash);
-  console.log("Type: ", type);
   if (token_hash && type) {
-    const supabase = supabaseServerClient();
+    const supabase = createClient();
 
     const { error } = await supabase.auth.verifyOtp({
       type,
       token_hash,
     });
+
     if (!error) {
-      return NextResponse.redirect(redirectTo);
+      return NextResponse.redirect(redirectTo.origin);
     }
   }
 

@@ -6,7 +6,6 @@ export const runtime = "edge";
 
 export default function Edit() {
   const router = useRouter();
-
   useEffect(() => {
     async function handleRouteChange() {
       try {

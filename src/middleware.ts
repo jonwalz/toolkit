@@ -1,6 +1,7 @@
-import { createServerClient, CookieOptions } from "@supabase/ssr";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { updateSession } from "./utils/supabase/middleware";
+import { createSupabaseReqResClient } from "./utils/supabase/server";
 
 // A function that checks if the pathname is in the list of urls
 function isUrl(request: NextRequest, urls: string[]) {
@@ -8,52 +9,8 @@ function isUrl(request: NextRequest, urls: string[]) {
 }
 
 export async function middleware(request: NextRequest) {
-  let response = NextResponse.next({
-    request: {
-      headers: request.headers,
-    },
-  });
-
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return request.cookies.get(name)?.value;
-        },
-        set(name: string, value: string, options: CookieOptions) {
-          request.cookies.set({
-            name,
-            value,
-            ...options,
-          });
-          response = NextResponse.next({
-            request: {
-              headers: request.headers,
-            },
-          });
-          response.cookies.set({
-            name,
-            value,
-            ...options,
-          });
-        },
-        remove(name: string, options: CookieOptions) {
-          request.cookies.set({
-            name,
-            value: "",
-            ...options,
-          });
-          response = NextResponse.next({
-            request: {
-              headers: request.headers,
-            },
-          });
-        },
-      },
-    },
-  );
+  const response = await updateSession(request);
+  const supabase = createSupabaseReqResClient(request, response);
 
   const { data, error: sessionError } = await supabase.auth.getSession();
 
@@ -74,8 +31,8 @@ export async function middleware(request: NextRequest) {
     (request.nextUrl.pathname === "/login" ||
       request.nextUrl.pathname === "/register")
   ) {
-    console.log("Redirecting to /");
-    return NextResponse.redirect(new URL("/", request.url));
+    console.log("Confirmed session user, redirecting to /");
+    return NextResponse.redirect(new URL("/"));
   }
 
   if (
@@ -83,6 +40,7 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname !== "/login" &&
     request.nextUrl.pathname !== "/register"
   ) {
+    console.log("DATA: ", data);
     console.log("No data.session.user, redirecting to /login");
     return NextResponse.redirect(new URL("/login", request.url));
   }

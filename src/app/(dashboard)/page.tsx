@@ -10,7 +10,7 @@ export default function Home() {
       <DashboardHeader heading="Welcome" text="Benefits to Tracking:" />
       <div
         className={
-          "flex min-h-[400px] flex-col justify-center rounded-md border p-8 animate-in fade-in-50"
+          "flex min-h-[400px] flex-col justify-center rounded-md border bg-white p-8 animate-in fade-in-50 dark:bg-[rgba(55,70,85,1)]"
         }
       >
         <p className="mb-2 mt-2 text-sm font-normal leading-6">
