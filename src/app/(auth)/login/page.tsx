@@ -1,8 +1,10 @@
 import { Metadata } from "next";
-import Link from "next/link";
+// import Link from "next/link";
 
 import { Icons } from "@/components/icons";
 import { UserAuthForm } from "@/components/user-auth-form";
+import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
 
 export const runtime = "edge";
 
@@ -11,7 +13,14 @@ export const metadata: Metadata = {
   description: "Login to your account",
 };
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const supabase = createClient();
+  const { data } = await supabase.auth.getUser();
+
+  if (data?.user) {
+    redirect("/dashboard");
+  }
+
   return (
     <div className="container grid h-screen w-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
       {/* TODO: Use this to go back to "landing page" once built*/}
