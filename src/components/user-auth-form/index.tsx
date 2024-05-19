@@ -10,7 +10,7 @@ import RegisterForm from "./RegisterForm";
 import MagicLinkForm from "./MagicLink";
 
 // Magic link does not work locally. Using user/password to develop locally
-const enableUserPassFlow = false;
+const enableUserPassFlow = process.env.NODE_ENV === "development";
 
 const PATHS = {
   REGISTER: "/register",

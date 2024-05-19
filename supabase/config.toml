@@ -69,9 +69,9 @@ enabled = true
 # in emails.
 site_url = "http://127.0.0.1:3030"
 # A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
-additional_redirect_urls = ["http://127.0.0.1:3030"]
+additional_redirect_urls = ["http://127.0.0.1:3030/auth/confirm, http://127.0.0.1:3030/auth/callback"]
 # How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604,800 (1 week).
-jwt_expiry = 3600
+jwt_expiry = 60
 # If disabled, the refresh token will never expire.
 enable_refresh_token_rotation = true
 # Allows refresh tokens to be reused after expiry, up to the specified interval in seconds.
@@ -87,15 +87,15 @@ enable_signup = true
 # addresses. If disabled, only the new email is required to confirm.
 double_confirm_changes = true
 # If enabled, users need to confirm their email address before signing in.
-enable_confirmations = true
+enable_confirmations = false
 
 # Uncomment to customize email template
 # [auth.email.template.invite]
 # subject = "You have been invited"
 # content_path = "./supabase/templates/invite.html"
-# [auth.email.template.magic_link]
-# subject = "Log in to your account"
-# content_path = "./supabase/templates/magicLink.html"
+[auth.email.template.magic_link]
+subject = "Log in to your account"
+content_path = "./supabase/templates/magicLink.html"
 
 [auth.sms]
 # Allow/disallow new user signups via SMS to your project.

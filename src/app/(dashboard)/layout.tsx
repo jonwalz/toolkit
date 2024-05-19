@@ -6,12 +6,17 @@ import Link from "next/link";
 import { Icons } from "@/components/icons";
 import { siteConfig } from "@/config/site";
 import { UserAccountNav } from "@/components/user-account-nav";
+import { redirectToLogin } from "@/utils/redirectToLogin";
 
 interface DashboardLayoutProps {
   children?: React.ReactNode;
 }
 
-export default function DashboardLayout({ children }: DashboardLayoutProps) {
+export default async function DashboardLayout({
+  children,
+}: DashboardLayoutProps) {
+  await redirectToLogin();
+
   return (
     <div className="flex min-h-screen">
       <aside className="container my-4 ml-4 hidden w-[240px] flex-col gap-6 rounded-xl bg-white py-4 pl-4 dark:bg-[rgba(55,70,85,1)] md:flex">

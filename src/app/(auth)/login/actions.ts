@@ -61,7 +61,6 @@ export async function sendMagicLink(formData: FormData) {
     email,
     options: {
       shouldCreateUser: false,
-      emailRedirectTo: "https://toolkit-e19.pages.dev/",
     },
   });
 

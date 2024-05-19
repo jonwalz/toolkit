@@ -57,8 +57,8 @@ const LoginForm: React.FC = () => {
 
     try {
       const response = await login(formData);
-      if (response.error) {
-        handleAuthError(response.error);
+      if (response?.error) {
+        handleAuthError(response?.error);
       } else {
         router.push("/");
       }
