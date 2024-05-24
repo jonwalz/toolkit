@@ -31,7 +31,7 @@ export async function upsertProjectTargets({
 
   const { error } = await supabase
     .from("project_targets")
-    .upsert([{ ...filteredData, user_id: userId }])
+    .upsert({ ...filteredData, user_id: userId })
     .select();
 
   if (error) {
