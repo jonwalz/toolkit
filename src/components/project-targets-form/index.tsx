@@ -12,6 +12,7 @@ import {
 import { useEffect } from "react";
 import { upsertProjectTargets } from "@/server/functions/updateProjectTargets";
 import { supabase } from "@/client/supabase";
+import { format, parseISO } from "date-fns";
 
 type FormData = {
   totalWordCount: number;
@@ -24,6 +25,7 @@ export function ProjectTargetsForm() {
   const {
     register,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
@@ -48,6 +50,44 @@ export function ProjectTargetsForm() {
 
     return totalWritingDays ? totalWordCount / totalWritingDays : 0;
   };
+
+  useEffect(() => {
+    const fetchProjectTargets = async () => {
+      const user = await supabase.auth.getUser();
+      const userId = user?.data?.user?.id;
+
+      if (userId) {
+        const { data } = await supabase
+          .from("project_targets")
+          .select()
+          .eq("user_id", userId)
+          .single();
+
+        console.log("GET DATA: ", data);
+        if (data) {
+          const {
+            total_word_count,
+            target_start_date,
+            target_complete_date,
+            days_per_week,
+          } = data;
+
+          setValue("totalWordCount", total_word_count);
+          setValue(
+            "startDate",
+            format(parseISO(target_start_date), "yyyy-MM-dd"),
+          );
+          setValue(
+            "endDate",
+            format(parseISO(target_complete_date), "yyyy-MM-dd"),
+          );
+          setValue("writingDaysPerWeek", days_per_week);
+        }
+      }
+    };
+
+    void fetchProjectTargets();
+  }, [setValue]);
 
   useEffect(() => {
     const subscription = watch((value) => {
@@ -106,7 +146,17 @@ export function ProjectTargetsForm() {
           <Label className="mr-2 w-48">Writing Days Per Week:</Label>
           <Input
             type="number"
-            {...register("writingDaysPerWeek", { valueAsNumber: true })}
+            {...register("writingDaysPerWeek", {
+              valueAsNumber: true,
+            })}
+            onInput={(e) => {
+              const target = e.target as HTMLInputElement;
+              if (target.value) {
+                const value = parseInt(target.value, 10);
+                if (value < 1) target.value = "1";
+                if (value > 7) target.value = "7";
+              }
+            }}
           />
           {errors.writingDaysPerWeek && (
             <p className="text-xs text-red-600">

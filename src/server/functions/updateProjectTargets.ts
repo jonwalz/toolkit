@@ -14,24 +14,25 @@ export async function upsertProjectTargets({
   endDate: string | undefined;
   writingDaysPerWeek: number | null;
 }) {
+  const supabase = supabaseServerClient();
+  const user = await supabase.auth.getUser();
+  const userId = user?.data?.user?.id;
+
   const targetData = {
     total_word_count: totalWordCount,
     target_start_date: startDate?.length ? startDate : null,
     target_complete_date: endDate?.length ? endDate : null,
     days_per_week: writingDaysPerWeek,
+    user_id: userId,
   };
 
   const filteredData = Object.fromEntries(
     Object.entries(targetData).filter(([_, v]) => v !== null),
   );
 
-  const supabase = supabaseServerClient();
-  const user = await supabase.auth.getUser();
-  const userId = user?.data?.user?.id;
-
   const { error } = await supabase
     .from("project_targets")
-    .upsert({ ...filteredData, user_id: userId })
+    .upsert(filteredData)
     .select();
 
   if (error) {
