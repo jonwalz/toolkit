@@ -14,7 +14,6 @@ import { getUser } from "@/actions/user";
 
 export async function UserAccountNav() {
   const user = await getUser();
-  console.log("User account nav user: ", user);
   const email = user?.data.user?.email ?? "Welcome";
 
   return (

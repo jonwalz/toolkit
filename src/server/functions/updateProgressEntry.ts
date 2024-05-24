@@ -24,13 +24,13 @@ export async function updateProgressEntry(formData: FormData) {
 
     if (error) {
       console.log("Progress entry error: ", error.message);
-      throw error;
+      // throw error;
     }
   }
 
   if (!parsed.success) {
     console.log("Progress entry error: ", parsed.error);
-    throw parsed.error;
+    // throw parsed.error;
   }
 
   redirect("/progress");
