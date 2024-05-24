@@ -13,20 +13,21 @@ export async function upsertProjectTargets({
   startDate: string | undefined;
   endDate: string | undefined;
   writingDaysPerWeek: number | null;
-  userId: string;
 }) {
-  const supabase = supabaseServerClient();
+  const targetData = {
+    total_word_count: totalWordCount,
+    target_start_date: startDate?.length ? startDate : null,
+    target_complete_date: endDate?.length ? endDate : null,
+    days_per_week: writingDaysPerWeek,
+  };
 
-  const { error } = await supabase
+  const filteredData = Object.fromEntries(
+    Object.entries(targetData).filter(([_, v]) => v !== null),
+  );
+
+  const { error } = await supabaseServerClient()
     .from("project_targets")
-    .insert([
-      {
-        total_word_count: totalWordCount,
-        target_start_date: startDate,
-        target_complete_date: endDate,
-        days_per_week: writingDaysPerWeek,
-      },
-    ])
+    .upsert([filteredData])
     .select();
 
   if (error) {
