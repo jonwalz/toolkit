@@ -25,9 +25,13 @@ export async function upsertProjectTargets({
     Object.entries(targetData).filter(([_, v]) => v !== null),
   );
 
-  const { error } = await supabaseServerClient()
+  const supabase = supabaseServerClient();
+  const user = await supabase.auth.getUser();
+  const userId = user?.data?.user?.id;
+
+  const { error } = await supabase
     .from("project_targets")
-    .upsert([filteredData])
+    .upsert([{ ...filteredData, user_id: userId }])
     .select();
 
   if (error) {
