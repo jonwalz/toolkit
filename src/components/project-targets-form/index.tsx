@@ -61,7 +61,6 @@ export function ProjectTargetsForm() {
             startDate: value.startDate,
             endDate: value.endDate,
             writingDaysPerWeek: value.writingDaysPerWeek ?? null,
-            userId,
           });
         }
       }
