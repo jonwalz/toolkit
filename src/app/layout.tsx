@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { siteConfig } from "@/config/site";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
+import ReactQueryProvider from "@/providers/queryProvider";
 
 const inter = Montserrat({
   subsets: ["latin"],
@@ -27,14 +28,16 @@ export default function RootLayout({
       <head />
       <body
         className={cn(
-          "dark:bg-custom-gradient-dark min-h-screen overscroll-y-none bg-custom-gradient font-sans antialiased",
+          "min-h-screen overscroll-y-none bg-custom-gradient font-sans antialiased dark:bg-custom-gradient-dark",
           inter.variable,
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
-          <Toaster />
-          {/* <TailwindIndicator /> */}
+          <ReactQueryProvider>
+            {children}
+            <Toaster />
+            {/* <TailwindIndicator /> */}
+          </ReactQueryProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -57,6 +57,7 @@ export function ProjectTargetsForm() {
       const userId = user?.data?.user?.id;
 
       if (userId) {
+        // TODO: move this to a server function
         const { data } = await supabase
           .from("project_targets")
           .select()
@@ -110,8 +111,6 @@ export function ProjectTargetsForm() {
 
     return () => subscription.unsubscribe();
   }, [watch]);
-
-  console.log("RENDER");
 
   return (
     <div className="max-w-[600px]">

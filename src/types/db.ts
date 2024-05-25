@@ -34,6 +34,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      count: {
+        Row: {
+          created_at: string
+          date: string | null
+          id: number
+        }
+        Insert: {
+          created_at?: string
+          date?: string | null
+          id?: number
+        }
+        Update: {
+          created_at?: string
+          date?: string | null
+          id?: number
+        }
+        Relationships: []
+      }
       notes: {
         Row: {
           id: number
@@ -106,37 +124,37 @@ export type Database = {
       }
       project_targets: {
         Row: {
-          created_at: string
+          created_at: string | null
           days_per_week: number | null
           id: number
           target_complete_date: string | null
           target_start_date: string | null
           total_word_count: number | null
-          user_id: string | null
+          user_id: string
         }
         Insert: {
-          created_at?: string
+          created_at?: string | null
           days_per_week?: number | null
           id?: number
           target_complete_date?: string | null
           target_start_date?: string | null
           total_word_count?: number | null
-          user_id?: string | null
+          user_id?: string
         }
         Update: {
-          created_at?: string
+          created_at?: string | null
           days_per_week?: number | null
           id?: number
           target_complete_date?: string | null
           target_start_date?: string | null
           total_word_count?: number | null
-          user_id?: string | null
+          user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "public_project_targets_user_id_fkey"
+            foreignKeyName: "project_targets_user_id_fkey"
             columns: ["user_id"]
-            isOneToOne: false
+            isOneToOne: true
             referencedRelation: "users"
             referencedColumns: ["id"]
           },
