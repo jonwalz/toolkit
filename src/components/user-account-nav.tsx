@@ -20,7 +20,6 @@ export async function UserAccountNav() {
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center gap-2">
         <UserAvatar user={{ email }} className="h-8 w-8" />
-        <span className="text-xs">{email}</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">
         <div className="flex items-center justify-start gap-2 p-2">

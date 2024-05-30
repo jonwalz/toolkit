@@ -5,13 +5,13 @@ import { redirect } from "next/navigation";
 
 export async function upsertProjectTargets({
   totalWordCount,
-  startDate,
-  endDate,
+  targetStartDate,
+  targetCompleteDate,
   writingDaysPerWeek,
 }: {
   totalWordCount: number | null;
-  startDate: string | undefined;
-  endDate: string | undefined;
+  targetStartDate: string | null;
+  targetCompleteDate: string | null;
   writingDaysPerWeek: number | null;
 }) {
   const supabase = supabaseServerClient();
@@ -20,8 +20,10 @@ export async function upsertProjectTargets({
 
   const targetData = {
     total_word_count: totalWordCount,
-    target_start_date: startDate?.length ? startDate : null,
-    target_complete_date: endDate?.length ? endDate : null,
+    target_start_date: targetStartDate?.length ? targetStartDate : null,
+    target_complete_date: targetCompleteDate?.length
+      ? targetCompleteDate
+      : null,
     days_per_week: writingDaysPerWeek,
     user_id: userId,
   };

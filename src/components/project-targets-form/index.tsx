@@ -9,107 +9,102 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { upsertProjectTargets } from "@/server/functions/updateProjectTargets";
 import { supabase } from "@/client/supabase";
-import { format, parseISO } from "date-fns";
 
 type FormData = {
-  totalWordCount: number;
-  startDate: string;
-  endDate: string;
-  writingDaysPerWeek: number;
+  totalWordCount: number | null | undefined;
+  targetStartDate: string | null | undefined;
+  targetCompleteDate: string | null | undefined;
+  writingDaysPerWeek: number | null | undefined;
 };
 
-export function ProjectTargetsForm() {
+const calculateAverageWordsPerDay = (formData: FormData) => {
+  const {
+    totalWordCount,
+    targetStartDate,
+    targetCompleteDate,
+    writingDaysPerWeek,
+  } = formData;
+  if (
+    !totalWordCount ||
+    !targetStartDate ||
+    !targetCompleteDate ||
+    !writingDaysPerWeek
+  )
+    return 0;
+
+  const start = new Date(targetStartDate).getTime();
+  const end = new Date(targetCompleteDate).getTime();
+  const days = (end - start) / (1000 * 60 * 60 * 24);
+  const totalWritingDays = (days / 7) * writingDaysPerWeek;
+
+  return totalWritingDays ? totalWordCount / totalWritingDays : 0;
+};
+
+export function ProjectTargetsForm({
+  totalWordCount,
+  targetStartDate,
+  targetCompleteDate,
+  writingDaysPerWeek,
+}: {
+  totalWordCount: number | null;
+  targetStartDate: string | null;
+  targetCompleteDate: string | null;
+  writingDaysPerWeek: number | null;
+}) {
   const {
     register,
     watch,
-    setValue,
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
-      totalWordCount: 0,
-      startDate: undefined,
-      endDate: undefined,
-      writingDaysPerWeek: 0,
+      totalWordCount,
+      targetStartDate,
+      targetCompleteDate,
+      writingDaysPerWeek,
     },
   });
 
   const formData = watch();
 
-  const calculateAverageWordsPerDay = () => {
-    const { totalWordCount, startDate, endDate, writingDaysPerWeek } = formData;
-    if (!totalWordCount || !startDate || !endDate || !writingDaysPerWeek)
-      return 0;
-
-    const start = new Date(startDate).getTime();
-    const end = new Date(endDate).getTime();
-    const days = (end - start) / (1000 * 60 * 60 * 24);
-    const totalWritingDays = (days / 7) * writingDaysPerWeek;
-
-    return totalWritingDays ? totalWordCount / totalWritingDays : 0;
-  };
-
-  useEffect(() => {
-    const fetchProjectTargets = async () => {
-      const user = await supabase.auth.getUser();
-      const userId = user?.data?.user?.id;
-
-      if (userId) {
-        // TODO: move this to a server function
-        const { data } = await supabase
-          .from("project_targets")
-          .select()
-          .eq("user_id", userId)
-          .single();
-
-        console.log("GET DATA: ", data);
-        if (data) {
-          const {
-            total_word_count,
-            target_start_date,
-            target_complete_date,
-            days_per_week,
-          } = data;
-
-          setValue("totalWordCount", total_word_count);
-          setValue(
-            "startDate",
-            format(parseISO(target_start_date), "yyyy-MM-dd"),
-          );
-          setValue(
-            "endDate",
-            format(parseISO(target_complete_date), "yyyy-MM-dd"),
-          );
-          setValue("writingDaysPerWeek", days_per_week);
-        }
-      }
-    };
-
-    void fetchProjectTargets();
-  }, [setValue]);
-
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
     const subscription = watch((value) => {
-      async function run() {
-        const user = await supabase.auth.getUser();
-        const userId = user?.data?.user?.id;
-
-        if (userId) {
-          await upsertProjectTargets({
-            totalWordCount: value.totalWordCount ?? null,
-            startDate: value.startDate,
-            endDate: value.endDate,
-            writingDaysPerWeek: value.writingDaysPerWeek ?? null,
-          });
-        }
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
       }
 
-      void run();
+      debounceRef.current = setTimeout(() => {
+        const run = async () => {
+          try {
+            const user = await supabase.auth.getUser();
+            const userId = user?.data?.user?.id;
+
+            if (userId) {
+              await upsertProjectTargets({
+                totalWordCount: value.totalWordCount ?? null,
+                targetStartDate: value.targetStartDate ?? null,
+                targetCompleteDate: value.targetCompleteDate ?? null,
+                writingDaysPerWeek: value.writingDaysPerWeek ?? null,
+              });
+            }
+          } catch (error) {
+            console.error("Error updating project targets:", error);
+          }
+        };
+
+        void run();
+      }, 500);
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      subscription.unsubscribe();
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+      }
+    };
   }, [watch]);
 
   return (
@@ -129,16 +124,20 @@ export function ProjectTargetsForm() {
         </div>
         <div className="flex items-center">
           <Label className="mr-2 w-48">Target Start Date:</Label>
-          <Input type="date" {...register("startDate")} />
-          {errors.startDate && (
-            <p className="text-xs text-red-600">{errors.startDate.message}</p>
+          <Input type="date" {...register("targetStartDate")} />
+          {errors.targetStartDate && (
+            <p className="text-xs text-red-600">
+              {errors.targetStartDate.message}
+            </p>
           )}
         </div>
         <div className="flex items-center">
           <Label className="mr-2 w-48">Target Completion Date:</Label>
-          <Input type="date" {...register("endDate")} />
-          {errors.endDate && (
-            <p className="text-xs text-red-600">{errors.endDate.message}</p>
+          <Input type="date" {...register("targetCompleteDate")} />
+          {errors.targetCompleteDate && (
+            <p className="text-xs text-red-600">
+              {errors.targetCompleteDate.message}
+            </p>
           )}
         </div>
         <div className="flex items-center">
@@ -170,7 +169,7 @@ export function ProjectTargetsForm() {
         </CardHeader>
         <CardContent>
           <CardTitle className="text-4xl">
-            {calculateAverageWordsPerDay().toFixed()}
+            {calculateAverageWordsPerDay(formData).toFixed()}
           </CardTitle>
         </CardContent>
       </Card>
