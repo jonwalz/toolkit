@@ -14,10 +14,10 @@ import { upsertProjectTargets } from "@/server/functions/updateProjectTargets";
 import { supabase } from "@/client/supabase";
 
 type FormData = {
-  totalWordCount: number | null | undefined;
-  targetStartDate: string | null | undefined;
-  targetCompleteDate: string | null | undefined;
-  writingDaysPerWeek: number | null | undefined;
+  totalWordCount: number | null;
+  targetStartDate: string | null;
+  targetCompleteDate: string | null;
+  writingDaysPerWeek: number | null;
 };
 
 const calculateAverageWordsPerDay = (formData: FormData) => {

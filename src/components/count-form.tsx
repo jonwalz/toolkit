@@ -17,7 +17,7 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export function CountStartDate() {
-  const { data, error, isLoading } = useQuery(["count"], () => getCount());
+  const { data, error } = useQuery(["count"], () => getCount());
   const serverDate = data?.[0]?.date;
 
   const mutation = useMutation({
@@ -58,7 +58,6 @@ export function CountStartDate() {
     return subscription.unsubscribe;
   }, [mutation, watch]);
 
-  if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading data</p>;
 
   return (

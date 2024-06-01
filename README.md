@@ -46,10 +46,6 @@ To build the application for production, use:
 npm run build
 ```
 
-## API
-
-The server API is built with tRPC. You can find the API code in `src/server/api/trpc.ts`. If you want to modify the request context or create a new middleware or type of procedure, you can edit this file.
-
 ## Middleware
 
 The middleware is responsible for handling requests and responses. You can find the middleware code in `src/middleware.ts`.
