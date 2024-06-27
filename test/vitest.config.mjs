@@ -8,8 +8,8 @@ export default defineConfig({
     setupFiles: ["./test/vitest.setup.ts"],
     env: {
       NODE_ENV: "test",
-      NEXT_PUBLIC_SUPABASE_URL: "http://localhost:8080",
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: "anon_key",
+      SUPABASE_URL: "http://localhost:8080",
+      SUPABASE_ANON_KEY: "anon_key",
     },
   },
   plugins: [tsconfigPaths()],
