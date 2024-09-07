@@ -1,5 +1,6 @@
 import { fontFamily } from "tailwindcss/defaultTheme";
 
+/** @type {import('tailwindcss').Config} */
 const config = {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -8,20 +9,7 @@ const config = {
   ],
   darkMode: "class",
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
     extend: {
-      backgroundImage: {
-        "custom-gradient":
-          "radial-gradient(circle, rgba(216,240,252,1) 0%, rgba(148,187,233,0.7) 100%)",
-        "custom-gradient-dark":
-          "radial-gradient(circle, rgba(45,60,75,1) 0%, rgba(35,50,65,0.7) 100%)",
-      },
       colors: {
         border: "hsl(var(--border))",
         ring: "hsl(var(--ring))",
@@ -54,6 +42,20 @@ const config = {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        slate: {
+          100: "#f1f5f9",
+          300: "#cbd5e1",
+          400: "#94a3b8",
+          600: "#475569",
+          700: "#334155",
+          800: "#1e293b",
+          900: "#0f172a",
+        },
+        emerald: {
+          400: "#34d399",
+          600: "#059669",
+          700: "#047857",
         },
       },
       borderRadius: {
