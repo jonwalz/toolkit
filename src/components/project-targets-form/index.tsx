@@ -70,33 +70,38 @@ export function ProjectTargetsForm({
   const formData = watch();
 
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   useEffect(() => {
     const subscription = watch((value) => {
       if (debounceRef.current) {
         clearTimeout(debounceRef.current);
       }
 
-      debounceRef.current = setTimeout(() => {
-        const run = async () => {
-          try {
-            const user = await supabase.auth.getUser();
-            const userId = user?.data?.user?.id;
+      function runFunction() {
+        () => {
+          const run = async () => {
+            try {
+              const user = await supabase.auth.getUser();
+              const userId = user?.data?.user?.id;
 
-            if (userId) {
-              await upsertProjectTargets({
-                totalWordCount: value.totalWordCount ?? null,
-                targetStartDate: value.targetStartDate ?? null,
-                targetCompleteDate: value.targetCompleteDate ?? null,
-                writingDaysPerWeek: value.writingDaysPerWeek ?? null,
-              });
+              if (userId) {
+                await upsertProjectTargets({
+                  totalWordCount: value.totalWordCount ?? null,
+                  targetStartDate: value.targetStartDate ?? null,
+                  targetCompleteDate: value.targetCompleteDate ?? null,
+                  writingDaysPerWeek: value.writingDaysPerWeek ?? null,
+                });
+              }
+            } catch (error) {
+              console.error("Error updating project targets:", error);
             }
-          } catch (error) {
-            console.error("Error updating project targets:", error);
-          }
-        };
+          };
 
-        void run();
-      }, 500);
+          void run();
+        }
+      }
+
+      debounceRef.current = setTimeout(runFunction, 500);
     });
 
     return () => {

@@ -22,6 +22,7 @@ const loginSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 
 const handleAuthError = (message: string) => {
+  console.log("Sign in error: ", message);
   toast({
     title: "Something went wrong.",
     description: message,
