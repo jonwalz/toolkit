@@ -60,6 +60,7 @@ const LoginForm: React.FC = () => {
           disabled={isLoading}
           register={register}
           error={errors.email}
+          className="border border-gray-300 rounded-md"
         />
         <InputField<LoginFormData>
           id={FORM_FIELDS.PASSWORD}
@@ -69,6 +70,7 @@ const LoginForm: React.FC = () => {
           disabled={isLoading}
           register={register}
           error={errors.password}
+          className="border border-gray-300 rounded-md"
         />
         <AuthButton isLoading={isLoading} className="mt-4">
           Sign In with Email
