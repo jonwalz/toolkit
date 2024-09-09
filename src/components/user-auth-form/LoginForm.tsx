@@ -1,71 +1,48 @@
 import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
 import { login } from "@/app/(auth)/login/actions";
 import InputField from "./InputField";
 import AuthButton from "./AuthButton";
+import { useLoginForm } from "./useLoginForm";
+import { LoginFormData } from "./loginSchema";
+import { AuthError } from "@/utils/errors";
 
-const loginSchema = z.object({
-  email: z
-    .string()
-    .min(3, { message: "Email must contain at least 3 characters." }),
-  password: z
-    .string()
-    .min(3, { message: "Password must contain at least 3 characters." })
-    .max(20),
-});
-
-type LoginFormData = z.infer<typeof loginSchema>;
-
-const handleAuthError = (message: string) => {
-  console.log("Sign in error: ", message);
-  toast({
-    title: "Something went wrong.",
-    description: message,
-    variant: "destructive",
-  });
+const ROUTES = {
+  HOME: "/",
 };
 
-const prepareFormData = (email: string, password: string) => {
-  const formData = new FormData();
-  formData.append("email", email);
-  formData.append("password", password);
-  return formData;
+const FORM_FIELDS = {
+  EMAIL: "email",
+  PASSWORD: "password",
 };
 
 const LoginForm: React.FC = () => {
-  const [isLoading, setIsLoading] = React.useState(false);
   const router = useRouter();
+  const { register, handleSubmit, errors, isLoading, setIsLoading } = useLoginForm();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
-  });
+  const handleAuthError = (error: AuthError) => {
+    console.log("Sign in error: ", error.message);
+    toast({
+      title: "Authentication Error",
+      description: error.message,
+      variant: "destructive",
+    });
+  };
 
-  const onSubmit: SubmitHandler<LoginFormData> = async ({
-    email,
-    password,
-  }) => {
+  const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
-    const formData = prepareFormData(email, password);
-
     try {
-      const response = await login(formData);
+      const response = await login(data);
       if (response?.error) {
-        handleAuthError(response?.error);
-      } else {
-        router.push("/");
+        throw new AuthError(response.error);
       }
+      router.push(ROUTES.HOME);
     } catch (e) {
-      if (e instanceof Error) {
-        handleAuthError(e.message);
+      if (e instanceof AuthError) {
+        handleAuthError(e);
+      } else {
+        console.error("Unexpected error:", e);
       }
     } finally {
       setIsLoading(false);
@@ -76,7 +53,7 @@ const LoginForm: React.FC = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="grid gap-2">
         <InputField<LoginFormData>
-          id="email"
+          id={FORM_FIELDS.EMAIL}
           type="email"
           placeholder="name@example.com"
           autoComplete="email"
@@ -85,10 +62,10 @@ const LoginForm: React.FC = () => {
           error={errors.email}
         />
         <InputField<LoginFormData>
-          id="password"
+          id={FORM_FIELDS.PASSWORD}
           type="password"
           placeholder="Password"
-          autoComplete="password"
+          autoComplete="current-password"
           disabled={isLoading}
           register={register}
           error={errors.password}
