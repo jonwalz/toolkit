@@ -9,13 +9,6 @@ import { LoginFormData } from "@/components/user-auth-form/loginSchema";
 export async function login(data: LoginFormData) {
   const supabase = createClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-  };
-
   const response = await supabase.auth.signInWithPassword(data);
 
   if (response.error) {
