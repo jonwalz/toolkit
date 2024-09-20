@@ -40,3 +40,6 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+.aider*
+NvimTree_1
+toolkit.code-workspace

@@ -3,7 +3,7 @@ import "@/styles/globals.css";
 import { NextUIProviderComp } from "../_providers/nextUIProvider";
 
 export const metadata = {
-  title: "Writer's Toolkit",
+  title: "The Writer's Toolkit",
   description: "A toolkit for writers",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };

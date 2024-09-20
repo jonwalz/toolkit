@@ -13,52 +13,46 @@ const config = {
       colors: {
         border: "hsl(var(--border))",
         ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+        background: {
+          DEFAULT: "#1C1C1E",  // Slightly lighter dark gray
+          dark: "#121212",     // Pure black for a deeper dark mode if needed
         },
-        input: {
-          border: "hsl(var(--input-border))",
+        foreground: {
+          DEFAULT: "#E0E0E0",  // Light warm gray for primary text
+          muted: "#B0B0B0",    // Muted gray for secondary text
+        },
+        primary: {
+          DEFAULT: "#4A90E2",  // Light blue/teal for primary buttons
+          foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+          DEFAULT: "#FF9500",  // Muted orange for secondary actions
+          foreground: "#FFFFFF",
         },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+        input: {
+          DEFAULT: "#2B2B2B",  // Dark gray input background
+          border: "#4A90E2",   // Light blue border for input fields
+          foreground: "#E0E0E0",  // Light text in input fields
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          DEFAULT: "#00A8E2",  // Teal for accent elements
+          foreground: "#FFFFFF",
+        },
+        destructive: {
+          DEFAULT: "#E53935",  // Red for destructive actions
+          foreground: "#FFFFFF",
+        },
+        muted: {
+          DEFAULT: "#6B7280",  // Muted gray
+          foreground: "#D1D5DB",
         },
         popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+          DEFAULT: "#2D2D2D",  // Darker popover background
+          foreground: "#FFFFFF",
         },
         card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-        slate: {
-          100: "#f1f5f9",
-          300: "#cbd5e1",
-          400: "#94a3b8",
-          600: "#475569",
-          700: "#334155",
-          800: "#1e293b",
-          900: "#0f172a",
-        },
-        emerald: {
-          400: "#34d399",
-          600: "#059669",
-          700: "#047857",
+          DEFAULT: "#242526",  // Card background in dark mode
+          foreground: "#E0E0E0", // Lighter card text
         },
       },
       borderRadius: {

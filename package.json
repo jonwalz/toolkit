@@ -18,7 +18,7 @@
   "packageManager": "yarn@1.22.21",
   "engineStrict": true,
   "dependencies": {
-    "@hookform/resolvers": "^3.3.2",
+    "@hookform/resolvers": "^3.9.0",
     "@nextui-org/react": "^2.2.9",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-avatar": "^1.0.4",
@@ -58,8 +58,6 @@
   },
   "devDependencies": {
     "@cloudflare/next-on-pages": "^1.8.1",
-    "@snaplet/copycat": "^2.0.0",
-    "@snaplet/seed": "^0.93.0",
     "@tailwindcss/typography": "^0.5.10",
     "@tanstack/eslint-plugin-query": "^5.35.6",
     "@testing-library/jest-dom": "^6.1.5",

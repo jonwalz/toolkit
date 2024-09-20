@@ -98,7 +98,7 @@ export function ProjectTargetsForm({
           };
 
           void run();
-        }
+        };
       }
 
       debounceRef.current = setTimeout(runFunction, 500);
