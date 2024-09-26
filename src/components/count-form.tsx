@@ -17,7 +17,10 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export function CountStartDate() {
-  const { data, error } = useQuery(["count"], () => getCount());
+  const { data, error } = useQuery({
+    queryKey: ["count"],
+    queryFn: getCount,
+  });
   const serverDate = data?.[0]?.date;
 
   const mutation = useMutation({
@@ -61,17 +64,19 @@ export function CountStartDate() {
   if (error) return <p>Error loading data</p>;
 
   return (
-    <form className="grid gap-4">
-      <div className="flex items-center">
-        <Label className="mr-2 w-48">Enter start date:</Label>
-        <Input
-          type="date"
-          {...register("startDate", { required: "Start date is required" })}
-        />
-        {errors.startDate && (
-          <p className="text-xs text-red-600">{errors.startDate.message}</p>
-        )}
-      </div>
-    </form>
+    <div className="flex flex-grow flex-col">
+      <form className="grid gap-4">
+        <div className="flex items-center">
+          <Label className="mr-2 w-48">Enter start date:</Label>
+          <Input
+            type="date"
+            {...register("startDate", { required: "Start date is required" })}
+          />
+          {errors.startDate && (
+            <p className="text-xs text-red-600">{errors.startDate.message}</p>
+          )}
+        </div>
+      </form>
+    </div>
   );
 }

@@ -9,11 +9,13 @@ export default async function Targets() {
   const data = await fetchProjectTargets();
 
   return (
-    <Shell>
-      <div className="flex justify-between">
+    <Shell className="flex w-full max-w-[1000px] flex-col items-center self-center">
+      <div className="flex w-full items-center justify-between">
         <DashboardHeader heading="Project Targets" />
       </div>
-      <ProjectTargetsForm {...data} />
+      <div className={"flex w-full justify-center"}>
+        <ProjectTargetsForm {...data} />
+      </div>
     </Shell>
   );
 }

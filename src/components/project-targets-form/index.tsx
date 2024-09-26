@@ -113,7 +113,7 @@ export function ProjectTargetsForm({
   }, [watch]);
 
   return (
-    <div className="max-w-[600px]">
+    <div className="flex flex-grow flex-col">
       <form className="grid gap-4">
         <div className="flex items-center">
           <Label className="mr-2 w-48">Total Word Count Goal:</Label>
@@ -168,7 +168,7 @@ export function ProjectTargetsForm({
           )}
         </div>
       </form>
-      <Card className="mt-4">
+      <Card className="mt-4 border-4">
         <CardHeader>
           <CardDescription>Average Words Per Day:</CardDescription>
         </CardHeader>

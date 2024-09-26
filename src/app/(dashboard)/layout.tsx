@@ -19,15 +19,15 @@ export default async function DashboardLayout({
 
   return (
     <div className="flex min-h-screen">
-      <aside className="container my-4 ml-4 hidden w-[240px] flex-col gap-6 rounded-xl bg-white py-4 pl-4 dark:bg-[rgba(55,70,85,1)] md:flex">
+      <aside className="container my-4 ml-4 hidden flex-col gap-6 rounded-xl bg-white px-4 py-4 dark:bg-[rgba(55,70,85,1)] md:flex md:flex-none md:basis-0">
         <MainNav items={dashboardConfig.mainNav}>
           <UserAccountNav />
         </MainNav>
         <DashboardNav items={dashboardConfig.mainNav} />
       </aside>
       <div className="min-h-screen flex-1 gap-12 md:container md:grid-cols-[240px_1fr]">
-        <main className="flex w-full max-w-full flex-col ">
-          <header className="container sticky z-40 mt-4 flex h-12 max-w-[50%] items-center justify-center rounded-full border bg-secondary dark:bg-[rgba(55,70,85,1)]">
+        <main className="flex w-full max-w-full flex-col">
+          <header className="container sticky z-40 mt-4 flex h-12 max-w-[50%] items-center justify-center self-center rounded-full border bg-secondary dark:bg-[rgba(55,70,85,1)]">
             <MainNav items={dashboardConfig.mainNav} />
             <Link
               href="/"
@@ -46,3 +46,6 @@ export default async function DashboardLayout({
     </div>
   );
 }
+
+// Name the component DashboardLayout
+DashboardLayout.displayName = "DashboardLayout";

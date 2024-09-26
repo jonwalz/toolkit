@@ -47,19 +47,16 @@ export async function sendMagicLink(formData: FormData) {
   }
 
   // TODO: Create exit case to check if email is valid within kartra
-
   // const isValid = await checkEmailKartra(email);
 
   const supabase = createClient();
 
   const response = await supabase.auth.signInWithOtp({
     email,
-    options: {
-      shouldCreateUser: false,
-    },
   });
 
   if (response.error) {
+    console.log("response.error", response.error);
     return { error: "Something went wrong" };
   }
 

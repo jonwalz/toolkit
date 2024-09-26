@@ -43,3 +43,4 @@ yarn-error.log*
 .aider*
 NvimTree_1
 toolkit.code-workspace
+.env.test

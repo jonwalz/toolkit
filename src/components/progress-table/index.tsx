@@ -86,7 +86,7 @@ export function ProgressTable() {
   });
 
   return (
-    <>
+    <div className="flex w-full flex-col justify-center">
       <Table className="overflow-hidden rounded-xl bg-white dark:bg-[rgba(55,70,85,1)]">
         <TableHeader className="rounded-xl bg-gray-200 dark:bg-[rgba(45,60,75,1)]">
           {table.getHeaderGroups().map((headerGroup) => (
@@ -151,6 +151,6 @@ export function ProgressTable() {
           </PaginationItem>
         </PaginationContent>
       </Pagination>
-    </>
+    </div>
   );
 }

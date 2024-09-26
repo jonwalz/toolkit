@@ -6,9 +6,9 @@ export const runtime = "edge";
 
 export default function Progress() {
   return (
-    <Shell>
+    <Shell className="flex flex-col items-center">
       <DashboardHeader heading="Progress log" />
-      <div className={"max-w-[800px]"}>
+      <div className={"flex w-full max-w-[800px] justify-center"}>
         <ProgressForm />
       </div>
     </Shell>

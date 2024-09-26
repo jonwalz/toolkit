@@ -69,9 +69,9 @@ export function ProgressForm({
   const deleteProgressEntryWithId = deleteProgressEntry.bind(null, id);
 
   return (
-    <div className="grid gap-6">
+    <div className="flex flex-grow flex-col">
       <form ref={formRef} action={action}>
-        <div className="grid  grid-cols-1 gap-x-4 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-x-4 lg:grid-cols-2">
           <div className="col-span-1 sm:col-span-1">
             <Label>
               Date:
