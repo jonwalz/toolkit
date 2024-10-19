@@ -30,7 +30,11 @@ If you want to contribute to the project, here's how you can do it:
 
 ## Testing
 
-A testing framework is yet to be added.
+The project uses vitest
+
+```bash
+npm run test
+```
 
 This project uses Next.js's built-in ESLint support for linting. To run linting, use:
 
