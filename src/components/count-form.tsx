@@ -17,10 +17,11 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export function CountStartDate() {
-  const { data, error } = useQuery({
+  const { data, error, isLoading } = useQuery({
     queryKey: ["count"],
-    queryFn: getCount,
+    queryFn: () => getCount(),
   });
+
   const serverDate = data?.[0]?.date;
 
   const mutation = useMutation({
@@ -69,6 +70,7 @@ export function CountStartDate() {
         <div className="flex items-center">
           <Label className="mr-2 w-48">Enter start date:</Label>
           <Input
+            disabled={isLoading}
             type="date"
             {...register("startDate", { required: "Start date is required" })}
           />
