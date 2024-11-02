@@ -17,19 +17,19 @@ const FORM_FIELDS = {
   PASSWORD: "password",
 } as const;
 
+const handleAuthError = (error: AuthError) => {
+  console.log("Sign in error: ", error.message);
+  toast({
+    title: "Authentication Error",
+    description: error.message,
+    variant: "destructive",
+  });
+};
+
 const LoginForm: React.FC = () => {
   const router = useRouter();
   const { register, handleSubmit, errors, isLoading, setIsLoading } =
     useLoginForm();
-
-  const handleAuthError = (error: AuthError) => {
-    console.log("Sign in error: ", error.message);
-    toast({
-      title: "Authentication Error",
-      description: error.message,
-      variant: "destructive",
-    });
-  };
 
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
