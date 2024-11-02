@@ -15,7 +15,8 @@ type ProgressEntryData = {
   progressParagraph: string;
 };
 
-export default async function Edit({ params }: { params: { id: string } }) {
+export default async function Edit(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const { data, error } = await getOneProgressEntry(params.id);
 
   if (error) {

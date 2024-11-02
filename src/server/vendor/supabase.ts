@@ -1,4 +1,4 @@
-import { cookies } from "next/headers";
+import { cookies, type UnsafeUnwrappedCookies } from "next/headers";
 import { createClient } from "@supabase/supabase-js";
 import { CookieOptions, createServerClient } from "@supabase/ssr";
 import { Database } from "@/types/db";
@@ -9,7 +9,7 @@ export const supabaseClient = createClient(
 );
 
 export const supabaseServerClient = () => {
-  const cookieStore = cookies();
+  const cookieStore = (cookies() as unknown as UnsafeUnwrappedCookies);
   return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,

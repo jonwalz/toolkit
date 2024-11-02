@@ -6,7 +6,8 @@ import { title } from "../../_constants";
 
 export const runtime = "edge";
 
-export default async function Edit({ params }: { params: { id: string } }) {
+export default async function Edit(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   // TODO: move this to server function
   const { data, error } = await supabaseServerClient()
     .from("storyAccomplishments")

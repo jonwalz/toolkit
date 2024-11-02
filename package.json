@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "next dev -p 3030",
+    "dev": "next dev --turbopack -p 3030",
     "lint": "next lint",
     "start": "next start -p 3030",
     "db-types:linked": "supabase gen types typescript --linked > ./src/types/db.ts",
@@ -42,11 +42,11 @@
     "framer-motion": "^10.16.4",
     "lodash.debounce": "^4.0.8",
     "lucide-react": "^0.364.0",
-    "next": "^14.2.3",
+    "next": "15.0.2",
     "next-themes": "^0.2.1",
     "postgres": "^3.4.3",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "19.0.0-rc-02c0e824-20241028",
+    "react-dom": "19.0.0-rc-02c0e824-20241028",
     "react-feather": "^2.0.10",
     "react-hook-form": "^7.48.2",
     "server-only": "^0.0.1",
@@ -65,8 +65,8 @@
     "@testing-library/react": "^14.1.2",
     "@types/eslint": "^8.44.2",
     "@types/node": "^18.16.0",
-    "@types/react": "^18.2.33",
-    "@types/react-dom": "^18.2.14",
+    "@types/react": "npm:types-react@19.0.0-rc.1",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "@typescript-eslint/eslint-plugin": "^6.3.0",
     "@typescript-eslint/parser": "^6.3.0",
     "@vitejs/plugin-react": "^4.2.1",
@@ -74,7 +74,7 @@
     "dotenv": "^16.4.5",
     "drizzle-kit": "^0.20.6",
     "eslint": "^8.47.0",
-    "eslint-config-next": "^14.0.0",
+    "eslint-config-next": "15.0.2",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "jsdom": "^23.0.1",
@@ -90,5 +90,9 @@
   },
   "ct3aMetadata": {
     "initVersion": "7.23.2"
+  },
+  "resolutions": {
+    "@types/react": "npm:types-react@19.0.0-rc.1",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
   }
 }
